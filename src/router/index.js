@@ -8,32 +8,28 @@ const routes = [
   { path: "/", name: "home", component: () => import("../views/HomeView") },
   {
     path: "/list",
-    name: "list",
+    name: "anime",
     component: () => import("../views/ListView.vue"),
   },
-  {
-    path: "/list",
-    name: "list",
-    component: () => import("../views/ListView.vue"),
-  },
+
   {
     path: "/move",
-    name: "move",
+    name: "filmy",
     component: () => {},
   },
   {
     path: "/photo",
-    name: "photo",
+    name: "galeria",
     component: () => {},
   },
   {
     path: "/other",
-    name: "other",
+    name: "inne",
     component: () => {},
   },
   {
     path: "/setting",
-    name: "setting",
+    name: "ustawienia",
     component: () => {},
   },
 ];

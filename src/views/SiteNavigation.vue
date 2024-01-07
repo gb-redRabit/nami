@@ -6,10 +6,10 @@
                     <div class=" w-full group flex items-center space-x-4 px-4 py-3 text-gray-100 hover:bg-slate-600">
                         <MagnifyingGlassIcon @click="$emit('toogle')" class=" sidebar w-6 h-6 cursor-pointer"
                             :class="{ 'bg-slate-100 text-gray-700  rounded-l-xl w-8 h-8': toogleBar }" />
-                        <input class="h-8 w-7/12 rounded-r-xl text-gray-700" />
+                        <input class="sidebar h-8 w-7/12 rounded-r-xl bg-slate-950 text-gray-700"
+                            :class="{ ' !bg-slate-100': toogleBar }" />
                     </div>
                 </div>
-
                 <ul class="mt-10 space-y-2 tracking-wide">
                     <li class="min-w-max">
                         <RouterLink :to="{ name: 'home' }" exact aria-label="dashboard"
@@ -20,7 +20,7 @@
                         </RouterLink>
                     </li>
                     <li class="min-w-max">
-                        <RouterLink :to="{ name: 'list' }"
+                        <RouterLink :to="{ name: 'anime' }"
                             class="group flex items-center space-x-4 px-4 py-3 text-gray-100 hover:bg-slate-600"
                             active-class="bg-gradient-to-r  from-red-600 to-orange-400 text-white">
                             <FireIcon class="w-6 h-6" />
@@ -28,7 +28,7 @@
                         </RouterLink>
                     </li>
                     <li class="min-w-max">
-                        <RouterLink :to="{ name: 'move' }"
+                        <RouterLink :to="{ name: 'filmy' }"
                             class="group flex items-center space-x-4  px-4 py-3 text-gray-100 hover:bg-slate-600"
                             active-class="bg-gradient-to-r  from-red-600 to-orange-400 text-white">
                             <FilmIcon class="w-6 h-6" />
@@ -36,7 +36,7 @@
                         </RouterLink>
                     </li>
                     <li class="min-w-max">
-                        <RouterLink :to="{ name: 'photo' }"
+                        <RouterLink :to="{ name: 'galeria' }"
                             class="group flex items-center space-x-4  px-4 py-3 text-gray-100 hover:bg-slate-600"
                             active-class="bg-gradient-to-r  from-red-600 to-orange-400 text-white">
                             <PhotoIcon class="w-6 h-6" />
@@ -44,7 +44,7 @@
                         </RouterLink>
                     </li>
                     <li class="min-w-max">
-                        <RouterLink :to="{ name: 'other' }"
+                        <RouterLink :to="{ name: 'inne' }"
                             class="group flex items-center space-x-4 px-4 py-3 text-gray-100 hover:bg-slate-600"
                             active-class="bg-gradient-to-r  from-red-600 to-orange-400 text-white">
                             <HomeIcon class="w-6 h-6" />
@@ -54,7 +54,7 @@
                 </ul>
 
                 <div class="min-w-max -mb-3">
-                    <RouterLink :to="{ name: 'setting' }"
+                    <RouterLink :to="{ name: 'ustawienia' }"
                         class="group flex items-center space-x-4 px-4 py-3 text-gray-100 hover:bg-slate-600"
                         active-class="bg-gradient-to-r  from-red-600 to-orange-400 text-white">
                         <AdjustmentsHorizontalIcon class="w-6 h-6" />
@@ -65,7 +65,7 @@
                     <button @click="closeApp"
                         class="w-full group flex items-center space-x-4 px-4 py-3 text-gray-100 hover:bg-slate-600">
                         <XCircleIcon class="w-6 h-6" />
-                        <span cclass="group-hover:text-slate-400">Opcje</span>
+                        <span cclass="group-hover:text-slate-400">Wyjście</span>
                     </button>
                 </div>
             </div>
