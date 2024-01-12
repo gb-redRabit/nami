@@ -3,23 +3,22 @@ import { createStore } from "vuex";
 export default createStore({
   state: {
     fullList: [],
-    fullListSezon: [],
-    gen: [],
+    listSezon: [],
   },
   getters: {
     genres(state) {
-      let a = [];
+      let tab = [];
       state.fullList.forEach((item) => {
-        a = Array.from(new Set([...a, ...item.genres]));
+        tab = new Set([...tab, ...item.genres]);
       });
-      return a;
+      return tab;
     },
     type(state) {
-      let a = [];
+      let tab = [];
       state.fullList.forEach((item) => {
-        a = Array.from(new Set([...a, item.series_type]));
+        tab = new Set([...tab, item.series_type]);
       });
-      return a;
+      return tab;
     },
     movieList(state) {
       return state.fullList.filter((item) => item.series_type === "Movie");

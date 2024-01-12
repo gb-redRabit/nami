@@ -1,12 +1,10 @@
 <template>
-    <div class="flex flex-wrap">
-        <div v-for="(item) in this.$store.getters.genres" :key="item.mal_id" class="p-2 border-2 m-1">
-            {{ item }}
-        </div>
+    <div class="flex flex-wrap gap-3">
+        <ItemCard v-for="item in $store.getters.restList" :key="item.mal_id" :item="item" />
     </div>
 </template>
 
 <script setup>
-
+import ItemCard from '@/components/ItemCard.vue';
 
 </script>

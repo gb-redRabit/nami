@@ -3,36 +3,7 @@ import {
   createWebHashHistory,
   createWebHistory,
 } from "vue-router";
-
-const routes = [
-  { path: "/", name: "home", component: () => import("../views/HomeView") },
-  {
-    path: "/list",
-    name: "anime",
-    component: () => import("../views/ListView.vue"),
-  },
-
-  {
-    path: "/move",
-    name: "filmy",
-    component: () => {},
-  },
-  {
-    path: "/photo",
-    name: "galeria",
-    component: () => {},
-  },
-  {
-    path: "/other",
-    name: "inne",
-    component: () => {},
-  },
-  {
-    path: "/setting",
-    name: "ustawienia",
-    component: () => {},
-  },
-];
+import routes from "./routes";
 
 const router = createRouter({
   history: process.env.IS_ELECTRON

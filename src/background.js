@@ -31,6 +31,17 @@ async function createWindow() {
     createProtocol("app");
     win.loadURL("app://./index.html");
   }
+
+  if (isDevelopment && !process.env.IS_TEST) {
+    win.webContents.once("dom-ready", async () => {
+      await installExtension([VUEJS3_DEVTOOLS])
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log("An error occurred: ", err))
+        .finally(() => {
+          win.webContents.openDevTools();
+        });
+    });
+  }
 }
 
 app.on("window-all-closed", () => {
@@ -44,13 +55,6 @@ app.on("activate", () => {
 });
 
 app.on("ready", async () => {
-  if (isDevelopment && !process.env.IS_TEST) {
-    try {
-      await installExtension(VUEJS3_DEVTOOLS);
-    } catch (e) {
-      console.error("Vue Devtools failed to install:", e.toString());
-    }
-  }
   createWindow();
 });
 
