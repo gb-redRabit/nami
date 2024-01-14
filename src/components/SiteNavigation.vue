@@ -32,8 +32,6 @@ import { XCircleIcon, AdjustmentsHorizontalIcon, } from '@heroicons/vue/24/solid
 import ListNav from "./nav/ListNav.vue";
 import routes from "../router/routes";
 
-console.log(routes)
-
 defineEmits(["toogle"])
 defineProps({
     toogleBar: {
@@ -45,5 +43,3 @@ const closeApp = () => {
     ipcRenderer.send("close");
 }
 </script>
-
-<style scoped></style>

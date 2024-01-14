@@ -17,6 +17,7 @@
     "@heroicons/vue": "^2.1.1",
     "animate.css": "^4.1.1",
     "core-js": "^3.8.3",
+    "oh-vue-icons": "^1.0.0-rc3",
     "tailwind-scrollbar": "^3.0.5",
     "vue": "^3.2.13",
     "vue-router": "^4.2.5",

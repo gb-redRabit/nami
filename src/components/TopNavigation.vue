@@ -7,9 +7,6 @@
                 <ArrowLeftIcon class="h-8 w-8 text-gray-100 hover:text-slate-500" v-else />
             </Transition>
         </button>
-        <div>
-            hmmmm dodać menu nawigacyjne do podstron oraz zmienić pozycje guzika do menu głównego
-        </div>
         <div class="min-w-max">
             <div class=" w-full  flex items-center space-x-2 px-4 py-3 text-gray-100 ">
                 <MagnifyingGlassIcon class=" bg-slate-100 text-gray-700  rounded-l-xl w-8 h-8 p-2 cursor-pointer" />
@@ -21,6 +18,7 @@
 
 <script setup>
 import { ArrowRightIcon, ArrowLeftIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/solid'
+
 
 defineEmits(["toogle"])
 defineProps({

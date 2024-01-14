@@ -2,31 +2,14 @@
   <div class=" flex  flex-col relative  bg-gray-900 text-gray-100 min-h-screen ">
     <SiteNavigation :toogleBar="toogleBar" @toogle="toogle" />
     <TopNavigation :toogleBar="toogleBar" @toogle="toogle" />
-
-
-
-    <div class="sidebar flex ml-[3.35rem] " :class="{ '!ml-52': toogleBar }">
+    <div class="sidebar flex justify-center ml-[3.35rem] overflow-hidden" :class="{ '!ml-52': toogleBar }">
       <RouterView v-slot="{ Component }">
-        <Transition mode="out-in" enter-active-class="animate__animated animate__fadeIn animate__faster"
-          leave-active-class="animate__animated animate__fadeOut animate__faster">
-          <Suspense v-if="store.state.fullList[0]">
-            <Component :is="Component" />
-          </Suspense>
-          <div v-else>
-            dupa
-          </div>
-        </Transition>
+        <Component :is="Component" />
       </RouterView>
-
     </div>
   </div>
 </template>
-<script>
 
-
-
-
-</script>
 <script setup>
 import { useStore } from 'vuex'
 import { onMounted, ref } from 'vue'
@@ -43,8 +26,6 @@ const toogle = () => {
   toogleBar.value = !toogleBar.value
 }
 onMounted(async () => {
-  // aby pobrać z danego sezony trzeba wyciągnąć z pełnej listy
-  /// aby pobrać z danego z nastepnego sezonu trzeba wyciągnąć z pełnej listy
   //Ostatnio dodane odcinki
   //https://api.docchi.pl/v1/episodes/latest?season=winter&season_year=2024
   // Nieemitowane odcinki
