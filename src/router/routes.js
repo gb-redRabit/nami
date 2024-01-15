@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import {
   HomeIcon,
-  FilmIcon,
   PhotoIcon,
   FireIcon,
   XCircleIcon,
@@ -14,18 +13,18 @@ export default [
     component: () => import("../views/HomeView"),
     alies: HomeIcon,
   },
+
   {
     path: "/list",
     name: "list",
     component: () => import("../views/ListView.vue"),
     alies: FireIcon,
   },
-
   {
-    path: "/move",
-    name: "move",
-    component: () => {},
-    alies: FilmIcon,
+    path: "/list/:id",
+    name: "listItem",
+    component: () => import("../views/DescriptionItem.vue"),
+    props: true,
   },
   {
     path: "/photo",

@@ -8,4 +8,7 @@ export default {
   removeGenres({ commit }, task) {
     commit("removeGenres", task);
   },
+  celeanGenres({ commit }) {
+    commit("celeanGenres");
+  },
 };

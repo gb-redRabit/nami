@@ -9,4 +9,7 @@ export default {
     const index = state.genresTab.findIndex((item) => item === task);
     state.genresTab.splice(index, 1);
   },
+  celeanGenres(state) {
+    state.genresTab = [];
+  },
 };

@@ -36,9 +36,7 @@ onMounted(async () => {
       data += chunk;
     });
     resp.on('end', () => {
-      console.log(JSON.parse(data)[0])
       store.dispatch("getFull", JSON.parse(data))
-
     });
   }).on("error", (err) => {
     console.log("Error: " + err.message);

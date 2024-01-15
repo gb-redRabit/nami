@@ -3,7 +3,7 @@
         <div class="sidebar min-h-screen w-[3.35rem] overflow-hidden hover:shadow-lg" :class="{ '!w-52  ': toogleBar, }">
             <div class="flex h-screen flex-col justify-between pt-14 ">
                 <ul class=" space-y-2 tracking-wide">
-                    <ListNav v-for="(item, index) in routes" :key="index" :item="item" />
+                    <ListNav :routes="routes" />
 
                 </ul>
                 <div class="min-w-max ">
