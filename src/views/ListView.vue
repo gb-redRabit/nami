@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col  items-center justify-center">
+    <div class="flex flex-col mt-16  items-center justify-center">
         <div class="bg-slate-950 p-4  m-4 rounded-md w-11/12">
             <div class=" flex flex-row justify-between">
                 <h2 class=" font-bold text-2xl">Serie</h2>
@@ -73,7 +73,7 @@ const handleScroll = () => {
 onMounted(() => {
     window.addEventListener('scroll', handleScroll);
     searchList(store.state.genresTab, select.value)
-    console.log(store.state.genresTab)
+
 })
 
 const selectType = (e) => {

@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col  items-center justify-start z-10 relative min-h-full w-full" v-if="item">
         <div
-            class="absolute top-0 right-0 left-0 h-3/5 z-[-1]  blur-[3px] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:content-[''] after:z-[0] after:bg-gradient-to-b after:from-[rgba(0,0,0,0)] after:to-[rgba(17,24,39,1)]">
-            <img :src="item.bg ? item.bg : item.cover" alt="cover" class='h-3/4 w-full object-cover '>
+            class="absolute top-0 right-0 left-0 h-4/5 z-[-1]  blur-[3px] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:content-[''] after:z-[0] after:bg-gradient-to-b after:from-[rgba(0,0,0,0)] after:to-[rgba(17,24,39,1)]">
+            <img :src="item.bg ? item.bg : item.cover" alt="cover" class='h-full w-full object-cover '>
         </div>
         <div class="flex flex-row gap-10 mt-48 w-11/12 ">
             <img :src="item.cover" alt="cover" class='w-52 rounded-md' />
@@ -38,6 +38,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     <div v-else>
         ładowanie
@@ -68,7 +69,6 @@ onMounted(async () => {
         });
         resp.on('end', () => {
             item.value = JSON.parse(data)
-            console.log(item.value)
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
@@ -80,6 +80,7 @@ onMounted(async () => {
             data += chunk;
         });
         resp.on('end', () => {
+
             list.value = JSON.parse(data).sort((a, b) => a.anime_episode_number - b.anime_episode_number)
             console.log(list.value)
             const ids = list.value.map(({ anime_episode_number }) => anime_episode_number);

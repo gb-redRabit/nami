@@ -2,7 +2,9 @@
   <div class=" flex  flex-col relative  bg-gray-900 text-gray-100 min-h-screen ">
     <SiteNavigation :toogleBar="toogleBar" @toogle="toogle" />
 
-    <div class="sidebar flex justify-center ml-[3.35rem] overflow-hidden" :class="{ '!ml-52': toogleBar }">
+
+    <div class="sidebar relative flex   flex-col   ml-[3.35rem] overflow-hidden" :class="{ '!ml-52': toogleBar }">
+      <BreadcrumbsNav />
       <RouterView v-slot="{ Component }">
         <Component :is="Component" />
       </RouterView>
@@ -14,7 +16,7 @@
 import { useStore } from 'vuex'
 import { onMounted, ref } from 'vue'
 
-
+import BreadcrumbsNav from './components/BreadcrumbsNav.vue'
 import SiteNavigation from "./components/SiteNavigation"
 // import TopNavigation from "./components/TopNavigation"
 import https from 'https'
