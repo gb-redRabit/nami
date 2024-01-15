@@ -1,7 +1,7 @@
 <template>
   <div class=" flex  flex-col relative  bg-gray-900 text-gray-100 min-h-screen ">
     <SiteNavigation :toogleBar="toogleBar" @toogle="toogle" />
-    <TopNavigation :toogleBar="toogleBar" @toogle="toogle" />
+
     <div class="sidebar flex justify-center ml-[3.35rem] overflow-hidden" :class="{ '!ml-52': toogleBar }">
       <RouterView v-slot="{ Component }">
         <Component :is="Component" />
@@ -16,7 +16,7 @@ import { onMounted, ref } from 'vue'
 
 
 import SiteNavigation from "./components/SiteNavigation"
-import TopNavigation from "./components/TopNavigation"
+// import TopNavigation from "./components/TopNavigation"
 import https from 'https'
 
 const store = useStore()
