@@ -5,7 +5,7 @@
 
     <div class="sidebar relative flex   flex-col   ml-[3.35rem] overflow-hidden" :class="{ '!ml-52': toogleBar }">
       <BreadcrumbsNav />
-      <RouterView v-slot="{ Component }">
+      <RouterView v-slot="{ Component }" :key="$route.fullPath" rel=preload>
         <Component :is="Component" />
       </RouterView>
     </div>
@@ -39,6 +39,7 @@ onMounted(async () => {
     });
     resp.on('end', () => {
       store.dispatch("getFull", JSON.parse(data))
+      store.dispatch("listEdit", JSON.parse(data))
     });
   }).on("error", (err) => {
     console.log("Error: " + err.message);

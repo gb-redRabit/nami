@@ -18,6 +18,9 @@ export default {
   list(state) {
     return state.fullList;
   },
+  listEdit(state) {
+    return state.fullEdit;
+  },
   newList(state) {
     return state.fullList.filter(
       (item) =>

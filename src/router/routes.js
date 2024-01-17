@@ -13,18 +13,11 @@ export default [
     component: () => import("../views/HomeView"),
     alies: HomeIcon,
   },
-
   {
     path: "/list",
     name: "list",
     component: () => import("../views/ListView.vue"),
     alies: FireIcon,
-  },
-  {
-    path: "/list/:id",
-    name: "listItem",
-    component: () => import("../views/DescriptionItem.vue"),
-    props: true,
   },
   {
     path: "/photo",
@@ -37,5 +30,17 @@ export default [
     name: "other",
     component: () => {},
     alies: XCircleIcon,
+  },
+  {
+    path: "/list/:id",
+    name: "listItem",
+    component: () => import("../views/DescriptionItem.vue"),
+    props: true,
+  },
+  {
+    path: "/list/:id/:episode",
+    name: "ItemEpisode",
+    component: () => import("../views/ItemEpisode.vue"),
+    props: true,
   },
 ];

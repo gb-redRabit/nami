@@ -24,20 +24,23 @@
                 <h3 class="font-bold text-2xl">{{ item.broadcast_day }}</h3>
             </div>
         </div>
-        <div class="flex flex-row flex-wrap gap-4 justify-center w-11/12 mt-10">
-            <div v-for="(item, index) in  list" :key="index"
+        <div class="flex flex-row flex-wrap gap-4 justify-center w-11/12 mt-10" v-if="list !== null">
+            <RouterLink
+                :to="{ name: `ItemEpisode`, params: { id: item.slug, episode: episode.anime_episode_number }, query: { episodes: item.episodes } }"
+                v-for="(episode, index) in  list" :key="index"
                 class="group relative w-48 h-32 overflow-hidden cursor-pointer ">
-                <img :src="item.bg" alt="" class="w-full h-full" v-if="item.bg">
+                <img :src="episode.bg" alt="" class="w-full h-full" v-if="episode.bg">
                 <div v-else class=" w-full h-full bg-gray-600 flex justify-center items-center">
                     <PhotoIcon class="w-6 h-6" />
                 </div>
                 <div
                     class=" absolute -top-32 left-0 w-full h-full bg-[rgba(0,0,0,0.5)] flex flex-col justify-center items-center transition-all duration-300 ease-in-out group-hover:top-0">
-                    <h3 class="font-bold text-4xl">{{ item.anime_episode_number }}</h3>
+                    <h3 class="font-bold text-4xl">{{ episode.anime_episode_number }}</h3>
 
                 </div>
-            </div>
+            </RouterLink>
         </div>
+        <div v-else> brak odcinków</div>
 
     </div>
     <div v-else>
@@ -80,14 +83,14 @@ onMounted(async () => {
             data += chunk;
         });
         resp.on('end', () => {
-
-            list.value = JSON.parse(data).sort((a, b) => a.anime_episode_number - b.anime_episode_number)
-            console.log(list.value)
-            const ids = list.value.map(({ anime_episode_number }) => anime_episode_number);
-            list.value = list.value.filter(({ anime_episode_number }, index) =>
-                !ids.includes(anime_episode_number, index + 1));
-
+            if (resp.statusCode !== 404) {
+                list.value = JSON.parse(data).sort((a, b) => a.anime_episode_number - b.anime_episode_number)
+                const ids = list.value.map(({ anime_episode_number }) => anime_episode_number);
+                list.value = list.value.filter(({ anime_episode_number }, index) =>
+                    !ids.includes(anime_episode_number, index + 1));
+            }
         });
+
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });

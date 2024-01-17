@@ -2,6 +2,9 @@ export default {
   getFull(state, task) {
     state.fullList = task;
   },
+  listEdit(state, task) {
+    state.fullEdit = task;
+  },
   addGenres(state, task) {
     state.genresTab.push(task);
   },

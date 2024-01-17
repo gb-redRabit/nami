@@ -6,6 +6,7 @@ import actions from "./actions";
 export default createStore({
   state: {
     fullList: [],
+    fullEdit: [],
     listSezon: [],
     genresTab: [],
   },

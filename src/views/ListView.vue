@@ -8,19 +8,19 @@
                 </button>
             </div>
             <div class="flex flex-row gap-2">
-                <button class="group flex gap-1 bg-gray-900 p-2  rounded-md" @click="tab.sort(
+                <button class="group flex gap-1 bg-gray-900 p-2  rounded-md" @click="store.getters.listEdit.sort(
                     (a, b) => a.title.localeCompare(b.title)
                 )">
                     <BoltIcon class="h-6 w-6 text-gray-100 group-hover:text-slate-500" />
                     <span class="group-hover:text-slate-500"> Tytuł A-Z</span>
                 </button>
-                <button class=" group flex gap-1 bg-gray-900 p-2  rounded-md  " @click="tab.sort(
+                <button class=" group flex gap-1 bg-gray-900 p-2  rounded-md  " @click="store.getters.listEdit.sort(
                     (a, b) => new Date(b.aired_from) - new Date(a.aired_from)
                 )">
                     <BarsArrowDownIcon class="h-6 w-6 text-gray-100  group-hover:text-slate-500" />
                     <span class="group-hover:text-slate-500"> Od najnowszych</span>
                 </button>
-                <button class="group flex gap-1 bg-gray-900 p-2  rounded-md" @click="tab.sort(
+                <button class="group flex gap-1 bg-gray-900 p-2  rounded-md" @click="store.getters.listEdit.sort(
                     (a, b) => new Date(a.aired_from) - new Date(b.aired_from)
                 )">
                     <BarsArrowUpIcon class="h-6 w-6 text-gray-100 group-hover:text-slate-500" />
@@ -43,8 +43,12 @@
                 </select>
             </div>
         </div>
-        <div class="flex flex-wrap justify-center gap-3 w-11/12" @scroll="handleScroll">
-            <ItemCard v-for="(item, index) in tab" :key="index" :item="item" :set="set" />
+        <div class="flex flex-wrap justify-center gap-3 w-11/12" @scroll="handleScroll"
+            v-if="store.getters.listEdit.length !== 0">
+            <ItemCard v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" />
+        </div>
+        <div v-else>
+            ładowanie
         </div>
     </div>
 </template>
@@ -54,8 +58,6 @@ import { useStore } from 'vuex'
 import { onMounted, ref, watch } from 'vue'
 import { Bars3Icon, BarsArrowDownIcon, BarsArrowUpIcon, BoltIcon } from '@heroicons/vue/24/solid'
 
-
-
 import GenreItem from '@/components/GenreItem.vue';
 import ItemCard from '@/components/ItemCard.vue';
 
@@ -63,17 +65,15 @@ const store = useStore();
 const set = ref(0)
 const select = ref('')
 const tagi = ref([])
-const tab = ref(store.getters.list);
+let tab;
 const isActive = ref(false)
 
 const handleScroll = () => {
     set.value = window.scrollY
 }
-
 onMounted(() => {
     window.addEventListener('scroll', handleScroll);
     searchList(store.state.genresTab, select.value)
-
 })
 
 const selectType = (e) => {
@@ -88,17 +88,19 @@ watch(store.state.genresTab, (newValue) => {
 
 const searchList = (tagi, typ) => {
     if (tagi[0] !== undefined && typ !== '') {
-        tab.value = store.getters.list.filter(value => value.series_type === typ)
-        tab.value = tab.value.filter(value => tagi.every(r => value.genres.includes(r)))
+
+        tab = store.getters.list.filter(value => value.series_type === typ)
+        tab = tab.filter(value => tagi.every(r => value.genres.includes(r)))
     }
     if (tagi[0] === undefined && typ !== '') {
-        tab.value = store.getters.list.filter(value => value.series_type === typ)
+        tab = store.getters.list.filter(value => value.series_type === typ)
     }
     if (tagi[0] !== undefined && typ === '') {
-        tab.value = store.getters.list.filter(value => tagi.every(r => value.genres.includes(r)))
+        tab = store.getters.list.filter(value => tagi.every(r => value.genres.includes(r)))
     }
     if (tagi[0] === undefined && typ === '') {
-        tab.value = store.getters.list
+        tab = store.getters.list
     }
+    store.dispatch("listEdit", tab)
 }
 </script>

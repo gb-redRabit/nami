@@ -2,6 +2,9 @@ export default {
   getFull({ commit }, task) {
     commit("getFull", task);
   },
+  listEdit({ commit }, task) {
+    commit("listEdit", task);
+  },
   addGenres({ commit }, task) {
     commit("addGenres", task);
   },
