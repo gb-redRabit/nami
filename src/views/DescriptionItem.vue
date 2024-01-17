@@ -25,8 +25,7 @@
             </div>
         </div>
         <div class="flex flex-row flex-wrap gap-4 justify-center w-11/12 mt-10" v-if="list !== null">
-            <RouterLink
-                :to="{ name: `ItemEpisode`, params: { id: item.slug, episode: episode.anime_episode_number }, query: { episodes: item.episodes } }"
+            <RouterLink :to="{ name: `ItemEpisode`, params: { id: item.slug, episode: episode.anime_episode_number } }"
                 v-for="(episode, index) in  list" :key="index"
                 class="group relative w-48 h-32 overflow-hidden cursor-pointer ">
                 <img :src="episode.bg" alt="" class="w-full h-full" v-if="episode.bg">

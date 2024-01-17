@@ -13,10 +13,11 @@
             {{ breadcrumbs($route.fullPath)[2] }}
         </RouterLink>
         <RouterLink v-if="breadcrumbs($route.fullPath).length >= 3"
-            :to="{ name: $route.name, params: { id: breadcrumbs($route.fullPath)[3] } }" active-class="text-white"
-            class="first-letter:uppercase">
+            :to="{ name: $route.name, params: { id: breadcrumbs($route.fullPath)[2], episode: breadcrumbs($route.fullPath)[3] } }"
+            active-class="text-white" class="first-letter:uppercase">
             {{ breadcrumbs($route.fullPath)[3] }}
         </RouterLink>
+
     </div>
 </template>
 
