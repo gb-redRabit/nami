@@ -1,36 +1,46 @@
 <template>
     <div class="flex flex-col gap-3 items-center justify-start z-10 relative min-h-full w-full" v-if="item">
-        <div
+        <div v-if="item[select].bg"
             class="absolute top-0 right-0 left-0 h-4/5 z-[-1]  blur-[3px] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:content-[''] after:z-[0] after:bg-gradient-to-b after:from-[rgba(0,0,0,0)] after:to-[rgba(17,24,39,1)]">
             <img :src="item[select].bg" alt="cover" class='h-full w-full object-cover '>
         </div>
-        <div class="mt-16">
-            <RouterLink :disabled="episode == 1"
-                :to="{ name: `ItemEpisode`, params: { id: id, episode: Number(episode) - 1 }, query: { episodes: $route.query.episodes } }">
-                poprzedni
-            </RouterLink>
-            <RouterLink :to="{ name: `listItem`, params: { id: id } }">
-                lista
-            </RouterLink>
-            <RouterLink
-                :to="{ name: `ItemEpisode`, params: { id: id, episode: Number(episode) + 1 }, query: { episodes: $route.query.episodes } }">
-                nastepny
-            </RouterLink>
+        <div class="mt-16 flex gap-2">
+            <button :disabled="episode == 1" class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600"
+                :class="{ '!bg-slate-800 !cursor-auto hover:text-white': episode == 1 }"
+                @click="$router.push({ name: `ItemEpisode`, params: { id: id, episode: Number(episode) - 1 }, query: { episodes: $route.query.episodes } })">
+                <ChevronLeftIcon class="size-6" />
+            </button>
+            <button class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600"
+                @click="$router.push({ name: `listItem`, params: { id: id } })">
+                <Bars4Icon class="size-6" />
+            </button>
+            <button :disabled="$route.query.episodes == episode"
+                class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600" :class="{
+                    '!bg-slate-800 !cursor-auto hover:text-white': $route.query.episodes == episode
+                }"
+                @click="$router.push({ name: `ItemEpisode`, params: { id: id, episode: Number(episode) + 1 }, query: { episodes: $route.query.episodes } })">
+                <ChevronRightIcon class="size-6" />
+            </button>
         </div>
         <iframe :src="player(select)" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
             allow="clipboard-write" title="player" className="z-10 min-w-[1000px] h-[600px] m-2" />
         <div class=" flex gap-4">
             <button class="bg-slate-950 p-2 rounded-md" :class="{ 'text-red-600': select === index }"
-                v-for="(value, index) in item" :key="index" @click="select = index;">{{
+                v-for="( value, index ) in  item " :key="index" @click="select = index;">{{
                     value.player_hosting }} - {{
         value.translator_title }}</button>
         </div>
     </div>
+    <LoaderComponet v-else />
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue'
 import https from 'https'
+
+import { ChevronLeftIcon, ChevronRightIcon, Bars4Icon } from '@heroicons/vue/24/solid'
+import LoaderComponet from '@/components/LoaderComponet.vue';
+
 const select = ref(0)
 
 const props = defineProps({

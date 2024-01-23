@@ -4,26 +4,26 @@
             <div class=" flex flex-row justify-between">
                 <h2 class=" font-bold text-2xl">Serie</h2>
                 <button @click="isActive = !isActive" class="bg-gray-900 p-2 m-2 rounded-md">
-                    <Bars3Icon class="h-6 w-6 text-gray-100 hover:text-slate-500" />
+                    <Bars3Icon class="size-6 text-gray-100 hover:text-slate-500" />
                 </button>
             </div>
             <div class="flex flex-row gap-2">
                 <button class="group flex gap-1 bg-gray-900 p-2  rounded-md" @click="store.getters.listEdit.sort(
                     (a, b) => a.title.localeCompare(b.title)
                 )">
-                    <BoltIcon class="h-6 w-6 text-gray-100 group-hover:text-slate-500" />
+                    <BoltIcon class="size-6 text-gray-100 group-hover:text-slate-500" />
                     <span class="group-hover:text-slate-500"> Tytuł A-Z</span>
                 </button>
                 <button class=" group flex gap-1 bg-gray-900 p-2  rounded-md  " @click="store.getters.listEdit.sort(
                     (a, b) => new Date(b.aired_from) - new Date(a.aired_from)
                 )">
-                    <BarsArrowDownIcon class="h-6 w-6 text-gray-100  group-hover:text-slate-500" />
+                    <BarsArrowDownIcon class="size-6 text-gray-100  group-hover:text-slate-500" />
                     <span class="group-hover:text-slate-500"> Od najnowszych</span>
                 </button>
                 <button class="group flex gap-1 bg-gray-900 p-2  rounded-md" @click="store.getters.listEdit.sort(
                     (a, b) => new Date(a.aired_from) - new Date(b.aired_from)
                 )">
-                    <BarsArrowUpIcon class="h-6 w-6 text-gray-100 group-hover:text-slate-500" />
+                    <BarsArrowUpIcon class="size-6 text-gray-100 group-hover:text-slate-500" />
                     <span class="group-hover:text-slate-500"> Od najstarszych</span>
                 </button>
             </div>
@@ -43,13 +43,10 @@
                 </select>
             </div>
         </div>
-        <div class="flex flex-wrap justify-center gap-3 w-11/12" @scroll="handleScroll"
-            v-if="store.getters.listEdit.length !== 0">
+        <div class="grid grid-cols-8 gap-4" @scroll="handleScroll" v-if="store.getters.listEdit.length !== 0">
             <ItemCard v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" />
         </div>
-        <div v-else>
-            ładowanie
-        </div>
+        <LoaderComponet v-else />
     </div>
 </template>
 
@@ -58,6 +55,7 @@ import { useStore } from 'vuex'
 import { onMounted, ref, watch } from 'vue'
 import { Bars3Icon, BarsArrowDownIcon, BarsArrowUpIcon, BoltIcon } from '@heroicons/vue/24/solid'
 
+import LoaderComponet from '@/components/LoaderComponet.vue';
 import GenreItem from '@/components/GenreItem.vue';
 import ItemCard from '@/components/ItemCard.vue';
 
@@ -67,6 +65,12 @@ const select = ref('')
 const tagi = ref([])
 let tab;
 const isActive = ref(false)
+
+defineProps({
+    toogleBar: {
+        type: Boolean,
+    },
+})
 
 const handleScroll = () => {
     set.value = window.scrollY
@@ -104,3 +108,4 @@ const searchList = (tagi, typ) => {
     store.dispatch("listEdit", tab)
 }
 </script>
+

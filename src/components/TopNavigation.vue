@@ -3,8 +3,8 @@
         <button class=" p-3 text-lg" @click="$emit('toogle')">
             <Transition mode="out-in" enter-active-class="animate__animated animate__fadeIn animate__faster"
                 leave-active-class="animate__animated animate__fadeOut animate__faster">
-                <ArrowRightIcon class="h-8 w-8 text-gray-100 hover:text-slate-500" v-if="!toogleBar" />
-                <ArrowLeftIcon class="h-8 w-8 text-gray-100 hover:text-slate-500" v-else />
+                <ArrowRightIcon class="size-8 text-gray-100 hover:text-slate-500" v-if="!toogleBar" />
+                <ArrowLeftIcon class="size-8 text-gray-100 hover:text-slate-500" v-else />
             </Transition>
         </button>
         <div class="min-w-max">

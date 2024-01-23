@@ -4,7 +4,7 @@
         {{ item }}
     </button>
     <button class="p-2  bg-slate-900 rounded-md  hover:text-red-600 hover:border-red-600" v-else
-        @click="() => { store.dispatch(`celeanGenres`); store.dispatch(`addGenres`, item); $router.go(-1) }">
+        @click="() => { store.dispatch(`celeanGenres`); store.dispatch(`addGenres`, item); $router.push({ name: `list`, }) }">
         {{ item }}
     </button>
 </template>

@@ -12,25 +12,26 @@
                 </div>
                 <h1 class="font-bold text-2xl">{{ item.title }}</h1>
                 <h2 class="font-medium text-md">{{ item.title_en }}</h2>
-                <p class="mt-10">{{
+                <p class="mt-10 bg-gray-900 p-2 bg-opacity-60 rounded-md text-justify">{{
                     item.description }}</p>
             </div>
-            <div class=" flex flex-col  gap-2 -mt-10">
-                <h3 class="font-bold text-2xl">{{ item.series_type }}</h3>
-                <h3 class="font-bold text-2xl">{{ item.episodes }}</h3>
-                <h3 class="font-bold text-2xl">{{ item.aired_from }}</h3>
-                <h3 class="font-bold text-2xl">{{ item.season_year }}</h3>
-                <h3 class="font-bold text-2xl">{{ item.season }}</h3>
-                <h3 class="font-bold text-2xl">{{ item.broadcast_day }}</h3>
+            <div class=" flex flex-col  gap-2 ">
+                <h3 class="">Typ: <b>{{ item.series_type }}</b></h3>
+                <h3 class="">Ilość odcinków: <b>{{ item.episodes }}</b></h3>
+                <h3 class="">Rok: <b>{{ item.season_year }}</b></h3>
+                <h3 class="">Sezon: <b>{{ item.season }}</b></h3>
+                <h3 class="">Dzień wychodzenia: <b>{{ item.broadcast_day }}</b></h3>
             </div>
         </div>
-        <div class="flex flex-row flex-wrap gap-4 justify-center w-11/12 mt-10" v-if="list !== null">
-            <RouterLink :to="{ name: `ItemEpisode`, params: { id: item.slug, episode: episode.anime_episode_number } }"
+        <div class="grid grid-cols-5 gap-4 justify-center max-w-11/12 my-10" :class="{ '!grid-cols-1': item.episodes == 1 }"
+            v-if="list !== null">
+            <RouterLink
+                :to="{ name: `ItemEpisode`, params: { id: item.slug, episode: episode.anime_episode_number }, query: { episodes: item.episodes } }"
                 v-for="(episode, index) in  list" :key="index"
                 class="group relative w-48 h-32 overflow-hidden cursor-pointer ">
                 <img :src="episode.bg" alt="" class="w-full h-full" v-if="episode.bg">
                 <div v-else class=" w-full h-full bg-gray-600 flex justify-center items-center">
-                    <PhotoIcon class="w-6 h-6" />
+                    <PhotoIcon class="size-6" />
                 </div>
                 <div
                     class=" absolute -top-32 left-0 w-full h-full bg-[rgba(0,0,0,0.5)] flex flex-col justify-center items-center transition-all duration-300 ease-in-out group-hover:top-0">
@@ -42,17 +43,19 @@
         <div v-else> brak odcinków</div>
 
     </div>
-    <div v-else>
-        ładowanie
-    </div>
+    <LoaderComponet v-else />
 </template>
 
 <script setup>
+import { useStore } from 'vuex'
 import { onMounted, ref } from 'vue'
 import GenreItem from '@/components/GenreItem.vue';
-import https from 'https'
+import https from 'https';
 
+import LoaderComponet from '@/components/LoaderComponet.vue';
 import { PhotoIcon } from '@heroicons/vue/24/solid'
+
+const store = useStore();
 const item = ref(null)
 const list = ref(null)
 
@@ -62,6 +65,7 @@ const props = defineProps({
     },
 })
 
+store.dispatch(`celeanGenres`)
 
 onMounted(async () => {
     https.get(`https://api.docchi.pl/v1/series/find/${props.id}`, (resp) => {
