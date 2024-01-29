@@ -41,7 +41,6 @@
             </RouterLink>
         </div>
         <div v-else> brak odcinków</div>
-
     </div>
     <LoaderComponet v-else />
 </template>
@@ -97,7 +96,6 @@ onMounted(async () => {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });
-
 })
 
 </script>
