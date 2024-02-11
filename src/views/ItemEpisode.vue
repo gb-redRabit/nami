@@ -5,20 +5,21 @@
             <img :src="item[select].bg" alt="cover" class='h-full w-full object-cover '>
         </div>
         <div class="mt-16 flex gap-2">
-            <button :disabled="episode == 1" class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600"
+            <button :disabled="episode == 1" class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600 flex"
                 :class="{ '!bg-slate-800 !cursor-auto hover:text-white': episode == 1 }"
                 @click="$router.push({ name: `ItemEpisode`, params: { id: id, episode: Number(episode) - 1 }, query: { episodes: $route.query.episodes } })">
-                <ChevronLeftIcon class="size-6" />
+                <ChevronLeftIcon class="size-6" /><span>Poprzednie</span>
             </button>
-            <button class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600"
+            <button class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600 flex"
                 @click="$router.push({ name: `listItem`, params: { id: id } })">
-                <Bars4Icon class="size-6" />
+                <Bars4Icon class="size-6" /><span>Lista</span>
             </button>
             <button :disabled="$route.query.episodes == episode"
-                class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600" :class="{
+                class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600 flex" :class="{
                     '!bg-slate-800 !cursor-auto hover:text-white': $route.query.episodes == episode
                 }"
                 @click="$router.push({ name: `ItemEpisode`, params: { id: id, episode: Number(episode) + 1 }, query: { episodes: $route.query.episodes } })">
+                <span>Nastepne</span>
                 <ChevronRightIcon class="size-6" />
             </button>
         </div>
@@ -65,10 +66,30 @@ const player = (number) => {
     } else {
         src = item.value[number].player;
     }
+
+    (function () {
+        'use strict';
+        let loopCount = 0,
+            searchAds = setInterval(() => {
+                loopCount++;
+                let videoAd = document.querySelector("video.pb-ad-video-player") || document.querySelector("video.pb-block-video-player");
+                console.log(videoAd)
+
+                if (loopCount === 30) clearInterval(searchAds);
+                if (videoAd) {
+                    videoAd.style.dispaly = "none";
+                    videoAd.currentTime = videoAd.duration + 1;
+                    console.log("ad skipped")
+                    clearInterval(searchAds);
+                }
+            }, 100);
+    })();
+
     return src
 }
 
 onMounted(async () => {
+
     https.get(`https://api.docchi.pl/v1/episodes/find/${props.id}/${props.episode}`, (resp) => {
         let data = '';
         resp.on('data', (chunk) => {
@@ -81,7 +102,9 @@ onMounted(async () => {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });
-
 })
+
+
+
 </script>
 
