@@ -157,7 +157,6 @@ onMounted(async () => {
         });
         resp.on('end', () => {
             lastNot.value = JSON.parse(data)
-            console.log(lastNot.value)
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);

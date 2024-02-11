@@ -44,9 +44,9 @@
             </div>
         </div>
         <div class="grid grid-cols-8 gap-4" @scroll="handleScroll" v-if="store.getters.listEdit.length !== 0">
-            <ItemCard v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" />
+            <ItemCard v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" :index="index" />
         </div>
-        <LoaderComponet v-else />
+        <LoaderComponet v-else class="!h-[200px] mt-24" />
     </div>
 </template>
 
@@ -55,16 +55,19 @@ import { useStore } from 'vuex'
 import { onMounted, ref, watch } from 'vue'
 import { Bars3Icon, BarsArrowDownIcon, BarsArrowUpIcon, BoltIcon } from '@heroicons/vue/24/solid'
 
+import { isProxy, toRaw } from 'vue';
+
 import LoaderComponet from '@/components/LoaderComponet.vue';
 import GenreItem from '@/components/GenreItem.vue';
 import ItemCard from '@/components/ItemCard.vue';
 
+
 const store = useStore();
-const set = ref(0)
-const select = ref('')
-const tagi = ref([])
+const set = ref(30);
+const select = ref('');
+const tagi = ref([]);
+const isActive = ref(false);
 let tab;
-const isActive = ref(false)
 
 defineProps({
     toogleBar: {
@@ -73,11 +76,16 @@ defineProps({
 })
 
 const handleScroll = () => {
-    set.value = window.scrollY
+    if (window.scrollY > document.body.offsetHeight - 1300) {
+        set.value += 30
+    }
 }
+
 onMounted(() => {
+    console.log(toRaw(store.getters.listEdit) == [])
+    console.log(isProxy(store.getters.listEdit) ? 'y' : 'n')
     window.addEventListener('scroll', handleScroll);
-    searchList(store.state.genresTab, select.value)
+    searchList(store.state.genresTab, select.value);
 })
 
 const selectType = (e) => {

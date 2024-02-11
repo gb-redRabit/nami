@@ -3,7 +3,7 @@
         :class="{ 'text-amber-500 border-amber-600': isActive }" @click="clickGenre(item)">
         {{ item }}
     </button>
-    <button class="p-2  bg-slate-900 rounded-md  hover:text-red-600 hover:border-red-600" v-else
+    <button class="p-2  bg-slate-900 rounded-md  hover:text-red-600 " v-else
         @click="() => { store.dispatch(`celeanGenres`); store.dispatch(`addGenres`, item); $router.push({ name: `list`, }) }">
         {{ item }}
     </button>

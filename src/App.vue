@@ -50,4 +50,24 @@ onMounted(async () => {
 </script>
 
 
-<style></style>
+<style>
+/* width */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-gray-900
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-500
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-200
+}
+</style>

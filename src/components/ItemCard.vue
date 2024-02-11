@@ -1,6 +1,6 @@
 <template>
-    <RouterLink :to="{ path: `/list/${item.slug}` }" @click="console.log(`/list/${item.slug}`);">
-        <div class="group h-64 w-44 relative rounded-xl " v-if="upActive" ref="infoBox">
+    <RouterLink :to="{ path: `/list/${item.slug}` }" v-if="upActive">
+        <div class="group h-64 w-44 relative rounded-xl ">
             <div
                 class="transition-all duration-1000 ease-linear after:absolute after:top-0 after:left-0 after:w-full after:rounded-xl after:h-full after:content-[''] after:bg-gradient-to-t after:from-[rgba(0,0,0,0.3)] after:to-[rgba(0,0,0,0.3)] group-hover:after:from-[rgba(0,0,0,0.5)] group-hover:after:to-[rgba(0,0,0,0.5)] ">
                 <img :src="item.cover" class="absolute w-full h-full rounded-xl group-hover:blur-[1px]" alt="cover">
@@ -15,11 +15,6 @@
 <script>
 
 export default {
-    data() {
-        return {
-            el: null
-        }
-    },
     props: {
         item: {
             type: Object,
@@ -27,13 +22,15 @@ export default {
         set: {
             type: Number,
         },
+        index: {
+            type: Number,
+        },
     },
-    mounted() {
-        this.el = this.$refs.infoBox.getBoundingClientRect().top;
-    },
+
     computed: {
         upActive() {
-            return this.el < this.set + 1600 ? true : false
+            return this.index <= this.set ? true : false
+
         }
     }
 
