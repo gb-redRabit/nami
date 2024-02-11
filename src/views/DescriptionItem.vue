@@ -36,7 +36,6 @@
                 <div
                     class=" absolute -top-32 left-0 w-full h-full bg-[rgba(0,0,0,0.5)] flex flex-col justify-center items-center transition-all duration-300 ease-in-out group-hover:top-0">
                     <h3 class="font-bold text-4xl">{{ episode.anime_episode_number }}</h3>
-
                 </div>
             </RouterLink>
         </div>

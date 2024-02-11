@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col m-16 ">
         <h1 class="my-3 text-xl font-bold">
-            Obecny sezon
+            Obecny sezon {{ season(_, "pl").season }} {{ season().yers }}
         </h1>
         <div class="h-72">
             <Swiper class="w-full h-full" :slidesPerView="3" :loop="true" :spaceBetween="40" :freeMode="true" :pagination="{
@@ -17,6 +17,7 @@
                                 {{ item }}
                             </div>
                         </div>
+                        <div class="absolute top-14 p-2 flex">{{ item.series_type }} | {{ item.episodes }}</div>
                         <h2 class="absolute bottom-2 p-2 font-bold group-hover:text-red-700">{{ item.title }}</h2>
                     </RouterLink>
                 </SwiperSlide>
@@ -27,7 +28,7 @@
                 <h1 class="my-3 text-xl font-bold">
                     Nastepny sezon
                 </h1>
-                <Swiper class="w-full h-full" :slidesPerView="5" :loop="true" :spaceBetween="10" :freeMode="true"
+                <Swiper class="w-full h-full" :slidesPerView="4" :loop="true" :spaceBetween="10" :freeMode="true"
                     :pagination="{
                         clickable: true,
                     }">
@@ -58,7 +59,7 @@
                 <h1 class="my-3 text-xl font-bold">
                     Nowe odcinki
                 </h1>
-                <Swiper class="w-full h-full" :slidesPerView="10" :loop="true" :spaceBetween="10" :freeMode="true"
+                <Swiper class="w-full h-full" :slidesPerView="9" :loop="true" :spaceBetween="10" :freeMode="true"
                     :pagination="{
                         clickable: true,
                     }">
@@ -83,7 +84,7 @@
                 <h1 class="my-3 text-xl font-bold">
                     Nieemitowane odcinki
                 </h1>
-                <Swiper class="w-full h-full" :slidesPerView="10" :loop="true" :spaceBetween="10" :freeMode="true"
+                <Swiper class="w-full h-full" :slidesPerView="9" :loop="true" :spaceBetween="10" :freeMode="true"
                     :pagination="{
                         clickable: true,
                     }">
@@ -161,6 +162,7 @@ onMounted(async () => {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });
+
 
 })
 </script>
