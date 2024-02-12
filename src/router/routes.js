@@ -36,11 +36,13 @@ export default [
     name: "listItem",
     component: () => import("../views/DescriptionItem.vue"),
     props: true,
-  },
-  {
-    path: "/list/:id/:episode",
-    name: "ItemEpisode",
-    component: () => import("../views/ItemEpisode.vue"),
-    props: true,
+    children: [
+      {
+        path: ":episode",
+        name: "episode",
+        component: () => import("../views/ItemEpisode.vue"),
+        props: true,
+      },
+    ],
   },
 ];

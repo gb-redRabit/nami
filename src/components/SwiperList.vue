@@ -2,8 +2,7 @@
     <Swiper class="!h-96 w-full" :modules="[Pagination, Autoplay]" :autoplay="{
         delay: delay,
         disableOnInteraction: false,
-    }" :pagination="{ dynamicBullets: true }" :slidesPerView="view" :loop="true" :spaceBetween="30"
-        v-if="version === 'top'">
+    }" :pagination="{ dynamicBullets: true }" :slidesPerView="view" :spaceBetween="30" v-if="version === 'top'">
         <SwiperSlide v-for="(item, index) in list" :key="index" class="group relative rounded-md !h-[93%]">
             <RouterLink :to="{ path: `/list/${item.slug}` }">
                 <img :src="item.cover" alt="cover" class="h-full w-full absolute object-cover ">
@@ -22,9 +21,11 @@
     <Swiper class="w-full h-full" :modules="[Navigation, Autoplay]" :autoplay="{
         delay: delay,
         disableOnInteraction: false,
-    }" :slidesPerView="view" :navigation="true" :loop="true" :spaceBetween="20" v-if="version === 'mid'">
+    }" :slidesPerView="view" :navigation="true" :spaceBetween="20" v-if="version === 'mid'">
         <SwiperSlide v-for="(item, index) in list" :key="index" class="group relative rounded-md overflow-hidden ">
-            <RouterLink :to="{ path: `/list/${item.slug}` }" class="h-full w-full flex flex-col justify-end">
+            <RouterLink
+                :to="{ path: item.anime_episode_number ? `/list/${item.anime_id}/${item.anime_episode_number}` : `/list/${item.slug}` }"
+                class="h-full w-full flex flex-col justify-end">
                 <img :src="item.cover" alt="cover" class="w-full h-full bg-cover bg-center absolute -z-10">
                 <div class="absolute top-0 left-0 h-full w-full bg-slate-900 opacity-30 "></div>
                 <h2 class="px-2 font-medium group-hover:text-red-700 z-10">{{ `${item.title.slice(0,
@@ -46,7 +47,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-defineProps({
+const props = defineProps({
     list: {
         type: Array,
     },
@@ -60,6 +61,7 @@ defineProps({
         type: String
     }
 })
+console.log(props.list)
 </script>
 
 <style >

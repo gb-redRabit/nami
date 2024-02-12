@@ -12,13 +12,13 @@
         <span v-if="breadcrumbs($route.fullPath).length > 2">|</span>
         <RouterLink v-if="breadcrumbs($route.fullPath).length > 2"
             :to="{ name: $route.name, params: { id: breadcrumbs($route.fullPath)[2] } }" active-class="text-white"
-            class="first-letter:uppercase">
+            class="first-letter:uppercase" exact>
             {{ breadcrumbs($route.fullPath)[2].replaceAll('-', ' ') }}
         </RouterLink>
         <span v-if="breadcrumbs($route.fullPath).length > 3">|</span>
         <RouterLink v-if="breadcrumbs($route.fullPath).length > 3"
             :to="{ name: $route.name, params: { id: breadcrumbs($route.fullPath)[2], episode: breadcrumbs($route.fullPath)[3] } }"
-            active-class="text-white" class="first-letter:uppercase">
+            active-class="text-white" class="first-letter:uppercase" exact>
             {{ breadcrumbs($route.fullPath)[3] }}
         </RouterLink>
 
