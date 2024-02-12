@@ -3,129 +3,51 @@
         <h1 class="my-3 text-xl font-bold">
             Obecny sezon {{ season(_, "pl").season }} {{ season().yers }}
         </h1>
-        <div class="h-72">
-            <Swiper class="w-full h-full" :slidesPerView="3" :loop="true" :spaceBetween="40" :freeMode="true" :pagination="{
-                clickable: true,
-            }">
-                <SwiperSlide v-for="(item, index) in store.getters.newList" :key="index"
-                    class="group relative rounded-md overflow-hidden">
-                    <RouterLink :to="{ path: `/list/${item.slug}` }">
-                        <img :src="item.cover" alt="cover" class="w-full bg-cover bg-center absolute ">
-                        <div class="absolute top-0 left-0 h-full w-full bg-slate-900 opacity-50 "></div>
-                        <div class="absolute top-2 p-2 flex gap-2">
-                            <div v-for="(item, index) in item.genres" :key="index" class="bg-gray-900 p-2 rounded-md  ">
-                                {{ item }}
-                            </div>
-                        </div>
-                        <div class="absolute top-14 p-2 flex">{{ item.series_type }} | {{ item.episodes }}</div>
-                        <h2 class="absolute bottom-2 p-2 font-bold group-hover:text-red-700">{{ item.title }}</h2>
-                    </RouterLink>
-                </SwiperSlide>
-            </Swiper>
-        </div>
-        <div class="flex flex-row gap-3 justify-between mb-14">
+
+        <SwiperList :list="store.getters.newList" :view="3" :delay="2500" :version="'top'"
+            v-if="store.getters.newList.length !== 0" />
+        <LoaderComponet v-else class="!h-96" />
+        <div class="flex flex-row gap-3  mb-14">
             <div class="h-60 w-1/2">
                 <h1 class="my-3 text-xl font-bold">
                     Nastepny sezon
                 </h1>
-                <Swiper class="w-full h-full" :slidesPerView="4" :loop="true" :spaceBetween="10" :freeMode="true"
-                    :pagination="{
-                        clickable: true,
-                    }">
-                    <SwiperSlide v-for="(item, index) in store.getters.nextList" :key="index"
-                        class="group relative rounded-md overflow-hidden ">
-                        <RouterLink :to="{ path: `/list/${item.slug}` }">
-                            <img :src="item.cover" alt="cover" class="w-full h-full bg-cover bg-center absolute ">
-                            <div class="absolute top-0 left-0 h-full w-full bg-slate-900 opacity-30 "></div>
-                            <h2 class="absolute bottom-2 p-2 font-medium group-hover:text-red-700">{{ `${item.title.slice(0,
-                                19)}...`
-                            }}</h2>
-                        </RouterLink>
-                    </SwiperSlide>
-                </Swiper>
+                <SwiperList :list="store.getters.nextList" :view="5" :delay="2500" :version="'mid'"
+                    v-if="store.getters.nextList.length !== 0" />
+                <LoaderComponet v-else class="!h-full" />
             </div>
-            <div class="">
+            <div class=" w-full">
                 <h1 class=" text-right text-xl font-bold my-3">
                     Gatunki
                 </h1>
-                <div class="flex flex-row-reverse flex-wrap gap-1  ">
+                <div class="flex flex-row-reverse flex-wrap gap-1  " v-if="store.getters.nextList.length !== 0">
                     <GenreItem v-for="(item, index) in store.getters.genres" :key="index" :item="item" :typ="false"
                         class="!bg-slate-950" />
                 </div>
+                <LoaderComponet v-else class="!h-full " />
             </div>
         </div>
-        <div v-if="last && lastNot">
-            <div class="h-60 mb-14 ">
-                <h1 class="my-3 text-xl font-bold">
-                    Nowe odcinki
-                </h1>
-                <Swiper class="w-full h-full" :slidesPerView="9" :loop="true" :spaceBetween="10" :freeMode="true"
-                    :pagination="{
-                        clickable: true,
-                    }">
-                    <SwiperSlide v-for="(item, index) in last" :key="index"
-                        class="group relative rounded-md overflow-hidden ">
-                        <RouterLink
-                            :to="{ name: `ItemEpisode`, params: { id: item.anime_id, episode: item.anime_episode_number } }">
-                            <img :src="item.cover" alt="cover" class="w-full h-full bg-cover bg-center absolute  ">
-                            <div
-                                class="absolute top-0 right-0 size-8 font-bold bg-slate-700 flex justify-center items-center">
-                                {{
-                                    item.anime_episode_number }}</div>
-                            <div class="absolute top-0 left-0 h-full w-full bg-slate-900 opacity-30 "></div>
-                            <h2 class="absolute bottom-2 p-2 font-medium group-hover:text-red-700">{{ `${item.title.slice(0,
-                                19)}...`
-                            }}</h2>
-                        </RouterLink>
-                    </SwiperSlide>
-                </Swiper>
-            </div>
-            <div class="h-60 ">
-                <h1 class="my-3 text-xl font-bold">
-                    Nieemitowane odcinki
-                </h1>
-                <Swiper class="w-full h-full" :slidesPerView="9" :loop="true" :spaceBetween="10" :freeMode="true"
-                    :pagination="{
-                        clickable: true,
-                    }">
-                    <SwiperSlide v-for="(item, index) in lastNot" :key="index"
-                        class="group relative rounded-md overflow-hidden ">
-                        <RouterLink
-                            :to="{ name: `ItemEpisode`, params: { id: item.anime_id, episode: item.anime_episode_number } }">
-                            <img :src="item.cover" alt="cover" class="w-full h-full bg-cover bg-center absolute  ">
-                            <div
-                                class="absolute top-0 right-0 size-8 font-bold bg-slate-700 flex justify-center items-center">
-                                {{
-                                    item.anime_episode_number }}</div>
-                            <div class="absolute top-0 left-0 h-full w-full bg-slate-900 opacity-30 "></div>
-                            <h2 class="absolute bottom-2 p-2 font-medium group-hover:text-red-700">{{ `${item.title.slice(0,
-                                19)}...`
-                            }}</h2>
-                        </RouterLink>
-                    </SwiperSlide>
-                </Swiper>
-            </div>
+        <div class="h-60 mb-14 ">
+            <h1 class="my-3 text-xl font-bold">
+                Nowe odcinki
+            </h1>
+            <SwiperList :list="last" :view="9" :delay="2000" :version="'mid'" v-if="last" />
+            <LoaderComponet v-else class="!h-1/2 mt-24" />
         </div>
-        <LoaderComponet v-else class="!h-1/2 mt-24" />
+        <div class="h-60 ">
+            <h1 class="my-3 text-xl font-bold">
+                Nieemitowane odcinki
+            </h1>
+            <SwiperList :list="lastNot" :view="9" :delay="2000" :version="'mid'" v-if="lastNot" />
+            <LoaderComponet v-else class="!h-1/2 mt-24" />
+        </div>
     </div>
 </template>
 
-<script>
-import { Swiper, SwiperSlide } from 'swiper/vue';
 
-// Import Swiper styles
-import 'swiper/css';
-
-export default {
-    components: {
-        Swiper,
-        SwiperSlide,
-    },
-
-};
-</script>
 <script setup>
 import LoaderComponet from '@/components/LoaderComponet.vue';
+import SwiperList from '@/components/SwiperList.vue';
 import { useStore } from 'vuex'
 import GenreItem from '@/components/GenreItem.vue';
 import { onMounted, ref } from 'vue'
@@ -134,6 +56,8 @@ import season from "../helpers/date";
 const store = useStore();
 
 store.dispatch(`celeanGenres`)
+
+
 
 
 const last = ref(null)
@@ -167,3 +91,16 @@ onMounted(async () => {
 })
 </script>
 
+
+<style>
+.swiper-pagination-bullet {
+    background-color: rgb(255, 255, 255) !important;
+    opacity: .5 !important;
+}
+
+
+.swiper-pagination-bullet-active {
+    background-color: rgb(234, 179, 8) !important;
+    opacity: 1 !important;
+}
+</style>
