@@ -12,7 +12,11 @@
                         {{ item }}
                     </div>
                 </div>
-                <div class="absolute top-14 p-2 flex">{{ item.series_type }} | {{ item.episodes }}</div>
+                <div class="absolute top-14 p-3 flex"><span class="pr-1 text-gray-100 font-extrabold">{{ item.series_type
+                }}</span>|
+                    Odcinki: {{
+                        item.episodes
+                    }}</div>
                 <h2 class="absolute bottom-2 p-2 font-bold group-hover:text-red-700">{{ item.title }}</h2>
             </RouterLink>
         </SwiperSlide>
