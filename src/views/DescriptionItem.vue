@@ -5,7 +5,7 @@
             <img :src="item.bg ? item.bg : item.cover" alt="cover" class='h-full w-full object-cover '>
         </div>
         <div class="flex flex-row gap-10 mt-48 w-11/12 ">
-            <div class="w-1/5 flex flex-col gap-2">
+            <div class="w-1/3 flex flex-col gap-2">
                 <img :src="item.cover" alt="cover" class='w-full rounded-md' />
                 <div class=" flex flex-col  gap-2  bg-gray-900 bg-opacity-60 rounded-md p-2">
                     <h3 class="">Typ: <b>{{ item.series_type }}</b></h3>
@@ -15,15 +15,15 @@
                     <h3 class="">Dzień wychodzenia: <b>{{ item.broadcast_day }}</b></h3>
                 </div>
             </div>
-            <div class=" flex flex-col w-full gap-2 -mt-10">
+            <div class=" flex flex-col w-full gap-2 -mt-12">
                 <div class="flex gap-3">
                     <GenreItem v-for="(item, index) in  item.genres" :key="index" :item="item" :typ="false" />
                 </div>
-                <h1 class="font-bold text-2xl">{{ item.title }}</h1>
-                <h2 class="font-medium text-md">{{ item.title_en }}</h2>
-                <p class="mt-10 bg-gray-900 p-2 bg-opacity-60 rounded-md text-justify">{{
+                <h1 class="font-bold text-4xl">{{ item.title }}</h1>
+                <h2 class="font-medium text-2xl">{{ item.title_en }}</h2>
+                <p class="mt-10 bg-gray-900 p-2 bg-opacity-60 rounded-md text-justify text-xl">{{
                     item.description }}</p>
-                <div class="flex gap-3 mt-10">
+                <div class="flex flex-wrap gap-3 mt-10">
                     <button @click="$router.push({ name: `listItem`, params: { id: item.slug } });"
                         v-for="(item, index) in  related" :key="index"
                         class="bg-gray-900 bg-opacity-60 rounded-md overflow-hidden flex gap-1 w-72 h-24">

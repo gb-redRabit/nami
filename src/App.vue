@@ -5,7 +5,7 @@
 
     <div class="sidebar relative flex   flex-col   ml-[3.35rem] overflow-hidden" :class="{ '!ml-52': toogleBar }">
       <BreadcrumbsNav />
-      <RouterView v-slot="{ Component }" :key="$route.matched[0].name && $route.params.id">
+      <RouterView v-slot="{ Component }" :key="$route.params.id">
         <Component :is="Component" />
       </RouterView>
     </div>
@@ -28,10 +28,6 @@ const toogle = () => {
   toogleBar.value = !toogleBar.value
 }
 onMounted(async () => {
-  //Ostatnio dodane odcinki
-  //https://api.docchi.pl/v1/episodes/latest?season=winter&season_year=2024
-  // Nieemitowane odcinki
-  //https://api.docchi.pl/v1/episodes/latest?season=winter&season_year=2024&type=not
   https.get('https://api.docchi.pl/v1/series/list', (resp) => {
     let data = '';
     resp.on('data', (chunk) => {
