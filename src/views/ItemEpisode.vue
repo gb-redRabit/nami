@@ -3,7 +3,7 @@
         <div class="absolute w-full h-full bg-black bg-opacity-30"
             @click="$router.push({ name: `listItem`, params: { id: id } })">
         </div>
-        <div class=" bg-black bg-opacity-70 w-3/4 h-3/4 flex flex-col justify-center items-center z-10" v-if="item">
+        <div class=" bg-black bg-opacity-70 w-3/4 h-3/4 flex flex-col justify-center items-center z-10" v-if="item && list">
             <div class="mt-16 flex gap-2">
                 <button :disabled="episode == 1" class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600 flex"
                     :class="{ '!bg-slate-800 !cursor-auto hover:text-white': episode == 1 }"
@@ -14,9 +14,9 @@
                     @click="$router.push({ name: `listItem`, params: { id: id } })">
                     <Bars4Icon class="size-6" /><span>Lista</span>
                 </button>
-                <button :disabled="description.episodes == episode"
+                <button :disabled="description.episodes == episode || list[list.length - 1].anime_episode_number == episode"
                     class="bg-slate-950 p-2 rounded-md cursor-pointer hover:text-red-600 flex" :class="{
-                        '!bg-slate-800 !cursor-auto hover:text-white': description.episodes == episode
+                        '!bg-slate-800 !cursor-auto hover:text-white': description.episodes == episode || list[list.length - 1].anime_episode_number == episode
                     }" @click="$router.push({ name: `episode`, params: { id: id, episode: Number(episode) + 1 } })">
                     <span>Nastepne</span>
                     <ChevronRightIcon class="size-6" />
@@ -54,6 +54,7 @@ const props = defineProps({
 })
 const item = ref(null);
 const description = ref('');
+const list = ref();
 
 const player = (number) => {
     let src;
@@ -98,6 +99,27 @@ onMounted(async () => {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });
+
+
+    https.get(`https://api.docchi.pl/v1/episodes/count/${props.id}`, (resp) => {
+        let data = '';
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+        resp.on('end', () => {
+            if (resp.statusCode !== 404) {
+                list.value = JSON.parse(data).sort((a, b) => a.anime_episode_number - b.anime_episode_number)
+                const ids = list.value.map(({ anime_episode_number }) => anime_episode_number);
+                list.value = list.value.filter(({ anime_episode_number }, index) =>
+                    !ids.includes(anime_episode_number, index + 1));
+
+            }
+        });
+
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });
+
 
     (function () {
         'use strict';
