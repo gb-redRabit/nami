@@ -5,7 +5,7 @@
 
     <div class="sidebar relative flex   flex-col   ml-[3.35rem] overflow-hidden" :class="{ '!ml-52': toogleBar }">
       <BreadcrumbsNav />
-      <RouterView v-slot="{ Component }">
+      <RouterView v-slot="{ Component }" :key="$route.matched[0].name && $route.params.id">
         <Component :is="Component" />
       </RouterView>
     </div>

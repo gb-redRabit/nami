@@ -24,7 +24,7 @@
                 <p class="mt-10 bg-gray-900 p-2 bg-opacity-60 rounded-md text-justify">{{
                     item.description }}</p>
                 <div class="flex gap-3 mt-10">
-                    <div @click="$router.push({ name: `listItem`, params: { id: item.slug } });"
+                    <button @click="$router.push({ name: `listItem`, params: { id: item.slug } });"
                         v-for="(item, index) in  related" :key="index"
                         class="bg-gray-900 bg-opacity-60 rounded-md overflow-hidden flex gap-1 w-72 h-24">
                         <img :src="item.cover" alt="cover" class="w-16 h-full">
@@ -33,11 +33,11 @@
                                 19)}...` }}</h1>
                             <h3 class="font-medium text-md">Ilość odcinków: <b>{{ item.episodes }}</b></h3>
                         </div>
-                    </div>
+                    </button>
                 </div>
                 <div class="grid grid-cols-7 gap-2 justify-center  my-10 bg-gray-900 bg-opacity-60 rounded-md p-3"
                     :class="{ '!grid-cols-1': item.episodes == 1 }" v-if="list !== null">
-                    <RouterLink :to="{ path: `/list/${item.slug}/${episode.anime_episode_number}` }" exact
+                    <RouterLink :to="{ path: `/list/${item.slug}/${episode.anime_episode_number}` }"
                         v-for="(episode, index) in  list" :key="index"
                         class="group relative w-48 h-32 overflow-hidden cursor-pointer rounded-md">
                         <img :src="episode.bg ? episode.bg : item.cover" alt="" class="w-full h-full  object-cover">
@@ -50,7 +50,7 @@
                 <div v-else> brak odcinków</div>
             </div>
         </div>
-        <RouterView v-slot="{ Component }" :key="$route.fullPath">
+        <RouterView v-slot="{ Component }" :key="$route.path">
             <Component :is="Component" />
         </RouterView>
     </div>
@@ -69,7 +69,7 @@ import LoaderComponet from '@/components/LoaderComponet.vue';
 const store = useStore();
 const item = ref(null);
 const list = ref(null);
-const related = ref(null);
+const related = ref([]);
 const props = defineProps({
     id: {
         type: String,
@@ -94,8 +94,13 @@ onMounted(async () => {
                     data += chunk;
                 });
                 resp.on('end', () => {
-                    console.log('Inne:', JSON.parse(data))
-                    related.value = JSON.parse(data)
+                    if (resp.statusCode !== 404) {
+                        JSON.parse(data) && JSON.parse(data).forEach((value) => {
+                            if (value.mal_id !== item.value.mal_id) {
+                                related.value.push(value)
+                            }
+                        })
+                    }
                 });
             }).on("error", (err) => {
                 console.log("Error: " + err.message);
