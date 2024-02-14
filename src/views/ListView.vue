@@ -32,7 +32,7 @@
             :class="{ 'h-52': isActive }">
             <div class="my-4 ml-4 w-3/4">
                 <h2 class="my-2 font-bold text-2xl">Tagi</h2>
-                <GenreItem v-for="(item, index) in $store.getters.genres" :key="index" :item="item" :typ="true" />
+                <GenreItem v-for="(item, index) in store.getters.genres" :key="index" :item="item" :typ="true" />
             </div>
             <div class=" my-4 mr-4 w-1/4">
                 <h2 class="my-2 font-bold text-2xl">Rodzaj</h2>
@@ -45,6 +45,10 @@
         </div>
         <div class="grid grid-cols-8 gap-4" @scroll="handleScroll" v-if="store.getters.listEdit.length !== 0">
             <ItemCard v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" :index="index" />
+        </div>
+        <div v-else-if="store.getters.genres.length != 0"
+            class="bg-slate-950 w-11/12  p-2 rounded-md flex flex-col justify-center items-center">
+            <h1 class="text-4xl font-medium tracking-wider">Brakuje serii spełniającej kryteria</h1>
         </div>
         <LoaderComponet v-else class="!h-[200px] mt-24" />
     </div>
@@ -82,20 +86,20 @@ const handleScroll = () => {
 }
 
 onMounted(() => {
-    console.log(toRaw(store.getters.listEdit) == [])
-    console.log(isProxy(store.getters.listEdit) ? 'y' : 'n')
+    console.log(toRaw(store.getters.listEdit) == []);
+    console.log(isProxy(store.getters.listEdit) ? 'y' : 'n');
     window.addEventListener('scroll', handleScroll);
     searchList(store.state.genresTab, select.value);
 })
 
 const selectType = (e) => {
-    select.value = e.target.value
-    searchList(tagi.value, select.value)
+    select.value = e.target.value;
+    searchList(tagi.value, select.value);
 }
 
 watch(store.state.genresTab, (newValue) => {
-    tagi.value = newValue
-    searchList(tagi.value, select.value)
+    tagi.value = newValue;
+    searchList(tagi.value, select.value);
 })
 
 const searchList = (tagi, typ) => {

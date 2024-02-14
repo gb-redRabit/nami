@@ -15,6 +15,7 @@
                     <h3 class="">Dzień wychodzenia: <b>{{ item.broadcast_day }}</b></h3>
                 </div>
             </div>
+
             <div class=" flex flex-col w-full gap-2 -mt-12">
                 <div class="flex gap-3">
                     <GenreItem v-for="(item, index) in  item.genres" :key="index" :item="item" :typ="false" />
@@ -24,14 +25,19 @@
                 <p class="mt-10 bg-gray-900 p-2 bg-opacity-60 rounded-md text-justify text-xl">{{
                     item.description }}</p>
                 <div class="flex flex-wrap gap-3 mt-10">
-                    <button @click="$router.push({ name: `listItem`, params: { id: item.slug } });"
-                        v-for="(item, index) in  related" :key="index"
-                        class="bg-gray-900 bg-opacity-60 rounded-md overflow-hidden flex gap-1 w-72 h-24">
-                        <img :src="item.cover" alt="cover" class="w-16 h-full">
-                        <div class="flex flex-col h-full justify-between p-2">
-                            <h1 class="font-bold text-xl">{{ `${item.title && item.title.slice(0,
-                                19)}...` }}</h1>
-                            <h3 class="font-medium text-md">Ilość odcinków: <b>{{ item.episodes }}</b></h3>
+                    <button @click="$router.push({
+                        name: `listItem`, params: {
+                            id: item.slug
+                        }
+                    });" v-for="(item, index) in  related" :key="index">
+                        <div v-if="item" class="bg-gray-900 bg-opacity-60 rounded-md overflow-hidden flex gap-1 w-72 h-24">
+                            <img :src="item.cover" alt="cover">
+                            <div class="flex flex-col ">
+                                <span>{{ item.relation }}</span>
+                                <span>{{ item.title }}</span>
+                                <span> {{ item.title_en }}</span>
+                            </div>
+
                         </div>
                     </button>
                 </div>
@@ -88,16 +94,32 @@ onMounted(async () => {
             item.value = JSON.parse(data)
             console.log(item.value)
             //linki do nastepnych seri i poprzenich
-            https.get(`https://api.docchi.pl/v1/series/related/${item.value.title}`, (resp) => {
+            https.get(`https://api.jikan.moe/v4/anime/${item.value.mal_id}/full`, (resp) => {
                 let data = '';
                 resp.on('data', (chunk) => {
                     data += chunk;
                 });
                 resp.on('end', () => {
                     if (resp.statusCode !== 404) {
-                        JSON.parse(data) && JSON.parse(data).forEach((value) => {
-                            if (value.mal_id !== item.value.mal_id) {
-                                related.value.push(value)
+                        JSON.parse(data).data.relations.forEach((value) => {
+                            if (value.relation !== "Adaptation" && value.relation !== "Other") {
+                                value.entry.forEach((link) => {
+                                    https.get(`https://api.docchi.pl/v1/series/related/${link.mal_id} `, (resp) => {
+                                        let epis = '';
+                                        resp.on('data', (chunk) => {
+                                            epis += chunk;
+                                        });
+                                        resp.on('end', () => {
+                                            if (resp.statusCode !== 404) {
+                                                let obj = JSON.parse(epis)[0]
+                                                if (obj != undefined) {
+                                                    obj.relation = value.relation
+                                                    related.value.push(obj)
+                                                }
+                                            }
+                                        });
+                                    })
+                                })
                             }
                         })
                     }
