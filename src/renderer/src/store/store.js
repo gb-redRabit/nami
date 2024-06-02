@@ -7,6 +7,7 @@ export default createStore({
   state: {
     fullList: [],
     fullEdit: [],
+    listTop: [],
     listSezon: [],
     genresTab: [],
     typeSelect: []

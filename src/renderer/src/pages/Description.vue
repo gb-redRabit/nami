@@ -66,7 +66,7 @@ const anime = ref(null);
 const mal = ref(null);
 
 const episodes = ref(null);
-const props = defineProps({
+const { id } = defineProps({
   id: {
     type: String,
   },
@@ -118,8 +118,8 @@ window.electron.ipcRenderer.on('sendApiFive', (__, data) => {
 })
 
 onMounted(() => {
-  window.electron.ipcRenderer.send('getApiTwo', `https://api.docchi.pl/v1/series/find/${props.id}`);
-  window.electron.ipcRenderer.send('getApiFive', `https://api.docchi.pl/v1/episodes/count/${props.id}`);
+  window.electron.ipcRenderer.send('getApiTwo', `https://api.docchi.pl/v1/series/find/${id}`);
+  window.electron.ipcRenderer.send('getApiFive', `https://api.docchi.pl/v1/episodes/count/${id}`);
 })
 
 </script>

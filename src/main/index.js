@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import axios from 'axios'
+import { table } from 'console'
 
 function createWindow() {
   // Create the browser window.
@@ -115,6 +116,17 @@ app.whenReady().then(() => {
       })
       .catch(function (error) {
         console.log('error getApiSeven')
+      })
+  })
+
+  ipcMain.on('getApiEight', async (event, data) => {
+    axios
+      .get(data)
+      .then(function (response) {
+        event.reply('sendApiEight', response.data.data)
+      })
+      .catch(function (error) {
+        console.log('error getApiEight')
       })
   })
   createWindow()

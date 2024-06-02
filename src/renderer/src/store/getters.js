@@ -29,6 +29,15 @@ export default {
   listEdit(state) {
     return state.fullEdit
   },
+  listTop(state) {
+    state.fullList.forEach((value) => {
+      const matchingItem = state.listTop.find((item) => item.mal_id === value.mal_id)
+      if (matchingItem) {
+        matchingItem.slug = value.slug
+      }
+    })
+    return state.listTop
+  },
   newList(state) {
     return state.fullList.filter(
       (item) => item.season === season().season && item.season_year === season().yers

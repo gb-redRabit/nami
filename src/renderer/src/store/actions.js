@@ -5,6 +5,9 @@ export default {
   listEdit({ commit }, task) {
     commit('listEdit', task)
   },
+  listTop({ commit }, task) {
+    commit('listTop', task)
+  },
   addGenres({ commit }, task) {
     commit('addGenres', task)
   },

@@ -5,6 +5,9 @@ export default {
   listEdit(state, task) {
     state.fullEdit = task
   },
+  listTop(state, task) {
+    state.listTop = task
+  },
   addGenres(state, task) {
     state.genresTab.push(task)
   },
