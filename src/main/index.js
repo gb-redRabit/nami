@@ -47,7 +47,7 @@ app.whenReady().then(() => {
         event.reply('sendApiOne', response.data)
       })
       .catch(function (error) {
-        console.log('error')
+        console.log('error getApiOne')
       })
   })
   ipcMain.on('getApiTwo', async (event, data) => {
@@ -57,7 +57,7 @@ app.whenReady().then(() => {
         event.reply('sendApiTwo', response.data)
       })
       .catch(function (error) {
-        console.log('error')
+        console.log('error getApiTwo')
       })
   })
 
@@ -68,18 +68,18 @@ app.whenReady().then(() => {
         event.reply('sendApiThree', response.data)
       })
       .catch(function (error) {
-        console.log('error')
+        console.log('error getApiThree')
       })
   })
 
   ipcMain.on('getApiFour', async (event, data) => {
     axios
-      .get(data)
+      .get(data[0])
       .then(function (response) {
-        event.reply('sendApiFour', response.data)
+        event.reply('sendApiFour', [response.data[0], data[1]])
       })
       .catch(function (error) {
-        console.log('error')
+        console.log('error sendApiFour')
       })
   })
 
@@ -90,7 +90,7 @@ app.whenReady().then(() => {
         event.reply('sendApiFive', response.data)
       })
       .catch(function (error) {
-        console.log('error')
+        console.log('error getApiFive')
       })
   })
 
@@ -101,7 +101,7 @@ app.whenReady().then(() => {
         event.reply('sendApiSix', response.data)
       })
       .catch(function (error) {
-        console.log('error')
+        console.log('error getApiSix')
       })
   })
 
@@ -112,7 +112,7 @@ app.whenReady().then(() => {
         event.reply('sendApiSeven', response.data)
       })
       .catch(function (error) {
-        console.log('error')
+        console.log('error getApiSeven')
       })
   })
   createWindow()

@@ -1,7 +1,7 @@
 <template>
-    <button @click="clickGenre(item)" :class="{ '!bg-slate-500 ': isActive }" class=" py-1 px-2 border bg-slate-700 text-white rounded-xl text-sm
+    <button @click="clickGenre(item)" :class="{ '!bg-slate-500 ': item.isActive }" class=" py-1 px-2 border bg-slate-700 text-white rounded-xl text-sm
         hover:bg-slate-900">
-        {{ item }}</button>
+        {{ item.title }}</button>
 </template>
 
 
@@ -9,34 +9,32 @@
 import { useStore } from 'vuex'
 import { ref, onMounted } from 'vue'
 const store = useStore();
-const index = ref('');
-const isActive = ref(false)
+const index = ref();
 
 const props = defineProps({
     item: {
-        type: String,
+        type: Object,
 
     }
 })
 
 onMounted(() => {
-    index.value = store.state.genresTab.findIndex(item => item === props.item)
+    index.value = store.state.genresTab.findIndex(item => item.title === props.item.title)
     if (index.value < 0) {
-        isActive.value = false
+        props.item.isActive = false
     }
     if (index.value >= 0)
-        isActive.value = true
+        props.item.isActive = true
 })
 
 const clickGenre = (value) => {
-    index.value = store.state.genresTab.findIndex(item => item === value)
-    if (index.value < 0) {
+    if (!value.isActive) {
         store.dispatch("addGenres", value)
-        isActive.value = !isActive.value
+        value.isActive = !value.isActive
     }
     else {
         store.dispatch("removeGenres", value)
-        isActive.value = !isActive.value
+        value.isActive = !value.isActive
     }
 }
 </script>

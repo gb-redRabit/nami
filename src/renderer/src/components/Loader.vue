@@ -1,6 +1,6 @@
 <template>
-    <div class="flex items-center justify-start z-10 relative min-h-screen w-full ">
-        <div class="circles m-auto relative w-[400px] h-[400px] ">
+    <div class=" flex items-center justify-start z-10 relative min-h-screen w-full ">
+        <div class="circles m-auto relative w-[300px] h-[300px]">
             <div class="circle1"></div>
             <div class="circle2"></div>
             <div class="circle3"></div>

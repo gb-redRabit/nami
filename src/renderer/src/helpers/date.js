@@ -1,5 +1,5 @@
 export default function (next, language) {
-  const month = new Date().getMonth() + next ? 3 : 0
+  const month = new Date().getMonth() + (next ? 3 : 0)
   let season
   let yers = new Date().getFullYear()
   if (language !== 'pl') {

@@ -15,7 +15,9 @@ export default {
     const index = state.genresTab.findIndex((item) => item === task)
     state.genresTab.splice(index, 1)
   },
-  celeanGenres(state) {
+  celean(state) {
     state.genresTab = []
+    state.typeSelect = []
+    console.log('czysczenie', state.genresTab)
   }
 }

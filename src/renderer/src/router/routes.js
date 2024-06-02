@@ -14,7 +14,7 @@ export default [
       {
         path: 'edit',
         name: 'edit',
-        component: () => import('../components/bar/Option.vue')
+        component: () => import('../components/list/Option.vue')
       }
     ]
   },

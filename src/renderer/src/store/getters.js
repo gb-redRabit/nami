@@ -3,17 +3,25 @@ import season from '../helpers/date'
 export default {
   genres(state) {
     let tab = []
+    let tabActive = []
     state.fullList.forEach((item) => {
       tab = new Set([...tab, ...item.genres])
     })
-    return tab
+    tab.forEach((item) => {
+      tabActive.push({ title: item, isActive: false })
+    })
+    return tabActive
   },
   type(state) {
     let tab = []
+    let tabActive = []
     state.fullList.forEach((item) => {
       tab = new Set([...tab, item.series_type])
     })
-    return tab
+    tab.forEach((item) => {
+      tabActive.push({ title: item, isActive: false })
+    })
+    return tabActive
   },
   list(state) {
     return state.fullList

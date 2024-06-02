@@ -8,15 +8,16 @@
             <section class="p-1">
                 <h2 class=" text-lg font-medium py-2">Gatunki</h2>
                 <div class="flex flex-wrap gap-1">
-                    <Genres v-for="item in store.getters.genres" :item="item" />
+                    <Genres v-for="item in genres" :item="item" />
                 </div>
             </section>
 
             <section>
                 <h2 class=" text-lg font-medium py-2 ">Typy</h2>
-                <select class="bg-gray-500 p-2 w-[150px] rounded-lg" @change="selectType" :value="test">
+                <select class="bg-gray-500 p-2 w-[180px] rounded-lg" @change="selectType" :value="select">
+                    {{ console.log(type) }}
                     <option value=''>Wybierz opcje</option>
-                    <option v-for="(item, index) in $store.getters.type" :key="index" :value="item">{{ item }}
+                    <option v-for="(item, index) in type" :key="index" :value="item.title">{{ item.title }}
                     </option>
                 </select>
             </section>
@@ -30,13 +31,19 @@ import Genres from '../Genres.vue';
 import { useStore } from 'vuex'
 import { onMounted, ref } from 'vue'
 const store = useStore();
-const test = ref('');
-
+const select = ref('');
+const index = ref('');
 defineEmits(["toogle"])
-defineProps({
+const props = defineProps({
     toogleBar: {
         type: Boolean,
     },
+    genres: {
+        type: Object
+    },
+    type: {
+        type: Object
+    }
 })
 
 
@@ -44,8 +51,7 @@ const selectType = (e) => {
     store.dispatch("addType", e.target.value)
 }
 onMounted(() => {
-    test.value = store.state.typeSelect[store.state.typeSelect.length - 1]
-
+    select.value = store.state.typeSelect[store.state.typeSelect.length - 1]
 })
 
 </script>

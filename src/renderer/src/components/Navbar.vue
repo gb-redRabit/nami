@@ -9,15 +9,21 @@
                 <FaRegRectangleList class="text-2xl" />
             </RouterLink>
         </div>
-        <button @click="closeApp" class="flex flex-col items-center p-1 hover:animate-pulse">
-            <ClCloseCircle class="text-2xl" />
-        </button>
+        <div class="flex flex-col justify-center items-center gap-2">
+            <button class="flex flex-col items-center p-1 rounded-full hover:animate-pulse">
+                <AnOutlinedInfoCircle class="text-2xl" />
+            </button>
+            <button @click="closeApp" class="flex flex-col items-center p-1 rounded-full hover:animate-pulse">
+                <ClCloseCircle class="text-2xl" />
+            </button>
+        </div>
     </nav>
 </template>
 
 <script setup>
 import { AkHome } from "@kalimahapps/vue-icons";
 import { ClCloseCircle } from "@kalimahapps/vue-icons";
+import { AnOutlinedInfoCircle } from "@kalimahapps/vue-icons";
 import { FaRegRectangleList } from "@kalimahapps/vue-icons";
 
 import routes from '../router/routes'

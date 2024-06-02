@@ -1,7 +1,7 @@
 <template>
   <div class=" relative min-h-screen min-w-11/12 ">
-    <RouterView :toogleBar="toogleBar" @toogle="toogle" />
-    <div class="m-2 flex flex-col items-center justify-center  w-[calc(100%-10px)] "
+    <RouterView :toogleBar="toogleBar" @toogle="toogle" :genres="genres" :type="type" />
+    <div class="p-2 flex flex-col items-center justify-center  w-[calc(100%-10px)] "
       :class="{ 'ml-60 !w-[calc(100%-240px)]': toogleBar }">
       <div class="flex justify-between items-center w-11/12 py-3    my-6l">
         <div class="flex justify-center gap-2 px-5 py-1 bg-slate-700  rounded-full">
@@ -38,8 +38,15 @@
         v-if="store.getters.listEdit.length !== 0">
         <Card v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" :index="index" />
       </div>
-      <div class="flex flex-wrap justify-center mt-20" v-else>
-        <h1 class="text-8xl">Brak wyników wyszukiwania ;(</h1>
+      <div class="flex flex-col justify-center items-center mt-20  " v-else>
+        <img src="../assets//cat.png" alt="cat" class="grayscale w-96" />
+        <h1 class="flex justify-center items-center gap-2">Brak wyników wyszukiwania
+          <button @click="cleanSearch"
+            class="flex justify-center items-center gap-2 font-medium py-1 px-2 border bg-slate-700 text-white rounded-xl animate-pulse">
+            Wyczyść
+            <AkCircleXFill class=" text-xl" />
+          </button>
+        </h1>
       </div>
     </div>
   </div>
@@ -54,20 +61,32 @@ import { AnOutlinedSortDescending } from "@kalimahapps/vue-icons";
 import { CgSortAz } from "@kalimahapps/vue-icons";
 import { CgSortZa } from "@kalimahapps/vue-icons";
 
+import { AkCircleXFill } from "@kalimahapps/vue-icons";
 
 
 const toogleBar = ref(true)
 const store = useStore();
 const search = ref('');
+const genres = ref(store.getters.genres);
+const type = ref(store.getters.type);
 const set = ref(40);
+const index = ref('');
 let tab;
 
 const toogle = () => {
   toogleBar.value = !toogleBar.value
 }
 
-
-
+const cleanSearch = () => {
+  store.dispatch(`celean`);
+  search.value = ""
+  genres.value = store.getters.genres
+  genres.type = store.getters.type
+  searchList(store.state.genresTab, store.state.typeSelect);
+  watch([store.state.genresTab, store.state.typeSelect], async (currentValue, newValue) => {
+    searchList(store.state.genresTab, store.state.typeSelect);
+  })
+}
 const searchAnime = (e) => {
   search.value = e.target.value
   searchList(store.state.genresTab, store.state.typeSelect);
@@ -85,7 +104,8 @@ onMounted(() => {
 })
 
 
-watch([store.state.genresTab, store.state.typeSelect], (currentValue, newValue) => {
+watch([store.state.genresTab, store.state.typeSelect], async (currentValue, newValue) => {
+  console.log('asd');
   searchList(store.state.genresTab, store.state.typeSelect);
 })
 
@@ -96,13 +116,13 @@ const searchList = (tagi, typ) => {
   tab = store.getters.list.filter(value => value.title.toLowerCase().includes(search.value.toLowerCase()))
   if (tagi[0] !== undefined && typ != '') {
     tab = tab.filter(value => value.series_type === typ)
-    tab = tab.filter(value => tagi.every(r => value.genres.includes(r)))
+    tab = tab.filter(value => tagi.every(r => value.genres.includes(r.title)))
   }
   if (tagi[0] === undefined && typ != '') {
     tab = tab.filter(value => value.series_type === typ)
   }
   if (tagi[0] !== undefined && typ == '') {
-    tab = tab.filter(value => tagi.every(r => value.genres.includes(r)))
+    tab = tab.filter(value => tagi.every(r => value.genres.includes(r.title)))
   }
   if (tagi[0] === undefined && typ == '') {
     tab = tab

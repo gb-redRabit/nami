@@ -26,8 +26,12 @@
             </div>
         </RouterLink>
         <RouterLink v-if="toogleList" :to="{ path: `/list/${anime.slug}/${episode.anime_episode_number}` }"
-            class=" w-3/4 p-2 bg-gray-600 rounded-lg" v-for="(episode, index) in episodes" :key="index">
+            class=" w-3/4 p-2 bg-gray-600 rounded-lg flex justify-between" v-for="(episode, index) in episodes"
+            :key="index">
+            {{ console.log(episode) }}
             <p><span class=" font-medium">Odcinek</span> {{ episode.anime_episode_number }}</p>
+            <p> <span class=" font-medium">Dodany</span> {{ new Date(episode.created_at).toISOString().slice(0, 10) }}
+            </p>
         </RouterLink>
     </div>
 </template>

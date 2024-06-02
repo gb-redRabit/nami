@@ -1,18 +1,17 @@
 <template>
-  <div class=" flex flex-col " v-if="item && list">
+  <div class=" flex flex-col " v-if="item && list && description">
     <div class="flex lex-col justify-center items-center">
       <button :disabled="episode == 1"
         class="bg-black bg-opacity-40 text-white p-2 rounded-full cursor-pointer hover:text-red-600 flex"
-        :class="{ '!bg-slate-800 !cursor-auto hover:text-white': episode == 1 }"
+        :class="{ ' hidden': episode == 1 }"
         @click="$router.push({ name: `episode`, params: { id: idr, episode: Number(episode) - 1 } })">
         <FlFilledPreviousFrame class="size-8" />
       </button>
       <iframe :src="player(select)" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
         allow="clipboard-write" title="player" className="z-10 min-w-[1000px] h-[600px] m-2" />
-      <button :disabled="description.episodes == episode || list[list.length - 1].anime_episode_number == episode"
-        class="bg-black bg-opacity-40 text-white p-2 rounded-full cursor-pointer hover:text-red-600 flex" :class="{
-          '!bg-slate-800 !cursor-auto hover:text-white': description.episodes == episode || list[list.length - 1].anime_episode_number == episode
-        }" @click="$router.push({ name: `episode`, params: { id: idr, episode: Number(episode) + 1 } })">
+      <button class="bg-black bg-opacity-40 text-white p-2 rounded-full cursor-pointer hover:text-red-600 flex" :class="{
+        'hidden': description.episodes == episode || list[list.length - 1].anime_episode_number == episode
+      }" @click="$router.push({ name: `episode`, params: { id: idr, episode: Number(episode) + 1 } })">
         <FlFilledNextFrame class="size-8" />
       </button>
     </div>
