@@ -40,9 +40,11 @@
       </div>
       <div class="flex flex-col justify-center items-center mt-20  " v-else>
         <img src="../assets//cat.png" alt="cat" class="grayscale w-96" />
-        <h1 class="flex justify-center items-center gap-2">Brak wyników wyszukiwania
+        <h1 class="flex justify-center items-center gap-2 py-4 px-16 -mt-16 rounded-lg text-white bg-slate-700">Brak
+          wyników
+          wyszukiwania
           <button @click="cleanSearch"
-            class="flex justify-center items-center gap-2 font-medium py-1 px-2 border bg-slate-700 text-white rounded-xl animate-pulse">
+            class="flex justify-center items-center gap-2 font-medium py-1 px-2 border text-slate-700 bg-white rounded-xl animate-pulse">
             Wyczyść
             <AkCircleXFill class=" text-xl" />
           </button>
@@ -80,8 +82,8 @@ const toogle = () => {
 const cleanSearch = () => {
   store.dispatch(`celean`);
   search.value = ""
-  genres.value = store.getters.genres
-  genres.type = store.getters.type
+  genres.value = store.getters.genres;
+  genres.type = store.getters.type;
   searchList(store.state.genresTab, store.state.typeSelect);
   watch([store.state.genresTab, store.state.typeSelect], async (currentValue, newValue) => {
     searchList(store.state.genresTab, store.state.typeSelect);

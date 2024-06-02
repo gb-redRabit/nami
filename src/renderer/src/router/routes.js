@@ -19,6 +19,11 @@ export default [
     ]
   },
   {
+    path: '/',
+    name: 'new',
+    component: () => import('../pages/New.vue')
+  },
+  {
     path: '/list/:id',
     name: 'anime',
     component: () => import('../pages/Description.vue'),

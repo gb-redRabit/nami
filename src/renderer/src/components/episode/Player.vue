@@ -1,5 +1,8 @@
 <template>
-  <div class=" flex flex-col " v-if="item && list && description">
+  <div v-if="select === 'ERR_BAD_REQUEST'" class="flex">
+
+  </div>
+  <div class=" flex flex-col " v-else-if="item && list && description">
     <div class="flex lex-col justify-center items-center">
       <button :disabled="episode == 1"
         class="bg-black bg-opacity-40 text-white p-2 rounded-full cursor-pointer hover:text-red-600 flex"
@@ -8,15 +11,18 @@
         <FlFilledPreviousFrame class="size-8" />
       </button>
       <iframe :src="player(select)" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
-        allow="clipboard-write" title="player" className="z-10 min-w-[1000px] h-[600px] m-2" />
-      <button class="bg-black bg-opacity-40 text-white p-2 rounded-full cursor-pointer hover:text-red-600 flex" :class="{
-        'hidden': description.episodes == episode || list[list.length - 1].anime_episode_number == episode
-      }" @click="$router.push({ name: `episode`, params: { id: idr, episode: Number(episode) + 1 } })">
+        allow="clipboard-write" title="player" class="z-10 min-w-[1000px] h-[600px] m-2"
+        :class="{ ' invert': typHost === 'vk' }" />
+      <button class="bg-black bg-opacity-40 text-white p-2 rounded-full cursor-pointer hover:text-red-600 flex invert"
+        :class="{
+          'hidden': description.episodes == episode || list[list.length - 1].anime_episode_number == episode
+        }" @click="$router.push({ name: `episode`, params: { id: idr, episode: Number(episode) + 1 } })">
         <FlFilledNextFrame class="size-8" />
       </button>
     </div>
     <Hosting :item="item" :select="select" @selectPlayer="selectPlayer" />
   </div>
+
   <Loader v-else />
 </template>
 
@@ -39,12 +45,14 @@ const props = defineProps({
 })
 
 const select = ref(0)
+const typHost = ref('')
 const item = ref({ cda: [], vk: [], dailymotion: [], other: [], mega: [], google: [] });
 const description = ref('');
 const list = ref();
 
-const selectPlayer = (id) => {
+const selectPlayer = (id, typ) => {
   select.value = id
+  typ ? typHost.value = typ : '';
 }
 
 
@@ -92,15 +100,18 @@ const player = (number) => {
 }
 
 window.electron.ipcRenderer.on('sendApiSix', (__, data) => {
-  sortPlayer(data)
-  select.value = data[0].id
-  window.electron.ipcRenderer.send('getApiSeven', `https://api.docchi.pl/v1/series/find/${props.idr}`);
+  if (data === 'ERR_BAD_REQUEST') {
+    select.value = data
+  }
+  else {
+    sortPlayer(data)
+    select.value = data[0].id
+  }
 })
 
 
 window.electron.ipcRenderer.on('sendApiSeven', (__, data) => {
   description.value = data
-
 })
 
 window.electron.ipcRenderer.on('sendApiFive', (__, data) => {
@@ -111,6 +122,7 @@ window.electron.ipcRenderer.on('sendApiFive', (__, data) => {
 })
 
 onMounted(async () => {
+  window.electron.ipcRenderer.send('getApiSeven', `https://api.docchi.pl/v1/series/find/${props.idr}`);
   window.electron.ipcRenderer.send('getApiSix', `https://api.docchi.pl/v1/episodes/find/${props.idr}/${props.episode}`);
   window.electron.ipcRenderer.send('getApiFive', `https://api.docchi.pl/v1/episodes/count/${props.idr}`);
 })

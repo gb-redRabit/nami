@@ -15,18 +15,25 @@
           <div class="bg-slate-700 rounded-lg p-2 " v-for="item in anime.genres" :key="item">{{ item }}</div>
         </div>
         <Related :mal="mal.relations" />
-        <div class="flex justify-end mt-10 mx-6  gap-2" v-if="anime.episodes > 1">
-          <div class="bg-gray-600 flex rounded-lg gap-2 p-2">
-            <CgMenuGridR class=" size-8  cursor-pointer" :class="{ 'text-red-600 cursor-default': toogleBar }"
-              @click="toogleB" />
-            <HeOutlineUiMenuGrid class=" size-8  cursor-pointer" :class="{ 'text-red-600 cursor-default': toogleMenu }"
-              @click="toogleM" />
-            <CaMenu class=" size-8  cursor-pointer" :class="{ 'text-red-600 cursor-default': toogleList }"
-              @click="toogleL" />
-          </div>
+        <div v-if="episodes === 'ERR_BAD_REQUEST' || episodes == null"
+          class="flex flex-col justify-center items-center  mt-10">
+          <img src="../assets/cat.png" alt="cat" class="grayscale w-44 ">
+          <h2 class="text-2xl text-center bg-slate-700  rounded-lg  py-2 px-10 -mt-9">Brak odcinków</h2>
         </div>
-        <ListEpisodes v-if="anime.episodes > 1" :toogleList="toogleList" :toogleMenu="toogleMenu" :toogleBar="toogleBar"
-          :episodes="episodes" :anime="anime" />
+        <template v-else>
+          <div class="flex justify-end mt-10 mx-6  gap-2" v-if="anime.episodes > 1 && episodes !== 'ERR_BAD_REQUEST'">
+            <div class="bg-gray-600 flex rounded-lg gap-2 p-2">
+              <CgMenuGridR class=" size-8  cursor-pointer" :class="{ 'text-red-600 cursor-default': toogleBar }"
+                @click="toogleB" />
+              <HeOutlineUiMenuGrid class=" size-8  cursor-pointer"
+                :class="{ 'text-red-600 cursor-default': toogleMenu }" @click="toogleM" />
+              <CaMenu class=" size-8  cursor-pointer" :class="{ 'text-red-600 cursor-default': toogleList }"
+                @click="toogleL" />
+            </div>
+          </div>
+          <ListEpisodes v-if="anime.episodes > 1 && episodes !== 'ERR_BAD_REQUEST'" :toogleList="toogleList"
+            :toogleMenu="toogleMenu" :toogleBar="toogleBar" :episodes="episodes" :anime="anime" />
+        </template>
         <RouterView v-slot="{ Component }" :key="$route.path" :anime="anime">
           <Component :is="Component" />
         </RouterView>
@@ -100,10 +107,14 @@ window.electron.ipcRenderer.on('sendApiThree', (__, data) => {
 })
 
 window.electron.ipcRenderer.on('sendApiFive', (__, data) => {
-  episodes.value = data.sort((a, b) => a.anime_episode_number - b.anime_episode_number)
-  const ids = episodes.value.map(({ anime_episode_number }) => anime_episode_number);
-  episodes.value = episodes.value.filter(({ anime_episode_number }, index) =>
-    !ids.includes(anime_episode_number, index + 1));
+  if (data !== 'ERR_BAD_REQUEST') {
+    episodes.value = data.sort((a, b) => a.anime_episode_number - b.anime_episode_number)
+    const ids = episodes.value.map(({ anime_episode_number }) => anime_episode_number);
+    episodes.value = episodes.value.filter(({ anime_episode_number }, index) =>
+      !ids.includes(anime_episode_number, index + 1));
+  } else {
+    episodes.value = data
+  }
 })
 
 onMounted(() => {

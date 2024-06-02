@@ -5,6 +5,7 @@
             <span>{{ date(false, 'pl').season }}</span>
             <span> {{ date(false, 'pl').yers }}</span>
         </h1>
+
     </div>
 </template>
 

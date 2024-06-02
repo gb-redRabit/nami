@@ -18,6 +18,5 @@ export default {
   celean(state) {
     state.genresTab = []
     state.typeSelect = []
-    console.log('czysczenie', state.genresTab)
   }
 }

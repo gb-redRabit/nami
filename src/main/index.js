@@ -90,7 +90,8 @@ app.whenReady().then(() => {
         event.reply('sendApiFive', response.data)
       })
       .catch(function (error) {
-        console.log('error getApiFive')
+        console.log('error getApiFive', error.code)
+        event.reply('sendApiFive', error.code)
       })
   })
 
@@ -101,7 +102,8 @@ app.whenReady().then(() => {
         event.reply('sendApiSix', response.data)
       })
       .catch(function (error) {
-        console.log('error getApiSix')
+        console.log('error getApiSix', error.code)
+        event.reply('sendApiSix', error.code)
       })
   })
 
