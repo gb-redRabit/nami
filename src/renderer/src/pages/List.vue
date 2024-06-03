@@ -55,16 +55,12 @@
 </template>
 
 <script setup>
+import { AnOutlinedSortAscending, AnOutlinedSortDescending, CgSortAz, CgSortZa, AkCircleXFill } from "@kalimahapps/vue-icons";
+
+import Card from '../components/list/Card.vue'
+
 import { useStore } from 'vuex'
 import { onMounted, ref, watch } from 'vue'
-import Card from '../components/list/Card.vue'
-import { AnOutlinedSortAscending } from "@kalimahapps/vue-icons";
-import { AnOutlinedSortDescending } from "@kalimahapps/vue-icons";
-import { CgSortAz } from "@kalimahapps/vue-icons";
-import { CgSortZa } from "@kalimahapps/vue-icons";
-
-import { AkCircleXFill } from "@kalimahapps/vue-icons";
-
 
 const toogleBar = ref(true)
 const store = useStore();

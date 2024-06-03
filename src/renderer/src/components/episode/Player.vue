@@ -11,12 +11,11 @@
         <FlFilledPreviousFrame class="size-8" />
       </button>
       <iframe :src="player(select)" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
-        allow="clipboard-write" title="player" class="z-10 min-w-[1000px] h-[600px] m-2"
+        allow="clipboard-write" title="player" class="z-10 min-w-[1000px] h-[600px] m-2 bg-black"
         :class="{ ' invert': typHost === 'vk' }" />
-      <button class="bg-black bg-opacity-40 text-white p-2 rounded-full cursor-pointer hover:text-red-600 flex invert"
-        :class="{
-          'hidden': description.episodes == episode || list[list.length - 1].anime_episode_number == episode
-        }" @click="$router.push({ name: `episode`, params: { id: idr, episode: Number(episode) + 1 } })">
+      <button class="bg-black bg-opacity-40 text-white p-2 rounded-full cursor-pointer hover:text-red-600 flex" :class="{
+        'hidden': description.episodes == episode || list[list.length - 1].anime_episode_number == episode
+      }" @click="$router.push({ name: `episode`, params: { id: idr, episode: Number(episode) + 1 } })">
         <FlFilledNextFrame class="size-8" />
       </button>
     </div>
@@ -27,13 +26,12 @@
 </template>
 
 <script setup>
-import { FlFilledPreviousFrame } from "@kalimahapps/vue-icons";
-import { FlFilledNextFrame } from "@kalimahapps/vue-icons";
+import { FlFilledPreviousFrame, FlFilledNextFrame } from "@kalimahapps/vue-icons";
 
 import Hosting from "./Hosting.vue";
+import Loader from "../Loader.vue";
 
 import { onMounted, ref } from 'vue'
-import Loader from "../Loader.vue";
 
 const props = defineProps({
   idr: {

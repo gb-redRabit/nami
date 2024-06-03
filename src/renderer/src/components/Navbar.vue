@@ -24,11 +24,7 @@
 </template>
 
 <script setup>
-import { AkHome } from "@kalimahapps/vue-icons";
-import { ClCloseCircle } from "@kalimahapps/vue-icons";
-import { AnOutlinedInfoCircle } from "@kalimahapps/vue-icons";
-import { FaRegRectangleList } from "@kalimahapps/vue-icons";
-import { FaFireFlameCurved } from "@kalimahapps/vue-icons";
+import { ClCloseCircle, AnOutlinedInfoCircle, FaRegRectangleList, FaFireFlameCurved, AkHome } from "@kalimahapps/vue-icons";
 
 import routes from '../router/routes'
 //https://vue-icons.kalimah-apps.com/?ref=madewithvuejs.com

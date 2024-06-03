@@ -28,8 +28,9 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
+
 const related = ref([]);
-const relatedTab = ref([]);
+
 const props = defineProps({
     mal: { type: Object, },
 })
@@ -43,7 +44,6 @@ onMounted(() => {
         }
     })
 })
-
 
 window.electron.ipcRenderer.on('sendApiFour', (__, data) => {
     if (data[0] != undefined) {

@@ -20,6 +20,7 @@
 
 <script setup>
 import { ClCloseCircle } from "@kalimahapps/vue-icons";
+
 import Player from '../components/episode/Player.vue';
 
 defineProps({

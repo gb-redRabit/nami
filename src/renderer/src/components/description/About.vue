@@ -11,6 +11,8 @@
         </div>
         <h2 class="font-medium py-2">Informacje</h2>
         <div class="flex flex-col bg-slate-700 rounded-lg gap-2 p-2">
+            <p class="flex flex-col"><span class="font-medium">Status</span><span class="font-extralight">{{
+                mal.airing ? 'Wychodzi' : 'Zakończony' }}</span></p>
             <p class="flex flex-col"><span class="font-medium">Sezon</span><span
                     class="flex items-center gap-2 font-extralight">
                     <IconSeason :season="anime.season" />

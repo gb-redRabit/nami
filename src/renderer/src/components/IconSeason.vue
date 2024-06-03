@@ -8,11 +8,7 @@
 </template>
 
 <script setup>
-import { FlFilledLeafTwo } from "@kalimahapps/vue-icons";
-import { FaRegSnowflake } from "@kalimahapps/vue-icons";
-import { AnFilledSun } from "@kalimahapps/vue-icons";
-import { FlFilledUmbrella } from "@kalimahapps/vue-icons";
-
+import { FlFilledLeafTwo, FaRegSnowflake, AnFilledSun, FlFilledUmbrella } from "@kalimahapps/vue-icons";
 
 const props = defineProps({
     season: { type: String, },

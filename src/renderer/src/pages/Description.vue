@@ -7,11 +7,11 @@
     <div class="flex gap-9  w-9/12 h-full my-24 text-white">
       <About :mal="mal" :anime="anime" />
       <div class="flex flex-col  w-3/4 gap-2">
-        <h1 class="text-4xl mt-7 ">{{ anime.title }}</h1>
+        <h1 class="text-4xl ">{{ anime.title }}</h1>
         <h2 class="text-2xl ">{{ anime.title_en }}</h2>
         <h2 class="text-2xl font-bold mt-10 ">Opis</h2>
         <p class=" text-justify w-3/5 ">{{ anime.description }}</p>
-        <div class="flex  gap-2 mt-10">
+        <div class="flex  gap-2 my-10">
           <div class="bg-slate-700 rounded-lg p-2 " v-for="item in anime.genres" :key="item">{{ item }}</div>
         </div>
         <Related :mal="mal.relations" />
@@ -46,26 +46,22 @@
 
 <script setup>
 
-import { CaMenu } from "@kalimahapps/vue-icons";
-import { CgMenuGridR } from "@kalimahapps/vue-icons";
-import { HeOutlineUiMenuGrid } from "@kalimahapps/vue-icons";
-
-import { onMounted, ref } from 'vue'
+import { CaMenu, CgMenuGridR, HeOutlineUiMenuGrid } from "@kalimahapps/vue-icons";
 
 import Related from '../components/description/Related.vue'
 import Loader from '../components/Loader.vue';
 import ListEpisodes from "../components/description/ListEpisodes.vue";
 import About from "../components/description/About.vue";
 
-
+import { onMounted, ref } from 'vue'
 
 const toogleBar = ref(true)
 const toogleMenu = ref(false)
 const toogleList = ref(false)
 const anime = ref(null);
 const mal = ref(null);
-
 const episodes = ref(null);
+
 const { id } = defineProps({
   id: {
     type: String,

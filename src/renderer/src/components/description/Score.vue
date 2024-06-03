@@ -11,12 +11,9 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { CaStarHalf, CaStarFilled } from "@kalimahapps/vue-icons";
 
-    ;
-import { CaStarHalf } from "@kalimahapps/vue-icons";
-import { CaStarFilled } from "@kalimahapps/vue-icons";
-
+import { onMounted, ref } from 'vue';
 
 const score = ref([]);
 
