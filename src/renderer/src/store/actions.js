@@ -2,6 +2,12 @@ export default {
   getFull({ commit }, task) {
     commit('getFull', task)
   },
+  listNewSeson({ commit }, task) {
+    commit('listNewSeson', task)
+  },
+  listNew({ commit }, task) {
+    commit('listNew', task)
+  },
   listEdit({ commit }, task) {
     commit('listEdit', task)
   },

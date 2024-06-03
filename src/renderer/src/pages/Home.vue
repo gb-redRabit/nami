@@ -12,7 +12,6 @@
         </div>
         <CarouselSlide :data="store.getters.nextList" :p="false" :n="false" :numbering="false" :itemsShow="10"
             :autoplay="0" />
-        <img src="https://i.ibb.co/pnRS9Dt/Tights-subs-Kono-Koi-ni-Kizuite-The-Animation-001-6998.png" alt="">
     </div>
 </template>
 

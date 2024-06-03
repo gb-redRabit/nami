@@ -69,7 +69,6 @@ const genres = ref(store.getters.genres);
 const type = ref(store.getters.type);
 const set = ref(40);
 const index = ref('');
-let tab;
 
 const toogle = () => {
   toogleBar.value = !toogleBar.value
@@ -108,24 +107,19 @@ watch([store.state.genresTab, store.state.typeSelect], async (currentValue, newV
 })
 
 
-
 const searchList = (tagi, typ) => {
-  typ = typ[store.state.typeSelect.length - 1] === undefined ? "" : typ[store.state.typeSelect.length - 1];
-  tab = store.getters.list.filter(value => value.title.toLowerCase().includes(search.value.toLowerCase()))
-  if (tagi[0] !== undefined && typ != '') {
-    tab = tab.filter(value => value.series_type === typ)
-    tab = tab.filter(value => tagi.every(r => value.genres.includes(r.title)))
-  }
-  if (tagi[0] === undefined && typ != '') {
-    tab = tab.filter(value => value.series_type === typ)
-  }
-  if (tagi[0] !== undefined && typ == '') {
-    tab = tab.filter(value => tagi.every(r => value.genres.includes(r.title)))
-  }
-  if (tagi[0] === undefined && typ == '') {
-    tab = tab
+  typ = typ[store.state.typeSelect.length - 1] || "";
+  let tab = store.getters.list.filter(value => value.title.toLowerCase().includes(search.value.toLowerCase()));
+
+  if (tagi[0] !== undefined && typ !== "") {
+    tab = tab.filter(value => value.series_type === typ);
+    tab = tab.filter(value => tagi.every(r => value.genres.includes(r.title)));
+  } else if (tagi[0] === undefined && typ !== "") {
+    tab = tab.filter(value => value.series_type === typ);
+  } else if (tagi[0] !== undefined && typ === "") {
+    tab = tab.filter(value => tagi.every(r => value.genres.includes(r.title)));
   }
 
-  store.dispatch("listEdit", tab)
-}
+  store.dispatch("listEdit", tab);
+};
 </script>

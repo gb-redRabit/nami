@@ -2,6 +2,12 @@ export default {
   getFull(state, task) {
     state.fullList = task
   },
+  listNewSeson(state, task) {
+    state.listNewSeson = task
+  },
+  listNew(state, task) {
+    state.listNew = task
+  },
   listEdit(state, task) {
     state.fullEdit = task
   },

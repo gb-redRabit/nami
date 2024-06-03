@@ -129,6 +129,26 @@ app.whenReady().then(() => {
         console.log('error getApiEight')
       })
   })
+  ipcMain.on('getApiNewSeson', async (event, data) => {
+    axios
+      .get(data)
+      .then(function (response) {
+        event.reply('sendApiNewSeson', response.data)
+      })
+      .catch(function (error) {
+        console.log('error getApiNewSeson')
+      })
+  })
+  ipcMain.on('getApiNew', async (event, data) => {
+    axios
+      .get(data)
+      .then(function (response) {
+        event.reply('sendApiNew', response.data)
+      })
+      .catch(function (error) {
+        console.log('error getApiNew')
+      })
+  })
   createWindow()
 
   app.on('activate', function () {

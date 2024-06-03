@@ -56,46 +56,54 @@ const selectPlayer = (id, typ) => {
 
 const sortPlayer = (items) => {
   items.forEach((value) => {
-    switch (value.player_hosting) {
-      case 'cda': item.value.cda.push(value); break;
-      case 'CDA': item.value.cda.push(value); break;
-      case 'vk': item.value.vk.push(value); break;
-      case 'VK': item.value.vk.push(value); break;
-      case "dailymotion": item.value.dailymotion.push(value); break;
-      case "DAILYMOTION": item.value.dailymotion.push(value); break;
-      case "google": item.value.google.push(value); break;
-      case "GOOGLE": item.value.google.push(value); break;
-      case "gdrive": item.value.google.push(value); break;
-      case "mega": item.value.mega.push(value); break;
-      case "MEGA": item.value.mega.push(value); break;
-      default: item.value.other.push(value); break;
+    switch (value.player_hosting.toLowerCase()) {
+      case 'cda':
+      case 'vk':
+      case 'dailymotion':
+      case 'google':
+      case 'gdrive':
+      case 'mega':
+        item.value[value.player_hosting].push(value);
+        break;
+      default:
+        item.value.other.push(value);
+        break;
     }
-  })
-}
+  });
+};
 
 
 const player = (number) => {
-  let src;
-  let tab = item.value.cda.concat(item.value.vk).concat(item.value.dailymotion).concat(item.value.other).concat(item.value.google).concat(item.value.mega)
-  tab.forEach((value) => {
-    if (value.id === number) {
-      const lastIndex = value.player.lastIndexOf("/");
-      const lenghtPlayer = value.player.length;
-      if (value.player_hosting.toUpperCase() === "CDA") {
-        src = `https://ebd.cda.pl/620x368/${value.player.slice(
-          lastIndex + 1,
-          lenghtPlayer
-        )}`;
-      } else if (value.player_hosting.toLowerCase() === "mp4upload") {
-        src = value.player.slice(0, lenghtPlayer - 5);
-      }
-      else {
-        src = value.player;
-      }
+  const tab = [
+    ...item.value.cda,
+    ...item.value.vk,
+    ...item.value.dailymotion,
+    ...item.value.other,
+    ...item.value.google,
+    ...item.value.mega,
+  ];
+  const foundValue = tab.find((value) => value.id === number);
+
+  if (foundValue) {
+    const lastIndex = foundValue.player.lastIndexOf("/");
+    const lengthPlayer = foundValue.player.length;
+
+    if (foundValue.player_hosting.toUpperCase() === "CDA") {
+      return `https://ebd.cda.pl/620x368/${foundValue.player.slice(
+        lastIndex + 1,
+        lengthPlayer
+      )}`;
+    } else if (foundValue.player_hosting.toLowerCase() === "mp4upload") {
+      return foundValue.player.slice(0, lengthPlayer - 5);
+    } else {
+      return foundValue.player;
     }
-  })
-  return src
-}
+  }
+
+  // Obsługa przypadku, gdy numer nie został znaleziony
+  return "Brak dostępnego źródła wideo";
+};
+
 
 window.electron.ipcRenderer.on('sendApiSix', (__, data) => {
   if (data === 'ERR_BAD_REQUEST') {
@@ -113,11 +121,11 @@ window.electron.ipcRenderer.on('sendApiSeven', (__, data) => {
 })
 
 window.electron.ipcRenderer.on('sendApiFive', (__, data) => {
-  list.value = data.sort((a, b) => a.anime_episode_number - b.anime_episode_number)
-  const ids = list.value.map(({ anime_episode_number }) => anime_episode_number);
-  list.value = list.value.filter(({ anime_episode_number }, index) =>
-    !ids.includes(anime_episode_number, index + 1));
-})
+  const sortedData = [...data].sort((a, b) => a.anime_episode_number - b.anime_episode_number);
+  const uniqueIds = new Set(sortedData.map(({ anime_episode_number }) => anime_episode_number));
+  list.value = sortedData.filter(({ anime_episode_number }) => uniqueIds.has(anime_episode_number));
+});
+
 
 onMounted(async () => {
   window.electron.ipcRenderer.send('getApiSeven', `https://api.docchi.pl/v1/series/find/${props.idr}`);

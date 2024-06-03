@@ -1,7 +1,7 @@
 <template>
     <div class="flex items-center justify-between  p-2 bg-slate-700 rounded-lg" v-if="mal.score">
         <div class="flex ">
-            <div v-for="(index, i) in score[0]">
+            <div v-for="i in score[0]">
                 <CaStarFilled />
             </div>
             <CaStarHalf v-if="score[1]" />

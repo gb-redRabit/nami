@@ -12,7 +12,7 @@ import { ref, onMounted } from 'vue'
 const store = useStore();
 const index = ref();
 
-const props = defineProps({
+const { item } = defineProps({
     item: {
         type: Object,
 
@@ -20,12 +20,8 @@ const props = defineProps({
 })
 
 onMounted(() => {
-    index.value = store.state.genresTab.findIndex(item => item.title === props.item.title)
-    if (index.value < 0) {
-        props.item.isActive = false
-    }
-    if (index.value >= 0)
-        props.item.isActive = true
+    index.value = store.state.genresTab.findIndex(value => value.title === item.title)
+    item.isActive = index.value >= 0;
 })
 
 const clickGenre = (value) => {

@@ -5,7 +5,7 @@
             <RouterLink
                 :to="item.episodes > 1 || item.episodes == null ? { path: `/list/${item.slug}` } : { path: `/list/${item.slug}/1` }"
                 class=" group h-[370px] w-[250px] relative rounded-lg bg-red-400" :key="item.mal_id"
-                :class="{ 'h-[210px] w-[155px]': itemsShow >= 9, 'h-[310px] w-[200px]': itemsShow > 7 && itemsShow < 9 }">
+                :class="{ 'h-[200px] w-[150px]': itemsShow >= 9, 'h-[310px] w-[200px]': itemsShow > 7 && itemsShow < 9 }">
                 <img :src="item.images ? item.images.jpg.large_image_url : item.cover"
                     class="h-full w-full absolute  group-hover:blur-[1px] rounded-lg" alt="cover">
                 <div

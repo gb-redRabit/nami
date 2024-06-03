@@ -2,7 +2,7 @@ import season from '../helpers/date'
 
 export default {
   genres(state) {
-    let tab = []
+    let tab = new Set()
     let tabActive = []
     state.fullList.forEach((item) => {
       tab = new Set([...tab, ...item.genres])
@@ -10,10 +10,11 @@ export default {
     tab.forEach((item) => {
       tabActive.push({ title: item, isActive: false })
     })
+
     return tabActive
   },
   type(state) {
-    let tab = []
+    let tab = new Set()
     let tabActive = []
     state.fullList.forEach((item) => {
       tab = new Set([...tab, item.series_type])
@@ -24,10 +25,24 @@ export default {
     return tabActive
   },
   list(state) {
+    state.fullList.forEach((value) => {
+      const matchingItem = state.listNewSeson.find((item) => item.title === value.title)
+      value.newEpisode = !!matchingItem
+    })
     return state.fullList
   },
   listEdit(state) {
+    state.fullList.forEach((value) => {
+      const matchingItem = state.listNewSeson.find((item) => item.title === value.title)
+      value.newEpisode = !!matchingItem
+    })
     return state.fullEdit
+  },
+  listNewSeson(state) {
+    return state.listNewSeson
+  },
+  listNew(state) {
+    return state.listNew
   },
   listTop(state) {
     state.fullList.forEach((value) => {

@@ -17,7 +17,7 @@
 <script setup>
 import { ClCloseCircle } from "@kalimahapps/vue-icons";
 
-const props = defineProps({
+defineProps({
     id: {
         type: String,
     },

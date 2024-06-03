@@ -47,7 +47,7 @@ import traslate from "../../helpers/traslate"
 import Score from './Score.vue';
 import IconSeason from '../IconSeason.vue'
 
-const props = defineProps({
+defineProps({
     mal: { type: Object, },
     anime: { type: Object, },
 })

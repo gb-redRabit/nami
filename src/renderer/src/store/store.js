@@ -10,7 +10,9 @@ export default createStore({
     listTop: [],
     listSezon: [],
     genresTab: [],
-    typeSelect: []
+    typeSelect: [],
+    listNewSeson: [],
+    listNew: []
   },
   getters,
   mutations,

@@ -31,22 +31,26 @@ import { onMounted, ref } from 'vue'
 
 const related = ref([]);
 
-const props = defineProps({
+const { mal } = defineProps({
     mal: { type: Object, },
 })
 
 onMounted(() => {
-    props.mal.forEach((value) => {
-        if (value.relation !== "Adaptation" && value.relation !== "Other") {
-            value.entry.forEach((link) => {
-                window.electron.ipcRenderer.send('getApiFour', [`https://api.docchi.pl/v1/series/related/${link.mal_id}`, value.relation]);
-            })
-        }
-    })
-})
+    if (Array.isArray(mal)) {
+        mal.forEach((value) => {
+            if (value.relation !== "Adaptation" && value.relation !== "Other") {
+                if (Array.isArray(value.entry)) {
+                    value.entry.forEach((link) => {
+                        window.electron.ipcRenderer.send('getApiFour', [`https://api.docchi.pl/v1/series/related/${link.mal_id}`, value.relation]);
+                    });
+                }
+            }
+        });
+    }
+});
 
 window.electron.ipcRenderer.on('sendApiFour', (__, data) => {
-    if (data[0] != undefined) {
+    if (data[0] !== undefined) {
         related.value.push(data)
     }
 })

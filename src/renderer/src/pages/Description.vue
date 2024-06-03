@@ -39,7 +39,6 @@
         </RouterView>
       </div>
     </div>
-
   </div>
   <Loader v-else></Loader>
 </template>
@@ -104,12 +103,13 @@ window.electron.ipcRenderer.on('sendApiThree', (__, data) => {
 
 window.electron.ipcRenderer.on('sendApiFive', (__, data) => {
   if (data !== 'ERR_BAD_REQUEST') {
-    episodes.value = data.sort((a, b) => a.anime_episode_number - b.anime_episode_number)
-    const ids = episodes.value.map(({ anime_episode_number }) => anime_episode_number);
-    episodes.value = episodes.value.filter(({ anime_episode_number }, index) =>
-      !ids.includes(anime_episode_number, index + 1));
-  } else {
     episodes.value = data
+      .sort((a, b) => a.anime_episode_number - b.anime_episode_number)
+      .filter(({ anime_episode_number }, index, arr) =>
+        index === arr.findIndex(item => item.anime_episode_number === anime_episode_number)
+      );
+  } else {
+    episodes.value = data;
   }
 })
 
