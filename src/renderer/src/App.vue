@@ -29,7 +29,6 @@ window.electron.ipcRenderer.on('sendApiOne', (__, data) => {
 })
 
 window.electron.ipcRenderer.on('sendApiEight', (__, data) => {
-
   const top = data.sort(
     (a, b) => b.score - a.score
   )

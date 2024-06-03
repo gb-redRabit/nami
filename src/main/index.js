@@ -42,112 +42,91 @@ app.whenReady().then(() => {
   })
 
   ipcMain.on('getApiOne', async (event, data) => {
-    axios
-      .get(data)
-      .then(function (response) {
-        event.reply('sendApiOne', response.data)
-      })
-      .catch(function (error) {
-        console.log('error getApiOne')
-      })
+    try {
+      const response = await axios.get(data)
+      event.reply('sendApiOne', response.data)
+    } catch (error) {
+      console.error('Error in getApiOne:', error.message)
+    }
   })
   ipcMain.on('getApiTwo', async (event, data) => {
-    axios
-      .get(data)
-      .then(function (response) {
-        event.reply('sendApiTwo', response.data)
-      })
-      .catch(function (error) {
-        console.log('error getApiTwo')
-      })
+    try {
+      const response = await axios.get(data)
+      event.reply('sendApiTwo', response.data)
+    } catch (error) {
+      console.error('Error in getApiOne:', error.message)
+    }
   })
-
   ipcMain.on('getApiThree', async (event, data) => {
-    axios
-      .get(data)
-      .then(function (response) {
-        event.reply('sendApiThree', response.data)
-      })
-      .catch(function (error) {
-        console.log('error getApiThree')
-      })
+    try {
+      const response = await axios.get(data)
+      event.reply('sendApiThree', response.data)
+    } catch (error) {
+      console.error('Error in getApiOne:', error.message)
+    }
   })
-
   ipcMain.on('getApiFour', async (event, data) => {
-    axios
-      .get(data[0])
-      .then(function (response) {
-        event.reply('sendApiFour', [response.data[0], data[1]])
-      })
-      .catch(function (error) {
-        console.log('error sendApiFour')
-      })
+    try {
+      const response = await axios.get(data[0])
+      event.reply('sendApiFour', [response.data[0], data[1]])
+    } catch (error) {
+      console.error('Error while fetching data:', error.message)
+    }
   })
 
   ipcMain.on('getApiFive', async (event, data) => {
-    axios
-      .get(data)
-      .then(function (response) {
-        event.reply('sendApiFive', response.data)
-      })
-      .catch(function (error) {
-        console.log('error getApiFive', error.code)
-        event.reply('sendApiFive', error.code)
-      })
+    try {
+      const response = await axios.get(data)
+      event.reply('sendApiFive', response.data)
+    } catch (error) {
+      console.error('Error while fetching data:', error.message)
+    }
   })
 
   ipcMain.on('getApiSix', async (event, data) => {
-    axios
-      .get(data)
-      .then(function (response) {
-        event.reply('sendApiSix', response.data)
-      })
-      .catch(function (error) {
-        console.log('error getApiSix', error.code)
-        event.reply('sendApiSix', error.code)
-      })
+    try {
+      const response = await axios.get(data)
+      event.reply('sendApiSix', response.data)
+    } catch (error) {
+      console.error('Error while fetching data:', error.message)
+    }
   })
 
   ipcMain.on('getApiSeven', async (event, data) => {
-    axios
-      .get(data)
-      .then(function (response) {
-        event.reply('sendApiSeven', response.data)
-      })
-      .catch(function (error) {
-        console.log('error getApiSeven')
-      })
+    try {
+      const response = await axios.get(data)
+      event.reply('sendApiSeven', response.data)
+    } catch (error) {
+      console.error('Error while fetching data:', error.message)
+    }
   })
 
   ipcMain.on('getApiEight', async (event, data) => {
-    axios
-      .get(data)
-      .then(function (response) {
-        event.reply('sendApiEight', response.data.data)
-      })
-      .catch(function (error) {
-        console.log('error getApiEight')
-      })
+    try {
+      const response = await axios.get(data)
+      event.reply('sendApiEight', response.data.data)
+    } catch (error) {
+      console.error('Error while fetching data:', error.message)
+    }
   })
+
+  // pobranie nowych odcinków z tego sezonu
   ipcMain.on('getApiNewSeson', async (event, data) => {
-    axios
-      .get(data)
-      .then(function (response) {
-        event.reply('sendApiNewSeson', response.data)
-      })
-      .catch(function (error) {
-        console.log('error getApiNewSeson')
-      })
+    try {
+      const response = await axios.get(data)
+      event.reply('sendApiNewSeson', response.data)
+    } catch (error) {
+      console.error('Error while fetching data:', error.message)
+    }
   })
+  // pobranie nowych odcinków z poprzednich sezonów
   ipcMain.on('getApiNew', async (event, data) => {
-    axios
-      .get(data)
-      .then(function (response) {
-        event.reply('sendApiNew', response.data)
-      })
-      .catch(function (error) {
-        console.log('error getApiNew')
-      })
+    try {
+      const response = await axios.get(data)
+      event.reply('sendApiNew', response.data)
+    } catch (error) {
+      console.error('Error while fetching data:', error.message)
+    }
   })
   createWindow()
 
