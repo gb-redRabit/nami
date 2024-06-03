@@ -1,7 +1,8 @@
 <template>
     <div class="flex flex-col gap-2 w-1/4 ">
         <Score :mal="mal" />
-        <img class=" w-full h-[520px] rounded-lg" :src="anime.cover" alt="cover">
+        <img class=" w-full h-[520px] rounded-lg"
+            :src="mal.images.jpg.large_image_url ? mal.images.jpg.large_image_url : anime.cover" alt="cover">
         <div class="flex w-full" v-if="mal.trailer.embed_url">
             <button @click="$router.push({ name: `aaaa`, params: { id: anime.slug, yt: mal.trailer.embed_url } })"
                 class="flex justify-center items-center gap-2 w-full bg-slate-700 rounded-lg">

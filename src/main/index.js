@@ -11,6 +11,8 @@ function createWindow() {
     width: 900,
     height: 670,
     show: false,
+    // https://www.youtube.com/watch?v=jzmen0gYQrM
+    //  zrobić własna ramke z przesuwaniem
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {

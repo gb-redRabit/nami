@@ -2,7 +2,7 @@
   <div class=" flex flex-col  items-center justify-center z-10 relative min-h-screen w-full" v-if="anime && mal">
     <div
       class="absolute top-0 right-0 left-0 h-screen z-[-1]  blur-[1px] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:content-[''] after:z-[0] after:bg-gradient-to-b after:from-[rgba(0,0,0,0.7)] after:to-[rgba(229,229,229,1)]">
-      <img :src="anime.bg ? anime.bg : anime.cover" alt="bg" class='h-screen w-full object-cover '>
+      <img :src="anime.bg ? anime.bg : mal.images.jpg.large_image_url" alt="bg" class='h-screen w-full object-cover '>
     </div>
     <div class="flex gap-9  w-9/12 h-full my-24 text-white">
       <About :mal="mal" :anime="anime" />
@@ -26,7 +26,21 @@
             ponownie pózniej.</h2>
         </div>
         <template v-else>
-          <div class="flex justify-end mt-10 mx-6  gap-2" v-if="anime.episodes > 1 && episodes !== 'ERR_BAD_REQUEST'">
+          <div class="flex justify-between mt-10    gap-2" v-if="anime.episodes > 1 && episodes !== 'ERR_BAD_REQUEST'">
+            <div class="flex justify-center items-center gap-2 px-2  text-gray-600 ">
+              <h2>Sortuj odcinki od </h2>
+              <div
+                class="group w-36  flex flex-row justify-center items-center rounded-lg  bg-gray-600 text-neutral-200 hover:text-gray-300"
+                v-if="episodes[0].anime_episode_number === 1"
+                @click="episodes.sort((a, b) => b.anime_episode_number - a.anime_episode_number)">najstarszych
+                <CgSortAz class="text-4xl cursor-pointer  border-gray-400 rounded-lg group-hover:text-gray-400" />
+              </div>
+              <div v-else
+                class="group w-36  flex flex-row justify-center items-center rounded-lg  bg-gray-600 text-neutral-200 hover:text-gray-300"
+                @click=" episodes.sort((a, b) => a.anime_episode_number - b.anime_episode_number)">najnowszych
+                <CgSortZa class="text-4xl cursor-pointer border-gray-400 rounded-lg group-hover:text-gray-400" />
+              </div>
+            </div>
             <div class="bg-gray-600 flex rounded-lg gap-2 p-2">
               <CgMenuGridR class=" size-8  cursor-pointer" :class="{ 'text-red-600 cursor-default': toogleBar }"
                 @click="toogleB" />
@@ -49,8 +63,7 @@
 </template>
 
 <script setup>
-
-import { CaMenu, CgMenuGridR, HeOutlineUiMenuGrid } from "@kalimahapps/vue-icons";
+import { CaMenu, CgMenuGridR, HeOutlineUiMenuGrid, CgSortAz, CgSortZa } from "@kalimahapps/vue-icons";
 
 import Related from '../components/description/Related.vue'
 import Loader from '../components/Loader.vue';

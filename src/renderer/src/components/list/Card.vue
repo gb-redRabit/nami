@@ -33,7 +33,9 @@ export default {
         index: {
             type: Number,
         },
-    }, components: {
+    },
+
+    components: {
         MiComet, BsPlus
     },
 

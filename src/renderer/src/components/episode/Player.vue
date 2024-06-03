@@ -76,7 +76,6 @@ const sortPlayer = (items) => {
 };
 
 const player = (number) => {
-  let src;
   const tab = [
     ...item.cda,
     ...item.vk,
@@ -86,24 +85,24 @@ const player = (number) => {
     ...item.mega,
   ];
 
-  tab.forEach((value) => {
+  for (const value of tab) {
     if (value.id === number) {
       const lastIndex = value.player.lastIndexOf('/');
       const lengthPlayer = value.player.length;
       if (value.player_hosting.toUpperCase() === 'CDA') {
-        src = `https://ebd.cda.pl/620x368/${value.player.slice(
+        return `https://ebd.cda.pl/620x368/${value.player.slice(
           lastIndex + 1,
           lengthPlayer
         )}`;
       } else if (value.player_hosting.toLowerCase() === 'mp4upload') {
-        src = value.player.slice(0, lengthPlayer - 5);
+        return value.player.slice(0, lengthPlayer - 5);
       } else {
-        src = value.player;
+        return value.player;
       }
     }
-  });
+  }
 
-  return src;
+  return null;
 };
 
 window.electron.ipcRenderer.on('sendApiSix', (__, data) => {
