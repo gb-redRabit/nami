@@ -33,7 +33,6 @@
             <p> <span class=" font-medium">Dodany</span> {{ new Date(episode.created_at).toISOString().slice(0, 10) }}
             </p>
         </RouterLink>
-        <!-- dodać czas pojawiania się nastepnego odcinka -->
         <div v-if="episodes.length !== anime.episodes && toogleBar && nextEpisode(episodes[episodes.length - 1].created_at) >= -3"
             class="flex flex-col w-60  bg-gray-600 rounded-lg">
             <div class=" w-full h-32 rounded-t-lg">

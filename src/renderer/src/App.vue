@@ -24,7 +24,7 @@ const list = ref(null);
 window.electron.ipcRenderer.on('sendApiOne', (__, data) => {
   list.value = data
   store.dispatch("getFull", data)
-  store.dispatch("listEdit", JSON.parse(data))
+  store.dispatch("listEdit", data)
 
 })
 

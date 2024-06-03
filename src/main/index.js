@@ -70,7 +70,7 @@ app.whenReady().then(() => {
       const response = await axios.get(data[0])
       event.reply('sendApiFour', [response.data[0], data[1]])
     } catch (error) {
-      console.error('Error while fetching data:', error.message)
+      console.error('Error in getApiFour:', error.message)
     }
   })
 
@@ -79,7 +79,8 @@ app.whenReady().then(() => {
       const response = await axios.get(data)
       event.reply('sendApiFive', response.data)
     } catch (error) {
-      console.error('Error while fetching data:', error.message)
+      event.reply('sendApiFive', error.code)
+      console.error('Error in getApiFive:', error.message)
     }
   })
 
@@ -88,7 +89,8 @@ app.whenReady().then(() => {
       const response = await axios.get(data)
       event.reply('sendApiSix', response.data)
     } catch (error) {
-      console.error('Error while fetching data:', error.message)
+      event.reply('sendApiSix', error.code)
+      console.error('Error in getApiSix:', error.message)
     }
   })
 
@@ -97,7 +99,7 @@ app.whenReady().then(() => {
       const response = await axios.get(data)
       event.reply('sendApiSeven', response.data)
     } catch (error) {
-      console.error('Error while fetching data:', error.message)
+      console.error('Error in getApiSeven:', error.message)
     }
   })
 
@@ -106,7 +108,7 @@ app.whenReady().then(() => {
       const response = await axios.get(data)
       event.reply('sendApiEight', response.data.data)
     } catch (error) {
-      console.error('Error while fetching data:', error.message)
+      console.error('Error in getApiEight:', error.message)
     }
   })
 
@@ -116,7 +118,7 @@ app.whenReady().then(() => {
       const response = await axios.get(data)
       event.reply('sendApiNewSeson', response.data)
     } catch (error) {
-      console.error('Error while fetching data:', error.message)
+      console.error('Error in getApiNewSeson:', error.message)
     }
   })
   // pobranie nowych odcinków z poprzednich sezonów
@@ -125,7 +127,7 @@ app.whenReady().then(() => {
       const response = await axios.get(data)
       event.reply('sendApiNew', response.data)
     } catch (error) {
-      console.error('Error while fetching data:', error.message)
+      console.error('Error in getApiNew:', error.message)
     }
   })
   createWindow()

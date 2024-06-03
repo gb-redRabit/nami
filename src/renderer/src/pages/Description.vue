@@ -15,10 +15,15 @@
           <div class="bg-slate-700 rounded-lg p-2 " v-for="item in anime.genres" :key="item">{{ item }}</div>
         </div>
         <Related :mal="mal.relations" />
-        <div v-if="episodes === 'ERR_BAD_REQUEST' || episodes == null"
+        <div v-if="episodes === 'ERR_BAD_REQUEST' && mal.aired.to === null"
           class="flex flex-col justify-center items-center  mt-10">
           <img src="../assets/cat.png" alt="cat" class="grayscale w-44 ">
-          <h2 class="text-2xl text-center bg-slate-700  rounded-lg  py-2 px-10 -mt-9">Brak odcinków</h2>
+          <h2 class="text-2xl text-center bg-slate-700  rounded-lg  py-2 px-10 -mt-9">Brak odcinków.</h2>
+        </div>
+        <div v-else-if="episodes === 'ERR_BAD_REQUEST'" class="flex flex-col justify-center items-center  mt-10">
+          <img src="../assets/cat.png" alt="cat" class="grayscale w-44 ">
+          <h2 class="text-2xl text-center bg-slate-700  rounded-lg  py-2 px-10 -mt-9">Problem przy pobieraniu, spróbuj
+            ponownie pózniej.</h2>
         </div>
         <template v-else>
           <div class="flex justify-end mt-10 mx-6  gap-2" v-if="anime.episodes > 1 && episodes !== 'ERR_BAD_REQUEST'">

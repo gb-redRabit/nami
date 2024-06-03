@@ -1,8 +1,5 @@
 <template>
-  <div v-if="select === 'ERR_BAD_REQUEST'" class="flex">
-
-  </div>
-  <div class=" flex flex-col " v-else-if="item && list && description">
+  <div class=" flex flex-col " v-if="item && list && description">
     <div class="flex lex-col justify-center items-center">
       <button :disabled="episode == 1"
         class="bg-black bg-opacity-40 text-white p-2 rounded-full cursor-pointer hover:text-red-600 flex"
@@ -21,7 +18,6 @@
     </div>
     <Hosting :item="item" :select="select" @selectPlayer="selectPlayer" />
   </div>
-
   <Loader v-else />
 </template>
 
@@ -44,7 +40,14 @@ const props = defineProps({
 
 const select = ref(0)
 const typHost = ref('')
-const item = ref({ cda: [], vk: [], dailymotion: [], other: [], mega: [], google: [] });
+const item = {
+  cda: [],
+  vk: [],
+  dailymotion: [],
+  other: [],
+  mega: [],
+  google: [],
+};
 const description = ref('');
 const list = ref();
 
@@ -53,65 +56,65 @@ const selectPlayer = (id, typ) => {
   typ ? typHost.value = typ : '';
 }
 
-
 const sortPlayer = (items) => {
   items.forEach((value) => {
-    switch (value.player_hosting.toLowerCase()) {
+    const category = value.player_hosting.toLowerCase();
+    switch (category) {
       case 'cda':
       case 'vk':
       case 'dailymotion':
-      case 'google':
-      case 'gdrive':
+      case 'other':
       case 'mega':
-        item.value[value.player_hosting].push(value);
+      case 'google':
+        item[category].push(value);
         break;
       default:
-        item.value.other.push(value);
+        item.other.push(value);
         break;
     }
   });
 };
 
-
 const player = (number) => {
+  let src;
   const tab = [
-    ...item.value.cda,
-    ...item.value.vk,
-    ...item.value.dailymotion,
-    ...item.value.other,
-    ...item.value.google,
-    ...item.value.mega,
+    ...item.cda,
+    ...item.vk,
+    ...item.dailymotion,
+    ...item.other,
+    ...item.google,
+    ...item.mega,
   ];
-  const foundValue = tab.find((value) => value.id === number);
 
-  if (foundValue) {
-    const lastIndex = foundValue.player.lastIndexOf("/");
-    const lengthPlayer = foundValue.player.length;
-
-    if (foundValue.player_hosting.toUpperCase() === "CDA") {
-      return `https://ebd.cda.pl/620x368/${foundValue.player.slice(
-        lastIndex + 1,
-        lengthPlayer
-      )}`;
-    } else if (foundValue.player_hosting.toLowerCase() === "mp4upload") {
-      return foundValue.player.slice(0, lengthPlayer - 5);
-    } else {
-      return foundValue.player;
+  tab.forEach((value) => {
+    if (value.id === number) {
+      const lastIndex = value.player.lastIndexOf('/');
+      const lengthPlayer = value.player.length;
+      if (value.player_hosting.toUpperCase() === 'CDA') {
+        src = `https://ebd.cda.pl/620x368/${value.player.slice(
+          lastIndex + 1,
+          lengthPlayer
+        )}`;
+      } else if (value.player_hosting.toLowerCase() === 'mp4upload') {
+        src = value.player.slice(0, lengthPlayer - 5);
+      } else {
+        src = value.player;
+      }
     }
-  }
+  });
 
-  // Obsługa przypadku, gdy numer nie został znaleziony
-  return "Brak dostępnego źródła wideo";
+  return src;
 };
 
-
 window.electron.ipcRenderer.on('sendApiSix', (__, data) => {
+
   if (data === 'ERR_BAD_REQUEST') {
+
     select.value = data
   }
   else {
-    sortPlayer(data)
     select.value = data[0].id
+    sortPlayer(data)
   }
 })
 
