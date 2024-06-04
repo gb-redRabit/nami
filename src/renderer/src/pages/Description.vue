@@ -1,22 +1,22 @@
 <template>
-  <div class=" flex flex-col  items-center justify-center z-10 relative min-h-screen w-full" v-if="anime && mal">
+  <div class=" flex flex-col  items-center justify-center z-10 relative min-h-screen w-full">
     <div
       class="absolute top-0 right-0 left-0 h-screen z-[-1]  blur-[1px] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:content-[''] after:z-[0] after:bg-gradient-to-b after:from-[rgba(0,0,0,0.7)] after:to-[rgba(229,229,229,1)]">
-      <img :src="anime.bg ? anime.bg : mal.images.jpg.large_image_url" alt="bg" class='h-screen w-full object-cover '>
+      <img :src="anime.bg ? anime.bg : anime.cover" alt="bg" class='h-screen w-full object-cover ' v-if="anime">
+
     </div>
-    <div class="flex gap-9  w-9/12 h-full my-24 text-white">
+    <div class="flex gap-9  w-9/12 h-full my-24 text-white" v-if="anime && episodes">
       <About :mal="mal" :anime="anime" />
-      <div class="flex flex-col  w-3/4 gap-2">
-        <h1 class="text-4xl ">{{ anime.title }}</h1>
+      <div class="flex flex-col  w-3/4 gap-2 ">
+        <div class="text-4xl ">{{ anime.title }}</div>
         <h2 class="text-2xl ">{{ anime.title_en }}</h2>
         <h2 class="text-2xl font-bold mt-10 ">Opis</h2>
         <p class=" text-justify w-3/5 ">{{ anime.description }}</p>
         <div class="flex  gap-2 my-10">
           <div class="bg-slate-700 rounded-lg p-2 " v-for="item in anime.genres" :key="item">{{ item }}</div>
         </div>
-        <Related :mal="mal.relations" />
-        <div v-if="episodes === 'ERR_BAD_REQUEST' && mal.aired.to === null"
-          class="flex flex-col justify-center items-center  mt-10">
+        <Related :mal="mal.relations" v-if="mal" />
+        <div v-if="episodes === 'ERR_BAD_REQUEST' && mal" class="flex flex-col justify-center items-center  mt-10">
           <img src="../assets/cat.png" alt="cat" class="grayscale w-44 ">
           <h2 class="text-2xl text-center bg-slate-700  rounded-lg  py-2 px-10 -mt-9">Brak odcinków.</h2>
         </div>
@@ -58,15 +58,14 @@
         </RouterView>
       </div>
     </div>
+    <Skeleton v-else />
   </div>
-  <Loader v-else></Loader>
 </template>
 
 <script setup>
-import { CaMenu, CgMenuGridR, HeOutlineUiMenuGrid, CgSortAz, CgSortZa } from "@kalimahapps/vue-icons";
-
+import { CaMenu, CgMenuGridR, HeOutlineUiMenuGrid, CgSortAz, CgSortZa, BsImageFill } from "@kalimahapps/vue-icons";
+import Skeleton from "../components/description/Skeleton.vue"
 import Related from '../components/description/Related.vue'
-import Loader from '../components/Loader.vue';
 import ListEpisodes from "../components/description/ListEpisodes.vue";
 import About from "../components/description/About.vue";
 
@@ -115,6 +114,7 @@ window.electron.ipcRenderer.on('sendApiTwo', (__, data) => {
 
 // infor z mal
 window.electron.ipcRenderer.on('sendApiThree', (__, data) => {
+
   mal.value = data.data
 
 })

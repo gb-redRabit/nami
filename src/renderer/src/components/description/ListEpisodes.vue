@@ -63,7 +63,7 @@
             </div>
         </div>
         <div v-if="episodes.length !== anime.episodes && toogleList && nextEpisode(episodes[episodes.length - 1].created_at) >= -3"
-            class=" w-3/4 p-2 bg-gray-600 rounded-lg flex justify-between">
+            class=" w-[550px] p-2 bg-gray-600 rounded-lg flex justify-between">
             <p class=" font-medium">Kolejny odcinek</p>
             <p v-if="nextEpisode(episodes[episodes.length - 1].created_at) > 0"> za {{
                 nextEpisode(episodes[episodes.length - 1].created_at) }} dni</p>

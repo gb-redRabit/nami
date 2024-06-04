@@ -5,14 +5,18 @@
       :class="{ 'ml-60 !w-[calc(100%-240px)]': toogleBar }">
       <div class="flex justify-between items-center w-11/12 py-3    my-6l">
         <div class="flex justify-center gap-2 px-5 py-1 bg-slate-700  rounded-full">
-          <AnOutlinedSortAscending
-            class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="store.getters.listEdit.sort(
-              (a, b) => a.title.localeCompare(b.title)
-            )" />
-          <AnOutlinedSortDescending
-            class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="store.getters.listEdit.sort(
-              (a, b) => b.title.localeCompare(a.title)
-            )" />
+          <AnOutlinedSortAscending v-if="isActiveOne"
+            class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="() => {
+              isActiveOne = !isActiveOne, store.getters.listEdit.sort(
+                (a, b) => a.title.localeCompare(b.title)
+              )
+            }" />
+          <AnOutlinedSortDescending v-else
+            class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="() => {
+              isActiveOne = !isActiveOne, store.getters.listEdit.sort(
+                (a, b) => b.title.localeCompare(a.title)
+              )
+            }" />
           <CgSortAz class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="store.getters.listEdit.sort(
             (a, b) => new Date(b.aired_from) - new Date(a.aired_from)
           )" />
@@ -68,7 +72,7 @@ const search = ref('');
 const genres = ref(store.getters.genres);
 const type = ref(store.getters.type);
 const set = ref(40);
-const index = ref('');
+const isActiveOne = ref(false);
 
 const toogle = () => {
   toogleBar.value = !toogleBar.value

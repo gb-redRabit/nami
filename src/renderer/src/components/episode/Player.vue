@@ -1,5 +1,6 @@
 <template>
-  <div class=" flex flex-col " v-if="item && list && description">
+  <div class=" flex flex-col " v-if="list !== 'ERR_BAD_REQUEST' && description">
+    {{ console.log(description) }}
     <div class="flex lex-col justify-center items-center">
       <button :disabled="episode == 1"
         class="bg-black bg-opacity-40 text-white p-2 rounded-full cursor-pointer hover:text-red-600 flex"
@@ -17,6 +18,8 @@
       </button>
     </div>
     <Hosting :item="item" :select="select" @selectPlayer="selectPlayer" />
+  </div>
+  <div class=" flex flex-col " v-else-if="list === 'ERR_BAD_REQUEST'">
   </div>
   <Loader v-else />
 </template>
@@ -106,7 +109,6 @@ const player = (number) => {
 };
 
 window.electron.ipcRenderer.on('sendApiSix', (__, data) => {
-
   if (data === 'ERR_BAD_REQUEST') {
 
     select.value = data
@@ -123,9 +125,14 @@ window.electron.ipcRenderer.on('sendApiSeven', (__, data) => {
 })
 
 window.electron.ipcRenderer.on('sendApiFive', (__, data) => {
-  const sortedData = [...data].sort((a, b) => a.anime_episode_number - b.anime_episode_number);
-  const uniqueIds = new Set(sortedData.map(({ anime_episode_number }) => anime_episode_number));
-  list.value = sortedData.filter(({ anime_episode_number }) => uniqueIds.has(anime_episode_number));
+  if (data !== 'ERR_BAD_REQUEST') {
+    const sortedData = [...data].sort((a, b) => a.anime_episode_number - b.anime_episode_number);
+    const uniqueIds = new Set(sortedData.map(({ anime_episode_number }) => anime_episode_number));
+    list.value = sortedData.filter(({ anime_episode_number }) => uniqueIds.has(anime_episode_number));
+  }
+  else {
+    list.value = data
+  }
 });
 
 

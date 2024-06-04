@@ -13,7 +13,7 @@
                 </div>
                 <div v-if="numbering"
                     class="absolute z-10 top-1 right-1 bg-neutral-200 size-8 flex justify-center items-center rounded-full text-md">
-                    <McCupcakeFill v-if="index === 0" />
+                    <McCupcakeFill class=" text-yellow-400" v-if="index === 0" />
                     <span v-else>#</span>{{ index + 1 }}
                 </div>
                 <div class="absolute bottom-0 w-full p-2">

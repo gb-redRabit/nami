@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-between  p-2 bg-slate-700 rounded-lg" v-if="mal.score">
+    <div class="flex items-center justify-between  p-2 bg-slate-700 rounded-lg" v-if="score[0] > 0 && mal">
         <div class="flex ">
             <div v-for="i in score[0]">
                 <CaStarFilled />
@@ -17,12 +17,15 @@ import { onMounted, ref } from 'vue';
 
 const score = ref([]);
 
-const props = defineProps({
+const { mal } = defineProps({
     mal: { type: Object, },
 })
 
 onMounted(() => {
-    score.value.push(Math.floor(props.mal.score))
-    score.value.push((props.mal.score - Math.floor(props.mal.score)) > 0.5)
+    if (mal) {
+        score.value.push(Math.floor(mal.score))
+        score.value.push((mal.score - Math.floor(mal.score)) > 0.5)
+        console.log(score.value[0] > 0);
+    }
 })
 </script>
