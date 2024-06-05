@@ -13,54 +13,55 @@
         </div>
         <h2 class="font-medium py-2">Informacje</h2>
         <div class="flex flex-col bg-slate-700 rounded-lg gap-2 p-2">
-            <p class="flex flex-col">
+            <p v-if="mal" class="flex flex-col">
                 <span class="font-medium">Status</span>
-                <span v-if="mal" class="font-extralight">{{ mal.airing ? 'Wychodzi' : 'Zakończony' }}</span>
+                <span v-if="mal.airing" class="font-extralight">{{ mal.airing ? 'Wychodzi' : 'Zakończony' }}</span>
                 <span v-else class="font-extralight"> Brak Informacji </span>
             </p>
-            <p class="flex flex-col">
+            <p v-if="anime" class="flex flex-col">
                 <span class="font-medium">Sezon</span>
-                <span v-if="anime" class="flex items-center gap-2 font-extralight">
+                <span v-if="anime.season" class="flex items-center gap-2 font-extralight">
                     <IconSeason :season="anime.season" />
                     {{ traslate(anime.season) }} {{ anime.season_year }}
                 </span>
                 <span v-else class="font-extralight"> Brak Informacji </span>
             </p>
-            <p class="flex flex-col">
+            <p v-if="mal" class="flex flex-col">
                 <span class="font-medium">Ilość Ocen</span>
-                <span v-if="mal" class="font-extralight">{{ mal.scored_by }}</span>
+                <span v-if="mal.scored_by" class="font-extralight">{{ mal.scored_by }}</span>
                 <span v-else class="font-extralight"> Brak Informacji </span>
             </p>
-            <p class="flex flex-col">
+            <p v-if="anime" class="flex flex-col">
                 <span class="font-medium">Rodzaj</span>
-                <span v-if="anime" class="font-extralight">{{ anime.series_type }}</span>
+                <span v-if="anime.series_type" class="font-extralight">{{ anime.series_type }}</span>
                 <span v-else class="font-extralight"> Brak Informacji </span>
             </p>
-            <p class="flex flex-col">
+            <p v-if="anime" class="flex flex-col">
                 <span class="font-medium">Odcinki</span>
-                <span v-if="anime" class="font-extralight">{{ anime.episodes }}</span>
+                <span v-if="anime.episodes" class="font-extralight">{{ anime.episodes }}</span>
                 <span v-else class="font-extralight"> Brak Informacji </span>
             </p>
-            <p class="flex flex-col">
+            <p v-if="mal" class="flex flex-col">
                 <span class="font-medium">MPAA</span>
-                <span v-if="mal" class="font-extralight">{{ mal.rating }}</span>
+                <span v-if="mal.rating" class="font-extralight">{{ mal.rating }}</span>
                 <span v-else class="font-extralight"> Brak Informacji </span>
             </p>
-            <p class="flex flex-col">
+
+            <p v-if="mal" class="flex flex-col">
                 <span class="font-medium">Studio</span>
-                <span v-if="mal" class="font-extralight">{{ mal.studios[0].name }}</span>
+                <span v-if="mal.studios.length > 0" class="font-extralight">{{ mal.studios[0].name }}</span>
                 <span v-else class="font-extralight"> Brak Informacji </span>
             </p>
-            <p class="flex flex-col">
+            <p v-if="anime" class="flex flex-col">
                 <span class="font-medium">Początek Emisji</span>
-                <span v-if="anime" class="font-extralight">{{
+                <span v-if="anime.aired_from" class="font-extralight">{{
                     new Date(anime.aired_from).toISOString().slice(0, 10)
-                }}</span>
+                    }}</span>
                 <span v-else class="font-extralight"> Brak Informacji </span>
             </p>
-            <p class="flex flex-col">
+            <p v-if="mal" class="flex flex-col">
                 <span class="font-medium">Długość odcinków</span>
-                <span v-if="mal" class="font-extralight">{{ mal.duration }}</span>
+                <span v-if="mal.duration" class="font-extralight">{{ mal.duration }}</span>
                 <span v-else class="font-extralight"> Brak Informacji </span>
             </p>
         </div>

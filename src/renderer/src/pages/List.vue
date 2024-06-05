@@ -40,7 +40,8 @@
       </div>
       <div class="flex flex-wrap justify-center gap-3 mx-4" @scroll="handleScroll"
         v-if="store.getters.listEdit.length !== 0">
-        <Card v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" :index="index" />
+        <Card v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" :index="index"
+          :numbering="false" />
       </div>
       <div class="flex flex-col justify-center items-center mt-20" v-else>
         <img src="../assets//cat.png" alt="cat" class="grayscale w-96" />
@@ -82,6 +83,7 @@ const isActiveOne = ref(false)
 const toogle = () => {
   toogleBar.value = !toogleBar.value
 }
+
 
 const cleanSearch = () => {
   store.dispatch(`celean`)

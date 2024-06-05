@@ -6,7 +6,8 @@
       <span> {{ date(false, 'pl').yers }}</span>
     </h1>
     <div class="flex flex-wrap gap-2 justify-center items-center w-full mt-10">
-      <Card v-for="(item, index) in store.getters.newList" :key="index" :item="item" :set="60" :index="index" />
+      <Card v-for="(item, index) in store.getters.newList" :key="index" :item="item" :set="60" :index="index"
+        :numbering="false" />
     </div>
   </div>
 </template>
