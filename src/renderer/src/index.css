@@ -3,15 +3,23 @@
 @tailwind utilities;
 
 
+.dragApp{
+  -webkit-app-region: drag;
+  -webkit-user-select: none;
+  user-select: none
+}
+.dragApp  * {
+  -webkit-app-region: no-drag;
+}
 body::-webkit-scrollbar {
-    width: 4px;
-  }
-   
-  body::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 10px rgb(34, 128, 190);
-  }
-   
-  body::-webkit-scrollbar-thumb {
-    background-color: rgba(32, 29, 29, 0.856);
-    outline: 1px solid rgb(41, 36, 36);
-  }
+  width: 4px;
+}
+
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px rgb(34, 128, 190);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(32, 29, 29, 0.856);
+  outline: 1px solid rgb(41, 36, 36);
+}

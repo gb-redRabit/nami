@@ -8,9 +8,10 @@ import { table } from 'console'
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
-    show: false,
+    width: 1200,
+    height: 870,
+    show: true,
+    frame: false,
     // https://www.youtube.com/watch?v=jzmen0gYQrM
     //  zrobić własna ramke z przesuwaniem
     autoHideMenuBar: true,
@@ -20,7 +21,17 @@ function createWindow() {
       sandbox: false
     }
   })
+  ipcMain.on('minimize', () => {
+    mainWindow.minimize()
+  })
 
+  ipcMain.on('maximize', () => {
+    mainWindow.show()
+    mainWindow.isMaximized() ? mainWindow.restore() : mainWindow.maximize()
+  })
+  ipcMain.on('close', () => {
+    app.quit()
+  })
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
@@ -143,8 +154,4 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
-})
-
-ipcMain.on('close', () => {
-  app.quit()
 })

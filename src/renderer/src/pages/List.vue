@@ -1,35 +1,35 @@
 <template>
-  <div class=" relative min-h-screen min-w-11/12 ">
+  <div class="relative min-h-screen min-w-11/12">
     <RouterView :toogleBar="toogleBar" @toogle="toogle" :genres="genres" :type="type" />
-    <div class="p-2 flex flex-col items-center justify-center  w-[calc(100%-10px)] "
+    <div class="p-2 flex flex-col items-center justify-center w-[calc(100%-10px)]"
       :class="{ 'ml-60 !w-[calc(100%-240px)]': toogleBar }">
-      <div class="flex justify-between items-center w-11/12 py-3    my-6l">
-        <div class="flex justify-center gap-2 px-5 py-1 bg-slate-700  rounded-full">
+      <div class="flex justify-between items-center w-11/12 py-3 my-6l">
+        <div class="flex justify-center gap-2 px-5 py-1 bg-slate-700 rounded-full">
           <AnOutlinedSortAscending v-if="isActiveOne"
             class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="() => {
-              isActiveOne = !isActiveOne, store.getters.listEdit.sort(
-                (a, b) => a.title.localeCompare(b.title)
-              )
-            }" />
+              ; (isActiveOne = !isActiveOne),
+                store.getters.listEdit.sort((a, b) => a.title.localeCompare(b.title))
+            }
+              " />
           <AnOutlinedSortDescending v-else
             class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="() => {
-              isActiveOne = !isActiveOne, store.getters.listEdit.sort(
-                (a, b) => b.title.localeCompare(a.title)
-              )
-            }" />
-          <CgSortAz class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="store.getters.listEdit.sort(
-            (a, b) => new Date(b.aired_from) - new Date(a.aired_from)
-          )" />
-          <CgSortZa class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="store.getters.listEdit.sort(
-            (a, b) => new Date(a.aired_from) - new Date(b.aired_from)
-          )" />
+              ; (isActiveOne = !isActiveOne),
+                store.getters.listEdit.sort((a, b) => b.title.localeCompare(a.title))
+            }
+              " />
+          <CgSortAz class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="
+            store.getters.listEdit.sort((a, b) => new Date(b.aired_from) - new Date(a.aired_from))
+            " />
+          <CgSortZa class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="
+            store.getters.listEdit.sort((a, b) => new Date(a.aired_from) - new Date(b.aired_from))
+            " />
         </div>
-        <div class=" text-white  outline-none focus:outline-none">
+        <div class="text-white outline-none focus:outline-none">
           <input type="text" name="search" placeholder="Wyszukaj" :value="search" @input="searchAnime"
-            class="bg-slate-700 h-10 flex px-8 w-full rounded-full text-sm focus:outline-none border-2 border-l-0 border-gray-500 "
+            class="bg-slate-700 h-10 flex px-8 w-full rounded-full text-sm focus:outline-none border-2 border-l-0 border-gray-500"
             autocomplete="off" spellcheck="false" required step="any" autocapitalize="none" autofocus />
           <button type="submit" class="absolute inset-y-0 right-0 mr-2 flex items-center px-2">
-            <svg class="h-4 w-4 text-white fill-current " xmlns="http://www.w3.org/2000/svg"
+            <svg class="h-4 w-4 text-white fill-current" xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px"
               viewBox="0 0 56.966 56.966" xml:space="preserve" width="512px" height="512px">
               <path
@@ -42,15 +42,14 @@
         v-if="store.getters.listEdit.length !== 0">
         <Card v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" :index="index" />
       </div>
-      <div class="flex flex-col justify-center items-center mt-20  " v-else>
+      <div class="flex flex-col justify-center items-center mt-20" v-else>
         <img src="../assets//cat.png" alt="cat" class="grayscale w-96" />
-        <h1 class="flex justify-center items-center gap-2 py-4 px-16 -mt-16 rounded-lg text-white bg-slate-700">Brak
-          wyników
-          wyszukiwania
+        <h1 class="flex justify-center items-center gap-2 py-4 px-16 -mt-16 rounded-lg text-white bg-slate-700">
+          Brak wyników wyszukiwania
           <button @click="cleanSearch"
             class="flex justify-center items-center gap-2 font-medium py-1 px-2 border text-slate-700 bg-white rounded-xl animate-pulse">
             Wyczyść
-            <AkCircleXFill class=" text-xl" />
+            <AkCircleXFill class="text-xl" />
           </button>
         </h1>
       </div>
@@ -59,38 +58,44 @@
 </template>
 
 <script setup>
-import { AnOutlinedSortAscending, AnOutlinedSortDescending, CgSortAz, CgSortZa, AkCircleXFill } from "@kalimahapps/vue-icons";
+import {
+  AnOutlinedSortAscending,
+  AnOutlinedSortDescending,
+  CgSortAz,
+  CgSortZa,
+  AkCircleXFill
+} from '@kalimahapps/vue-icons'
 
-import Card from '../components/list/Card.vue'
+import Card from '../components/Card.vue'
 
 import { useStore } from 'vuex'
 import { onMounted, ref, watch } from 'vue'
 
 const toogleBar = ref(true)
-const store = useStore();
-const search = ref('');
-const genres = ref(store.getters.genres);
-const type = ref(store.getters.type);
-const set = ref(40);
-const isActiveOne = ref(false);
+const store = useStore()
+const search = ref('')
+const genres = ref(store.getters.genres)
+const type = ref(store.getters.type)
+const set = ref(40)
+const isActiveOne = ref(false)
 
 const toogle = () => {
   toogleBar.value = !toogleBar.value
 }
 
 const cleanSearch = () => {
-  store.dispatch(`celean`);
-  search.value = ""
-  genres.value = store.getters.genres;
-  genres.type = store.getters.type;
-  searchList(store.state.genresTab, store.state.typeSelect);
+  store.dispatch(`celean`)
+  search.value = ''
+  genres.value = store.getters.genres
+  genres.type = store.getters.type
+  searchList(store.state.genresTab, store.state.typeSelect)
   watch([store.state.genresTab, store.state.typeSelect], async (currentValue, newValue) => {
-    searchList(store.state.genresTab, store.state.typeSelect);
+    searchList(store.state.genresTab, store.state.typeSelect)
   })
 }
 const searchAnime = (e) => {
   search.value = e.target.value
-  searchList(store.state.genresTab, store.state.typeSelect);
+  searchList(store.state.genresTab, store.state.typeSelect)
 }
 
 const handleScroll = () => {
@@ -100,30 +105,29 @@ const handleScroll = () => {
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-  searchList(store.state.genresTab, store.state.typeSelect);
+  window.addEventListener('scroll', handleScroll)
+  searchList(store.state.genresTab, store.state.typeSelect)
 })
-
 
 watch([store.state.genresTab, store.state.typeSelect], async (currentValue, newValue) => {
-  console.log('asd');
-  searchList(store.state.genresTab, store.state.typeSelect);
+  searchList(store.state.genresTab, store.state.typeSelect)
 })
 
-
 const searchList = (tagi, typ) => {
-  typ = typ[store.state.typeSelect.length - 1] || "";
-  let tab = store.getters.list.filter(value => value.title.toLowerCase().includes(search.value.toLowerCase()));
+  typ = typ[store.state.typeSelect.length - 1] || ''
+  let tab = store.getters.list.filter((value) =>
+    value.title.toLowerCase().includes(search.value.toLowerCase())
+  )
 
-  if (tagi[0] !== undefined && typ !== "") {
-    tab = tab.filter(value => value.series_type === typ);
-    tab = tab.filter(value => tagi.every(r => value.genres.includes(r.title)));
-  } else if (tagi[0] === undefined && typ !== "") {
-    tab = tab.filter(value => value.series_type === typ);
-  } else if (tagi[0] !== undefined && typ === "") {
-    tab = tab.filter(value => tagi.every(r => value.genres.includes(r.title)));
+  if (tagi[0] !== undefined && typ !== '') {
+    tab = tab.filter((value) => value.series_type === typ)
+    tab = tab.filter((value) => tagi.every((r) => value.genres.includes(r.title)))
+  } else if (tagi[0] === undefined && typ !== '') {
+    tab = tab.filter((value) => value.series_type === typ)
+  } else if (tagi[0] !== undefined && typ === '') {
+    tab = tab.filter((value) => tagi.every((r) => value.genres.includes(r.title)))
   }
 
-  store.dispatch("listEdit", tab);
-};
+  store.dispatch('listEdit', tab)
+}
 </script>

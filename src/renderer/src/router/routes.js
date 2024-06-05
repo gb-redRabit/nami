@@ -37,7 +37,7 @@ export default [
       },
       {
         path: ':yt',
-        name: 'aaaa',
+        name: 'yt',
         component: () => import('../pages/Yt.vue'),
         props: true
       }

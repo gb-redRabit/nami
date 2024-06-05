@@ -12,8 +12,8 @@ asarUnpack:
   - resources/**
 win:
   executableName: nami
-  target: 
-     - nsis
+  target:
+    - nsis
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
