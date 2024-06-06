@@ -46,7 +46,9 @@ export default {
   },
   listTop(state) {
     state.fullList.forEach((value) => {
-      const matchingItem = state.listTop.find((item) => item.mal_id === value.mal_id)
+      const matchingItem = state.listTop.find((item) =>
+        item !== undefined ? item.mal_id === value.mal_id : false
+      )
       if (matchingItem) {
         matchingItem.slug = value.slug
       }
