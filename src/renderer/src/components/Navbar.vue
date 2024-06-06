@@ -12,10 +12,6 @@
         <FaFireFlameCurved class="text-2xl" />
       </RouterLink>
 
-      <!-- test brak strony  -->
-      <RouterLink :to="{ path: '/lisasdt/asfsd' }" exact class="p-1 hover:animate-pulse" active-class="text-gray-600">
-        <FaFireFlameCurved class="text-2xl" />
-      </RouterLink>
     </div>
     <div class="flex flex-col justify-center items-center gap-2">
       <button class="flex flex-col items-center p-1 rounded-full hover:animate-pulse">

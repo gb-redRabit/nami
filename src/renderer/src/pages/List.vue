@@ -1,9 +1,9 @@
 <template>
   <div class="relative min-h-screen min-w-11/12">
     <RouterView :toogleBar="toogleBar" @toogle="toogle" :genres="genres" :type="type" />
-    <div class="p-2 flex flex-col items-center justify-center w-[calc(100%-10px)]"
+    <div class="p-2 pr-20 flex flex-col items-center justify-center w-[calc(100%-10px)]"
       :class="{ 'ml-60 !w-[calc(100%-240px)]': toogleBar }">
-      <div class="flex justify-between items-center w-11/12 py-3 my-6l">
+      <div class="flex justify-between items-center w-full p-6">
         <div class="flex justify-center gap-2 px-5 py-1 bg-slate-700 rounded-full">
           <AnOutlinedSortAscending v-if="isActiveOne"
             class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="() => {
@@ -40,8 +40,7 @@
       </div>
       <div class="flex flex-wrap justify-center gap-3 mx-4" @scroll="handleScroll"
         v-if="store.getters.listEdit.length !== 0">
-        <Card v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" :index="index"
-          :numbering="false" />
+        <Card v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" :index="index" />
       </div>
       <div class="flex flex-col justify-center items-center mt-20" v-else>
         <img src="../assets//cat.png" alt="cat" class="grayscale w-96" />

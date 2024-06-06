@@ -1,9 +1,70 @@
 <template>
-    <Carousel class="w-11/12" ref="myCarousel" :itemsToShow="itemsShow" snapAlign="start" :autoplay="autoplay"
+    <Carousel v-if="top" class="w-11/12" ref="myCarousel" :itemsToShow="itemsShow" snapAlign="start"
+        :autoplay="autoplay" :wrapAround="true" @slide-start="console.log(myCarousel.data.currentSlide._value)"
+        :transition="1000">
+        <Slide v-for="(item, index) in data" :key="index">
+            <div class="h-96 w-[560px] relative rounded-xl text-gray-100 overflow-hidden">
+                <div
+                    class="transition-all w-full h-full duration-1000 ease-linear after:absolute after:top-0 after:left-0 after:w-full after:rounded-lg after:h-full after:content-[''] after:bg-black after:opacity-45">
+                    <img :src="item.images.jpg.large_image_url" class="w-full absolute object-cover rounded-lg "
+                        alt="cover" />
+
+                </div>
+                <div v-if="numbering"
+                    class="absolute z-10 top-1 right-1 bg-amber-300 size-9 flex justify-center items-center rounded-full font-medium">
+                    <McCupcakeFill class=" text-neutral-200 text-2xl" v-if="index === 0" />
+                    <span v-else>#</span>{{ index + 1 }}
+                </div>
+                <div class="absolute top-0  text-left w-full flex flex-col justify-start items-start gap-2 p-4  ">
+                    <div class="text-2xl font-medium">{{ item.title.length <= 40 ? item.title : `${item.title.slice(0,
+                        40)}...` }}</div>
+                            <div class="flex justify-center items-center ">
+                                <div class="text-amber-300 font-medium">{{ item.type }}</div>
+                                <BsDot class=" text-xl" />
+                                <div>Odcinki
+                                    <span v-if="item.episodes">{{ item.episodes
+                                        }}</span>
+                                    <span v-else>??</span>
+                                </div>
+                                <BsDot class=" text-xl" />
+                                <div>{{ item.duration.slice(0, 6) }}</div>
+                            </div>
+                            <div> {{ item.synopsis.length <= 120 ? item.synopsis : `${item.synopsis.slice(0, 120)}...`
+                                    }}</div>
+                            </div>
+                            <div class=" flex gap-2 absolute bottom-1 left-1 py-1 px-2 ">
+                                <button @click="$router.push({ path: `/list/${item.slug}/1` })"
+                                    class="flex justify-center items-center py-1 px-2 rounded-lg   group-hover:text-white bg-amber-300  hover:bg-amber-600 ">
+                                    <BxPlay class="text-2xl" /> Oglądaj
+                                </button> <button @click="$router.push({ path: `/list/${item.slug}` })"
+                                    class=" flex gap-2 justify-center items-center  py-1 px-2 rounded-lg text-amber-300  group-hover:text-white border-amber-300  border-4 border-solid ">
+                                    <BxSolidBookBookmark /> Wiecej
+                                </button>
+
+                            </div>
+                    </div>
+        </Slide>
+        <template #addons>
+            <Pagination v-if="p" />
+            <Navigation v-if="n" />
+        </template>
+    </Carousel>
+    <Carousel v-else class="w-full" ref="myCarousel" :itemsToShow="itemsShow" snapAlign="start" :autoplay="autoplay"
         :wrapAround="true" @slide-start="console.log(myCarousel.data.currentSlide._value)" :transition="1000">
         <Slide v-for="(item, index) in data" :key="index">
-            <Card :key="index" :item="item" :set="data.length" :index="index" :numbering="numbering" :carusel="true"
-                :itemsShow="itemsShow" />
+            <RouterLink :to="{ path: `/list/${item.anime_id}/${item.anime_episode_number}` }"
+                class=" h-56 w-40 relative rounded-xl text-gray-100">
+                <div
+                    class="transition-all w-full h-full duration-1000 ease-linear after:absolute after:top-0 after:left-0 after:w-full after:rounded-xl after:h-full after:content-[''] after:bg-black after:opacity-45">
+                    <img :src="item.cover" class="absolute w-full h-full rounded-xl" alt="cover" />
+                </div>
+                <div class="absolute top-0 w-full p-2 text-left text-gray-100 group-hover:text-white">
+                    Odcinek <span class=" text-amber-300 font-medium">{{ item.anime_episode_number }}</span>
+                </div>
+                <div class="absolute bottom-0 w-full p-2 text-left text-gray-100 group-hover:text-white">
+                    {{ `${item.title.slice(0, 19)}...` }}
+                </div>
+            </RouterLink>
         </Slide>
         <template #addons>
             <Pagination v-if="p" />
@@ -13,8 +74,9 @@
 </template>
 
 <script setup>
+import { MiComet, McCupcakeFill, BxPlay, BxSolidBookBookmark, BsDot } from '@kalimahapps/vue-icons'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
-import Card from './Card.vue'
+
 import 'vue3-carousel/dist/carousel.css'
 
 
@@ -29,6 +91,7 @@ const { data } = defineProps({
     numbering: Boolean,
     itemsShow: Number,
     autoplay: Number,
+    top: Boolean
 })
 onMounted(() => {
     data.length = 10
@@ -50,10 +113,10 @@ onMounted(() => {
 }
 
 .carousel__prev {
-    @apply -ml-10;
+    @apply size-10 bg-neutral-200 rounded-full text-black hover:text-white hover:bg-amber-300;
 }
 
 .carousel__next {
-    @apply -mr-10;
+    @apply size-10 bg-neutral-200 rounded-full text-black hover:text-white hover:bg-amber-300;
 }
 </style>
