@@ -12,9 +12,9 @@
       <section>
         <h2 class="text-lg font-medium py-2">Typy</h2>
         <select class="bg-gray-500 p-2 w-[180px] rounded-lg" @change="selectType" :value="select">
-          <option value="">Wybierz opcje</option>
+          <option value="">Wszystko</option>
           <option v-for="(item, index) in type" :key="index" :value="item.title">
-            {{ item.title }}
+            {{ item.title[0].toUpperCase() + item.title.slice(1) }}
           </option>
         </select>
       </section>

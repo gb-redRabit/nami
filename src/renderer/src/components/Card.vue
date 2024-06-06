@@ -1,6 +1,6 @@
 <template>
     <RouterLink
-        :to="item.type !== 'Movie' || item.series_type !== `Movie` ? { path: `/list/${item.slug}` } : { path: `/list/${item.slug}/1` }"
+        :to="item.type === 'Movie' || item.series_type === `Movie` ? { path: `/list/${item.slug}/1` } : { path: `/list/${item.slug}` }"
         class="group h-64 w-44 relative rounded-xl"
         :class="{ ' h-96 w-64': carusel, ' h-48 w-32 ': carusel && itemsShow > 7 }" v-if="upActive">
         <div

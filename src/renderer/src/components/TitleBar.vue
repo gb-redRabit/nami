@@ -31,4 +31,5 @@ const maxmizeApp = () => {
 const closeApp = () => {
     window.electron.ipcRenderer.send('close')
 }
+
 </script>

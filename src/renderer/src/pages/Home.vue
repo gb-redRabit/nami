@@ -24,12 +24,66 @@
           :autoplay="5000" :top="false" />
       </div>
     </div>
-    <!-- <CarouselSlide :data="store.getters.nextList" :p="false" :n="false" :numbering="false" :itemsShow="10"
-      :autoplay="0" /> -->
+    <div class="flex  gap-1 w-11/12 mt-10">
+      <Carousel class="w-7/12" ref="myCarousel" :itemsToShow="6" snapAlign="start" :autoplay="0" :wrapAround="true"
+        :transition="1000" @init="">
+        <Slide v-for=" (index, value) in store.getters.listNewSeson.length / 2" :key="index">
+          <div class="flex flex-col gap-5 ">
+            <RouterLink
+              :to="{ path: `/list/${store.getters.listNewSeson[value % 2 === 0 ? (value === 0 ? value : value * 2) : value * 2].anime_id}/${store.getters.listNewSeson[value % 2 === 0 ? (value === 0 ? value : value * 2) : value * 2].anime_episode_number}` }"
+              class=" h-56 w-40 relative rounded-xl text-gray-100">
+              <div
+                class="transition-all w-full h-full duration-1000 ease-linear after:absolute after:top-0 after:left-0 after:w-full after:rounded-xl after:h-full after:content-[''] after:bg-black after:opacity-45">
+                <img
+                  :src="store.getters.listNewSeson[value % 2 === 0 ? (value === 0 ? value : value * 2) : value * 2].cover"
+                  class="absolute w-full h-full rounded-xl" alt="cover" />
+              </div>
+              <div class="absolute top-0 w-full p-2 text-left text-gray-100 group-hover:text-white">
+                Odcinek <span class=" text-amber-300 font-medium">{{ store.getters.listNewSeson[value % 2 === 0 ? (value
+                  === 0 ? value : value * 2) : value * 2].anime_episode_number }}</span>
+              </div>
+              <div class="absolute bottom-0 w-full p-2 text-left text-gray-100 group-hover:text-white">
+                {{ `${store.getters.listNewSeson[value % 2 === 0 ? (value === 0 ? value : value * 2) : value *
+                  2].title.slice(0, 19)}...` }}
+              </div>
+            </RouterLink>
+            <RouterLink
+              :to="{ path: `/list/${store.getters.listNewSeson[value % 2 === 0 ? (value === 0 ? 1 : value * 2 + 1) : value * 2 + 1].anime_id}/${store.getters.listNewSeson[value % 2 === 0 ? (value === 0 ? 1 : value * 2 + 1) : value * 2 + 1].anime_episode_number}` }"
+              class=" h-56 w-40 relative rounded-xl text-gray-100">
+              <div
+                class="transition-all w-full h-full duration-1000 ease-linear after:absolute after:top-0 after:left-0 after:w-full after:rounded-xl after:h-full after:content-[''] after:bg-black after:opacity-45">
+                <img
+                  :src="store.getters.listNewSeson[value % 2 === 0 ? (value === 0 ? 1 : value * 2 + 1) : value * 2 + 1].cover"
+                  class="absolute w-full h-full rounded-xl" alt="cover" />
+              </div>
+              <div class="absolute top-0 w-full p-2 text-left text-gray-100 group-hover:text-white">
+                Odcinek <span class=" text-amber-300 font-medium">{{ store.getters.listNewSeson[value % 2 === 0 ? (value
+                  === 0 ? 1 : value * 2 + 1) : value * 2 + 1].anime_episode_number }}</span>
+              </div>
+              <div class="absolute bottom-0 w-full p-2 text-left text-gray-100 group-hover:text-white">
+                {{ `${store.getters.listNewSeson[value % 2 === 0 ? (value === 0 ? 1 : value * 2 + 1) : value * 2 +
+                  1].title.slice(0, 19)}...` }}
+              </div>
+            </RouterLink>
+          </div>
+        </Slide>
+        <template #addons>
+
+          <Navigation />
+        </template>
+      </Carousel>
+      <div class="w-5/12 bg-gray-700">asd</div>
+    </div>
   </div>
 </template>
 
 <script setup>
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+
+import 'vue3-carousel/dist/carousel.css'
+
+
+
 import date from '../helpers/date'
 import IconSeason from '../components/IconSeason.vue'
 import CarouselSlide from '../components/CarouselSlide.vue'
@@ -37,6 +91,12 @@ import CarouselSlide from '../components/CarouselSlide.vue'
 import { useStore } from 'vuex'
 import { ref } from 'vue'
 const store = useStore()
+const i = ref(0)
+const asdas = () => {
+  if (i <= store.getters.listNewSeson.length / 2 - 1)
+    return i.value++
 
+}
+const myCarousel = ref(null)
 const ipcHandle = () => window.getApi()
 </script>

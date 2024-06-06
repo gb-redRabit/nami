@@ -1,5 +1,4 @@
 <template>
-  {{ console.log(anime) }}
   <div class="fixed top-0 left-[40px] w-screen h-screen bg-white bg-opacity-40 flex justify-center items-center"
     v-if="anime.episodes > 1">
     <div class="absolute w-full h-full cursor-pointer" @click="$router.push({ name: `anime`, params: { id: id } })">

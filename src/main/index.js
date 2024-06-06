@@ -9,7 +9,9 @@ function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1200,
+    minWidth: 1000,
     height: 870,
+    minHeight: 750,
     show: true,
     frame: false,
     // https://www.youtube.com/watch?v=jzmen0gYQrM

@@ -14,14 +14,14 @@
           <AnOutlinedSortDescending v-else
             class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="() => {
               ; (isActiveOne = !isActiveOne),
-                store.getters.listEdit.sort((a, b) => b.title.localeCompare(a.title))
+                tab.sort((a, b) => b.title.localeCompare(a.title))
             }
               " />
           <CgSortAz class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="
-            store.getters.listEdit.sort((a, b) => new Date(b.aired_from) - new Date(a.aired_from))
+            tab.sort((a, b) => new Date(b.aired_from) - new Date(a.aired_from))
             " />
           <CgSortZa class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="
-            store.getters.listEdit.sort((a, b) => new Date(a.aired_from) - new Date(b.aired_from))
+            tab.sort((a, b) => new Date(a.aired_from) - new Date(b.aired_from))
             " />
         </div>
         <div class="text-white outline-none focus:outline-none">
@@ -40,7 +40,7 @@
       </div>
       <div class="flex flex-wrap justify-center gap-3 mx-4" @scroll="handleScroll"
         v-if="store.getters.listEdit.length !== 0">
-        <Card v-for="(item, index) in store.getters.listEdit" :key="index" :item="item" :set="set" :index="index" />
+        <Card v-for="(item, index) in tab" :key="index" :item="item" :set="set" :index="index" />
       </div>
       <div class="flex flex-col justify-center items-center mt-20" v-else>
         <img src="../assets//cat.png" alt="cat" class="grayscale w-96" />
@@ -78,7 +78,7 @@ const genres = ref(store.getters.genres)
 const type = ref(store.getters.type)
 const set = ref(40)
 const isActiveOne = ref(false)
-
+const tab = ref([])
 const toogle = () => {
   toogleBar.value = !toogleBar.value
 }
@@ -100,7 +100,7 @@ const searchAnime = (e) => {
 }
 
 const handleScroll = () => {
-  if (window.scrollY > document.body.offsetHeight - 1300) {
+  if (window.scrollY > document.body.offsetHeight - 2000) {
     set.value += 40
   }
 }
@@ -116,19 +116,19 @@ watch([store.state.genresTab, store.state.typeSelect], async (currentValue, newV
 
 const searchList = (tagi, typ) => {
   typ = typ[store.state.typeSelect.length - 1] || ''
-  let tab = store.getters.list.filter((value) =>
+  tab.value = store.getters.list.filter((value) =>
     value.title.toLowerCase().includes(search.value.toLowerCase())
   )
 
   if (tagi[0] !== undefined && typ !== '') {
-    tab = tab.filter((value) => value.series_type === typ)
-    tab = tab.filter((value) => tagi.every((r) => value.genres.includes(r.title)))
+    tab.value = tab.value.filter((value) => value.series_type.toLowerCase() === typ)
+    tab.value = tab.value.filter((value) => tagi.every((r) => value.genres.includes(r.title)))
   } else if (tagi[0] === undefined && typ !== '') {
-    tab = tab.filter((value) => value.series_type === typ)
+    tab.value = tab.value.filter((value) => value.series_type.toLowerCase() === typ)
   } else if (tagi[0] !== undefined && typ === '') {
-    tab = tab.filter((value) => tagi.every((r) => value.genres.includes(r.title)))
+    tab.value = tab.value.filter((value) => tagi.every((r) => value.genres.includes(r.title)))
   }
 
-  store.dispatch('listEdit', tab)
+  store.dispatch('listEdit', tab.value)
 }
 </script>

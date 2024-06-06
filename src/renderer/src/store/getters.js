@@ -11,13 +11,13 @@ export default {
       tabActive.push({ title: item, isActive: false })
     })
 
-    return tabActive
+    return tabActive.sort((a, b) => a.title.localeCompare(b.title))
   },
   type(state) {
     let tab = new Set()
     let tabActive = []
     state.fullList.forEach((item) => {
-      tab = new Set([...tab, item.series_type])
+      tab = new Set([...tab, item.series_type.toLowerCase()])
     })
     tab.forEach((item) => {
       tabActive.push({ title: item, isActive: false })
