@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-2 w-1/4">
-        <Score :mal="mal" />
+        <Score :mal="mal" v-if="mal" />
         <img class="w-full h-[520px] rounded-lg" :src="anime.cover ? anime.cover : mal.images.jpg.large_image_url"
             alt="cover" />
         <div class="flex w-full" v-if="mal">
@@ -56,7 +56,7 @@
                 <span class="font-medium">Początek Emisji</span>
                 <span v-if="anime.aired_from" class="font-extralight">{{
                     new Date(anime.aired_from).toISOString().slice(0, 10)
-                    }}</span>
+                }}</span>
                 <span v-else class="font-extralight"> Brak Informacji </span>
             </p>
             <p v-if="mal" class="flex flex-col">

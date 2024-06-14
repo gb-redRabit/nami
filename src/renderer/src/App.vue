@@ -1,6 +1,5 @@
 <template>
   <div class="flex overflow-hidden relative">
-
     <TitleBar />
     <Navbar />
     <RouterView v-slot="{ Component }" :key="$route.params.id" v-if="list"
@@ -43,7 +42,16 @@ window.electron.ipcRenderer.on('sendApiNewSeson', (__, data) => {
 window.electron.ipcRenderer.on('sendApiNew', (__, data) => {
   store.dispatch('listNew', data)
 })
+window.electron.ipcRenderer.on('sendtest', (__, data) => {
+  const parser = new DOMParser();
 
+
+  const doc = parser.parseFromString(data, "text/html");
+
+  // const a = data.getElementsByClassName('main-blur-block')
+  console.log(doc);
+
+})
 onMounted(async () => {
   window.electron.ipcRenderer.send(
     'getApiEight',
@@ -57,6 +65,10 @@ onMounted(async () => {
   window.electron.ipcRenderer.send(
     'getApiNew',
     `https://api.docchi.pl/v1/episodes/latest?season=${season().season}&season_year=${season().yers}&type=not`
+  )
+  window.electron.ipcRenderer.send(
+    'gettest',
+    `https://mega.nz/folder/SNJxUbxA#HL1_vmQozPO8tgStdUZhqw/folder/PBZgCJhL`
   )
 })
 </script>

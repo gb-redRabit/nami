@@ -2,9 +2,9 @@
   <nav class="dragApp fixed flex flex-col justify-between h-full py-3 w-[40px] bg-gray-400 z-10">
     <div class="flex flex-col items-center gap-2">
       <RouterLink :to="{ name: 'home' }" exact class="group p-1 relative  " active-class="text-gray-600">
-        <AkHome class="text-2xl" />
+        <AkHome class="text-2xl " />
         <div
-          class="transition-all duration-100 ease-linear h-full flex items-center  absolute opacity-0  bg-gray-400 left-9 top-0 group-hover:opacity-100 font-medium  px-2 pr-7  rounded-r-full">
+          class="transition-all duration-100 ease-linear  h-full  items-center hidden absolute opacity-0  bg-gray-400 left-9 top-0 group-hover:opacity-100 group-hover:flex font-medium  px-2 pr-6  rounded-r-full">
           Nami
         </div>
       </RouterLink>
@@ -12,14 +12,14 @@
       <RouterLink :to="{ name: 'edit' }" exact class="group p-1 relative   " active-class="text-gray-600">
         <FaRegRectangleList class="text-2xl" />
         <div
-          class="transition-all duration-100 ease-linear w-32 h-full flex items-center absolute opacity-0  bg-gray-400 left-9 top-0 group-hover:opacity-100 font-medium  px-2  rounded-r-full">
+          class="transition-all duration-100 ease-linear w-32 h-full  items-center hidden absolute opacity-0  bg-gray-400 left-9 top-0 group-hover:opacity-100 group-hover:flex font-medium  px-2  rounded-r-full">
           Lista Anime
         </div>
       </RouterLink>
       <RouterLink :to="{ name: 'new' }" exact class=" group p-1 relative  " active-class="text-gray-600">
         <FaFireFlameCurved class="text-2xl " />
         <div
-          class="transition-all duration-100 ease-linear w-36 h-full flex items-center absolute opacity-0  bg-gray-400 left-9 top-0 group-hover:opacity-100 font-medium  px-2  rounded-r-full">
+          class="transition-all duration-100 ease-linear w-36 h-full  items-center hidden absolute opacity-0  bg-gray-400 left-9 top-0 group-hover:opacity-100 group-hover:flex font-medium  px-2  rounded-r-full">
           Nowe Odcinki
         </div>
       </RouterLink>

@@ -60,6 +60,7 @@ export default {
       const matchingItem = state.listNewSeson.find((item) => item.title === value.title)
       value.newEpisode = !!matchingItem
     })
+
     return state.fullList.filter(
       (item) => item.season === season().season && item.season_year === season().yers
     )

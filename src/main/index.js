@@ -145,6 +145,7 @@ app.whenReady().then(() => {
       console.error('Error in getApiNew:', error.message)
     }
   })
+
   createWindow()
 
   app.on('activate', function () {

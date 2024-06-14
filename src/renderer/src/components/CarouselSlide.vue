@@ -3,6 +3,7 @@
         :autoplay="autoplay" :wrapAround="true" @slide-start="console.log(myCarousel.data.currentSlide._value)"
         :transition="1000">
         <Slide v-for="(item, index) in data" :key="index">
+
             <div class="h-96 w-[560px] relative rounded-xl text-gray-100 overflow-hidden">
                 <div
                     class="transition-all w-full h-full duration-1000 ease-linear after:absolute after:top-0 after:left-0 after:w-full after:rounded-lg after:h-full after:content-[''] after:bg-black after:opacity-60">
