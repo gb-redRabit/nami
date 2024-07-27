@@ -3,7 +3,7 @@
     <TitleBar />
     <Navbar />
     <RouterView v-slot="{ Component }" :key="$route.params.id" v-if="list"
-      class="ml-[40px] bg-neutral-200 min-h-screen min-w-[calc(100%-40px)]">
+      class="ml-[40px] bg-neutral-200 dark:bg-neutral-800 dark:text-white min-h-screen min-w-[calc(100%-40px)]">
       <Component :is="Component" />
     </RouterView>
     <Loader v-else></Loader>
@@ -17,8 +17,8 @@ import { onMounted, ref, watch } from 'vue'
 
 import season from './helpers/date'
 import Loader from './components/Loader.vue'
-import Navbar from './components/Navbar.vue'
-import TitleBar from './components/TitleBar.vue'
+import Navbar from './components/Nav/Navbar.vue'
+import TitleBar from './components/Nav/TitleBar.vue'
 const store = useStore()
 const list = ref(null)
 
@@ -29,6 +29,7 @@ window.electron.ipcRenderer.on('sendApiOne', (__, data) => {
 })
 
 window.electron.ipcRenderer.on('sendApiEight', (__, data) => {
+  console.log(data);
   const top = data.sort((a, b) => b.score - a.score)
   top.shift()
   top.length = 10

@@ -6,13 +6,13 @@
         <div class="flex w-full" v-if="mal">
             <button v-if="mal.trailer.embed_url"
                 @click="$router.push({ name: `yt`, params: { id: anime.slug, yt: mal.trailer.embed_url } })"
-                class="flex justify-center items-center gap-2 w-full bg-slate-700 rounded-lg">
+                class="flex justify-center items-center gap-2 w-full bg-slate-700 dark:bg-neutral-900 rounded-lg">
                 <BsBoxArrowUpRight />
                 <span class="text-lg py-1">Zwiastun</span>
             </button>
         </div>
         <h2 class="font-medium py-2">Informacje</h2>
-        <div class="flex flex-col bg-slate-700 rounded-lg gap-2 p-2">
+        <div class="flex flex-col bg-slate-700 dark:bg-neutral-900 rounded-lg gap-2 p-2">
             <p v-if="mal" class="flex flex-col">
                 <span class="font-medium">Status</span>
                 <span v-if="mal.airing" class="font-extralight">{{ mal.airing ? 'Wychodzi' : 'Zakończony' }}</span>

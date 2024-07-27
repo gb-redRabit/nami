@@ -14,58 +14,40 @@
             <span class="text-[12px]">NEW</span>
             <MiComet />
         </div>
-        <!-- dodawanie anime do zbioru obejrzanych -->
-        <!-- <div
-            class="absolute top-0 right-0 bg-blue-800  flex justify-center items-center size-7 rounded-tr-xl rounded-bl-xl font-bold text-neutral-200">
-            <BsPlus class="text-2xl" />
-        </div> -->
+
         <div class="absolute bottom-0 w-full p-2 text-gray-100 group-hover:text-white">
             {{ item.title.length <= 20 ? item.title : `${item.title.slice(0, 19)}...` }} </div>
     </RouterLink>
 
 </template>
-<script>
-import { MiComet, BsPlus, McCupcakeFill } from '@kalimahapps/vue-icons'
+<script setup>
+import { ref, computed } from 'vue';
+import { MiComet, BsPlus, McCupcakeFill } from '@kalimahapps/vue-icons';
 
-export default {
-    props: {
-        item: {
-            type: Object
-        },
-        set: {
-            type: Number
-        },
-        index: {
-            type: Number
-        },
-        carusel: {
-            type: Boolean,
-            default: false
-        },
-        itemsShow: {
-            type: Number,
-            default: 0,
-        },
+// Props
+const props = defineProps({
+    item: Object,
+    set: Number,
+    index: Number,
+    carusel: {
+        type: Boolean,
+        default: false
     },
+    itemsShow: {
+        type: Number,
+        default: 0,
+    }
+});
 
-    components: {
-        MiComet,
-        BsPlus,
-        McCupcakeFill
-    },
 
-    computed: {
-        upActive() {
-            return this.index <= this.set ? true : false
-        },
 
-    },
-    methods: {
-        preloadImage(url) {
-            let img = new Image();
-            img.src = url;
-            return img.src
-        }
-    },
+// Computed properties
+const upActive = computed(() => props.index <= props.set);
+
+// Methods
+function preloadImage(url) {
+    let img = new Image();
+    img.src = url;
+    return img.src;
 }
 </script>

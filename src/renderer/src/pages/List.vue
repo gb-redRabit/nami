@@ -4,29 +4,35 @@
     <div class="p-2 pr-20 flex flex-col items-center justify-center w-[calc(100%-10px)]"
       :class="{ 'ml-60 !w-[calc(100%-240px)]': toogleBar }">
       <div class="flex justify-between items-center w-full p-6">
-        <div class="flex justify-center gap-2 px-5 py-1 bg-slate-700 rounded-full">
+        <div class="flex justify-center gap-2 px-5 py-1 bg-slate-700 dark:bg-neutral-900 rounded-full">
           <AnOutlinedSortAscending v-if="isActiveOne"
-            class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="() => {
+            class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600 dark:bg-neutral-700"
+            @click="() => {
               ; (isActiveOne = !isActiveOne),
                 store.getters.listEdit.sort((a, b) => a.title.localeCompare(b.title))
             }
               " />
           <AnOutlinedSortDescending v-else
-            class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="() => {
+            class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600 dark:bg-neutral-700"
+            @click="() => {
               ; (isActiveOne = !isActiveOne),
                 tab.sort((a, b) => b.title.localeCompare(a.title))
             }
               " />
-          <CgSortAz class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="
-            tab.sort((a, b) => new Date(b.aired_from) - new Date(a.aired_from))
-            " />
-          <CgSortZa class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600" @click="
-            tab.sort((a, b) => new Date(a.aired_from) - new Date(b.aired_from))
-            " />
+          <CgSortAz
+            class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600 dark:bg-neutral-700"
+            @click="
+              tab.sort((a, b) => new Date(b.aired_from) - new Date(a.aired_from))
+              " />
+          <CgSortZa
+            class="text-3xl cursor-pointer bg-slate-400 border-gray-400 rounded-lg hover:text-gray-600 dark:bg-neutral-700"
+            @click="
+              tab.sort((a, b) => new Date(a.aired_from) - new Date(b.aired_from))
+              " />
         </div>
-        <div class="text-white outline-none focus:outline-none">
+        <div class="text-white outline-none focus:outline-none relative">
           <input type="text" name="search" placeholder="Wyszukaj" :value="search" @input="searchAnime"
-            class="bg-slate-700 h-10 flex px-8 w-full rounded-full text-sm focus:outline-none border-2 border-l-0 border-gray-500"
+            class="bg-slate-700 dark:bg-neutral-900 h-10 flex px-8 w-full rounded-full text-sm focus:outline-none  border-0"
             autocomplete="off" spellcheck="false" required step="any" autocapitalize="none" autofocus />
           <button type="submit" class="absolute inset-y-0 right-0 mr-2 flex items-center px-2">
             <svg class="h-4 w-4 text-white fill-current" xmlns="http://www.w3.org/2000/svg"
@@ -44,10 +50,11 @@
       </div>
       <div class="flex flex-col justify-center items-center mt-20" v-else>
         <img src="../assets//cat.png" alt="cat" class="grayscale w-96" />
-        <h1 class="flex justify-center items-center gap-2 py-4 px-16 -mt-16 rounded-lg text-white bg-slate-700">
+        <h1
+          class="flex justify-center items-center gap-2 py-4 px-16 -mt-16 rounded-lg text-white bg-slate-700 dark:bg-neutral-900">
           Brak wyników wyszukiwania
           <button @click="cleanSearch"
-            class="flex justify-center items-center gap-2 font-medium py-1 px-2 border text-slate-700 bg-white rounded-xl animate-pulse">
+            class="flex justify-center items-center gap-2 font-medium py-1 px-2 border text-slate-700  bg-white rounded-xl animate-pulse dark:bg-neutral-900 dark:text-neutral-700">
             Wyczyść
             <AkCircleXFill class="text-xl" />
           </button>

@@ -5,10 +5,11 @@
         ' grid-cols-1 mx-auto ': toogleList
     }">
         <RouterLink v-if="toogleBar" :to="{ path: `/list/${anime.slug}/${episode.anime_episode_number}` }"
-            class="flex flex-col w-60 bg-gray-600 rounded-lg" v-for="(episode, index) in episodes" :key="index">
+            class="flex flex-col w-60 bg-gray-600 dark:bg-neutral-900 rounded-lg" v-for="(episode, index) in episodes"
+            :key="index">
             <div class="w-full h-32 rounded-t-lg">
                 <img :src="episode.bg" v-if="episode.bg" alt="img" class="w-full h-full rounded-t-lg" />
-                <div class="flex justify-center items-center bg-slate-400 w-full h-full rounded-t-lg" v-else>
+                <div class="flex justify-center items-center bg-slate-400  w-full h-full rounded-t-lg" v-else>
                     <BsImageFill class="text-2xl" />
                 </div>
             </div>
@@ -18,7 +19,8 @@
             </div>
         </RouterLink>
         <RouterLink v-if="toogleMenu" :to="{ path: `/list/${anime.slug}/${episode.anime_episode_number}` }"
-            class="flex w-48 bg-gray-600 rounded-lg" v-for="(episode, index) in episodes" :key="index">
+            class="flex w-48 bg-gray-600 dark:bg-neutral-900 rounded-lg" v-for="(episode, index) in episodes"
+            :key="index">
             <div class="w-16 h-10 rounded-l-lg">
                 <img :src="episode.bg" v-if="episode.bg" alt="img" class="w-full h-full rounded-l-lg" />
                 <div class="flex justify-center items-center bg-slate-400 w-full h-full rounded-l-lg" v-else>
@@ -30,8 +32,8 @@
             </div>
         </RouterLink>
         <RouterLink v-if="toogleList" :to="{ path: `/list/${anime.slug}/${episode.anime_episode_number}` }"
-            class="w-[550px] p-2 bg-gray-600 rounded-lg flex justify-between" v-for="(episode, index) in episodes"
-            :key="index">
+            class="w-[550px] p-2 bg-gray-600 dark:bg-neutral-900 rounded-lg flex justify-between"
+            v-for="(episode, index) in episodes" :key="index">
             <p><span class="font-medium">Odcinek</span> {{ episode.anime_episode_number }}</p>
             <p>
                 <span class="font-medium">Dodany</span>
@@ -42,7 +44,7 @@
             episodes.length !== anime.episodes &&
             toogleBar &&
             nextEpisode(episodes[episodes.length - 1].created_at) >= -3
-        " class="flex flex-col w-60 bg-gray-600 rounded-lg">
+        " class="flex flex-col w-60 bg-gray-600 dark:bg-neutral-900  rounded-lg">
             <div class="w-full h-32 rounded-t-lg">
                 <div class="flex justify-center items-center bg-slate-400 w-full h-full rounded-t-lg">
                     <BsImageFill class="text-2xl" />
@@ -60,7 +62,7 @@
             episodes.length !== anime.episodes &&
             toogleMenu &&
             nextEpisode(episodes[episodes.length - 1].created_at) >= -3
-        " class="flex w-48 bg-gray-600 rounded-lg">
+        " class="flex w-48 bg-gray-600 dark:bg-neutral-900 rounded-lg">
             <div class="w-16 h-10 rounded-l-lg">
                 <div class="flex justify-center items-center bg-slate-400 w-full h-full rounded-l-lg">
                     <BsImageFill class="text-2xl" />
@@ -78,7 +80,7 @@
             episodes.length !== anime.episodes &&
             toogleList &&
             nextEpisode(episodes[episodes.length - 1].created_at) >= -3
-        " class="w-[550px] p-2 bg-gray-600 rounded-lg flex justify-between">
+        " class="w-[550px] p-2 bg-gray-600 dark:bg-neutral-900 rounded-lg flex justify-between">
             <p class="font-medium">Kolejny odcinek</p>
             <p v-if="nextEpisode(episodes[episodes.length - 1].created_at) > 0">
                 za {{ nextEpisode(episodes[episodes.length - 1].created_at) }} dni

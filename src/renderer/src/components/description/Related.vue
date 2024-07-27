@@ -10,7 +10,7 @@
           }
         })
         " v-for="(item, index) in related" :key="index">
-        <div class="bg-gray-900 bg-opacity-60 rounded-md overflow-hidden flex w-80 h-24">
+        <div class="bg-gray-900 dark:bg-neutral-900 bg-opacity-60 rounded-md overflow-hidden flex w-80 h-24">
           <img :src="item[0].cover" alt="cover" class="max-w-20 min-w-20 h-full" />
           <div class="flex flex-col items-start justify-start w-full">
             <div class="flex items-center justify-between w-full bg-opacity-10 bg-gray-900 p-1">
@@ -38,10 +38,10 @@ const { mal } = defineProps({
   mal: Object,
 })
 
-onMounted(() => {
+const fetchRelatedData = (mal) => {
   if (Array.isArray(mal)) {
     mal.forEach((value) => {
-      if (value.relation !== 'Adaptation' && value.relation !== 'Other') {
+      if (!['Adaptation', 'Other'].includes(value.relation)) {
         if (Array.isArray(value.entry)) {
           value.entry.forEach((link) => {
             window.electron.ipcRenderer.send('getApiFour', [
@@ -53,6 +53,10 @@ onMounted(() => {
       }
     })
   }
+}
+
+onMounted(() => {
+  fetchRelatedData(mal)
 })
 
 window.electron.ipcRenderer.on('sendApiFour', (__, data) => {

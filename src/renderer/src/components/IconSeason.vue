@@ -1,13 +1,9 @@
 <template>
-  <template v-if="season">
-    <FlFilledLeafTwo class="text-green-700" v-if="season == `spring`" />
-    <FaRegSnowflake v-if="season == `winter`" />
-    <AnFilledSun class="text-yellow-400" v-if="season == `summer`" />
-    <FlFilledUmbrella class="text-amber-950" v-if="season == `fall`" />
-  </template>
+  <component :is="iconComponent" :class="iconClass" v-if="season" />
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import {
   FlFilledLeafTwo,
   FaRegSnowflake,
@@ -18,4 +14,20 @@ import {
 const props = defineProps({
   season: String,
 })
+
+const seasonIcons = {
+  spring: FlFilledLeafTwo,
+  winter: FaRegSnowflake,
+  summer: AnFilledSun,
+  fall: FlFilledUmbrella
+}
+
+const seasonClasses = {
+  spring: 'text-green-700',
+  summer: 'text-yellow-400',
+  fall: 'text-amber-950'
+}
+
+const iconComponent = computed(() => seasonIcons[props.season])
+const iconClass = computed(() => seasonClasses[props.season] || '')
 </script>

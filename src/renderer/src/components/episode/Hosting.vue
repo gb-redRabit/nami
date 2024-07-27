@@ -6,8 +6,9 @@
           {{ key }}
         </h2>
         <div class="flex gap-1">
-          <button class="bg-slate-300 py-1 px-2 rounded-md text-sm" :class="{ 'text-red-600': select === value.id }"
-            v-for="(value, index) in values" :key="index"
+          <button
+            class="bg-slate-300 py-1 px-2 rounded-md text-sm dark:bg-neutral-900 dark:hover:bg-neutral-300 dark:hover:text-neutral-900"
+            :class="{ 'text-red-600': select === value.id }" v-for="(value, index) in values" :key="index"
             @click="$emit('selectPlayer', value.id, value.player_hosting)">
             {{ value.translator_title }}
           </button>
